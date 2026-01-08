@@ -38,7 +38,7 @@ docker-compose.yml gère les services.
 Cloner le projet: 
 
 ```bash
-git clone "https://github.com/coti96/ConnectED/"
+git clone https://github.com/coti96/ConnectED/
 ```
 ```bash
 cd ConnectED
