@@ -61,9 +61,17 @@ Après ça, le projet est accessible depuis le navigateur.
 Let's go!
 
 Lancer le projet : 
+
+Vérifier les images dockers 
 ```bash
-docker images
+docker images          
 ```
+
+Vérifier les conteneurs en cours d'executions
 ```bash
-docker run mon-image
+docker ps          
+```
+
+```bash
+docker-compose up
 ```
