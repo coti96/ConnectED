@@ -56,10 +56,14 @@ Et lance les containers correspondants
 
 Attention : ça peut prendre quelques minutes car Docker télécharge les images de base et installe les dépendances.
 
-Après ça, le projet est accessible depuis le navigateur :
-
-Backend : http://localhost:5000
-
-Frontend : http://localhost:4200
+Après ça, le projet est accessible depuis le navigateur.
 
 Let's go!
+
+Lancer le projet : 
+```bash
+docker images
+```
+```bash
+docker run mon-image
+```
