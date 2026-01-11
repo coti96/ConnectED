@@ -7,6 +7,10 @@
 Cette **Phase 0** correspond à l'initialisation technique du projet avec Docker et Git.
 
 ---
+Prérequis:
+- Git
+- Docker Desktop
+- Accès à un terminal (Git Bash, Powershell, VS Code Terminal…)
 
 ## 1. Structure du projet
 
@@ -22,7 +26,9 @@ ConnectED/
 │   ├─ src/
 │   ├─ package.json
 │   └─ Dockerfile
-│
+│─ database/
+│  └─ init/ 
+│       ├─ schema.sql         
 ├─ docker-compose.yml
 └─ README.md
 ```
@@ -48,11 +54,15 @@ Lancer le projet pour la première fois
 ```bash
 docker-compose up --build
 ```
-Cette commande fait deux choses :
+Cette commande construit les images (si nécessaire) et lance 3 conteneurs :
 
-Construit les images Docker pour backend et frontend (à partir des Dockerfile)
+Backend Flask (connected-backend) sur le port 5000
 
-Et lance les containers correspondants
+Frontend Angular avec Nginx (connected-frontend) sur le port 4200
+
+Base de données MariaDB (connected-db) sur le port 3306
+
+Le backend dépend de la base, donc elle sera initialisée automatiquement à partir du fichier schema.sql.
 
 Attention : ça peut prendre quelques minutes car Docker télécharge les images de base et installe les dépendances.
 
