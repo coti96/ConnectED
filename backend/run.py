@@ -1,33 +1,26 @@
 from flask import Flask, jsonify
-from flask_cors import CORS
 import os
+from neo4j import GraphDatabase
 
 
 app = Flask(__name__)
 
-# Active CORS pour permettre les requêtes depuis Angular
-CORS(app)
+# Récupération des variables Docker
+uri = os.getenv("DB_URI", "bolt://db:7687")
+user = os.getenv("DB_USER", "neo4j")
+password = os.getenv("DB_PASSWORD", "connected_password")
 
-# =========================
-# Configuration Base de Données
-# =========================
-DB_HOST = os.getenv("DB_HOST", "db")
-DB_PORT = os.getenv("DB_PORT", "3306")
-DB_NAME = os.getenv("DB_NAME", "connected")
-DB_USER = os.getenv("DB_USER", "connected_user")
-DB_PASSWORD = os.getenv("DB_PASSWORD", "connected_password")
+# Initialisation du driver Neo4j
+driver = GraphDatabase.driver(uri, auth=(user, password))
 
+@app.route('/projects')
+def get_projects():
+    with driver.session() as session:
+        # Une requête Cypher simple
+        result = session.run("MATCH (p:Project) RETURN p LIMIT 10")
+        projects = [record["p"].items() for record in result]
+        return {"projects": projects}
 
-@app.route("/")
-def health():
-    return jsonify( {
-        "status": "Backend running",
-        "db_host": DB_HOST})
-
-# Exemple d'endpoint API
-@app.route("/api/hello")
-def hello():
-    return jsonify({"message": "Hello from backend!"})
 
 
 if __name__ == "__main__":

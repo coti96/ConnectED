@@ -17,19 +17,19 @@ Prérequis:
 ```text
 ConnectED/
 │
-├─ backend/           # Code Flask
-│   ├─ app/
+├─ backend/           # API Flask (Python)
+│   ├─ run.py         # Point d'entrée avec driver Neo4j
 │   ├─ requirements.txt
 │   └─ Dockerfile
 │
-├─ frontend/          # Angular (préparé pour Docker)
-│   ├─ src/
-│   ├─ package.json
+├─ frontend/          # Application Angular
 │   └─ Dockerfile
-│─ database/
-│  └─ init/ 
-│       ├─ schema.sql         
-├─ docker-compose.yml
+│
+├─ database/          # Initialisation de la BDD
+│   └─ init/ 
+│       └─ db.cypher  # Scripts de création du graphe (NoSQL)
+│
+├─ docker-compose.yml # Orchestration des services
 └─ README.md
 ```
 
@@ -54,21 +54,24 @@ Lancer le projet pour la première fois
 ```bash
 docker-compose up --build
 ```
-Cette commande construit les images (si nécessaire) et lance 3 conteneurs :
-
-Backend Flask (connected-backend) sur le port 5000
-
-Frontend Angular avec Nginx (connected-frontend) sur le port 4200
-
-Base de données MariaDB (connected-db) sur le port 3306
-
-Le backend dépend de la base, donc elle sera initialisée automatiquement à partir du fichier schema.sql.
+Cette commande lance 4 conteneurs :
+- connected-db : Base de données Neo4j (Port 7474 pour l'interface, 7687 pour le backend).
+- connected-db-init : Script automatique qui injecte les données de test (s'arrête après exécution).
+- connected-backend : API Flask (Port 5000).
+- connected-frontend : App Angular via Nginx (Port 4200).
 
 Attention : ça peut prendre quelques minutes car Docker télécharge les images de base et installe les dépendances.
 
-Après ça, le projet est accessible depuis le navigateur.
+Après ça, le projet est accessible depuis le navigateur :
 
-Let's go!
+- Frontend Angular : http://localhost:4200
+- Backend API : http://localhost:5000
+- Neo4j Browser (Explorateur de graphe) : http://localhost:7474
+    - Login : neo4j
+    - Password : connected_password
+    - Commande de test : Tape MATCH (n) RETURN n pour voir les bulles.
+
+## 3. Commandes utiles au quotidien
 
 Lancer le projet : 
 
@@ -82,6 +85,24 @@ Vérifier les conteneurs en cours d'executions
 docker ps          
 ```
 
+Démarrer le projet
+
+Pour lancer tous les services en arrière-plan et continuer à utiliser ton terminal :
 ```bash
-docker-compose up
+docker-compose up -d
+```
+
+Appliquer des changements
+```bash
+docker-compose up -d --build
+```
+
+Eteindre le conteneur
+```bash
+docker-compose stop
+```
+
+Reinitialiser le conteneur
+```bash
+docker-compose down -v
 ```
