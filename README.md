@@ -18,7 +18,7 @@ Prérequis:
 ConnectED/
 │
 ├─ backend/           # API Flask (Python)
-│   ├─ run.py         # Point d'entrée avec driver Neo4j
+│   ├─ app.py         # Point d'entrée avec driver Neo4j
 │   ├─ requirements.txt
 │   └─ Dockerfile
 │

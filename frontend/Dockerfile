@@ -1,29 +1,29 @@
-# frontend/Dockerfile
-
 # =========================
 # Étape 1 : Build Angular
 # =========================
+FROM node:20-alpine AS build
 
-# Utilise l'image Node.js officielle pour builder Angular
-FROM node:20 AS build
 WORKDIR /app
+
+# On copie les fichiers de dépendances en premier (Optimisation du cache Docker)
 COPY package*.json ./
-# Installe les dépendances npm
-RUN npm install
-# Copie tout le code source Angular dans le container
+# À la place de RUN npm install
+RUN npm install --legacy-peer-deps
+
+# Copie le reste du code
 COPY . .
-# Build Angular en mode dev
-RUN npm run build --dev
+
+# Build de production (plus rapide et léger que --dev)
+RUN npm run build -- --configuration=production
 
 # =========================
 # Étape 2 : Serveur Nginx
 # =========================
-
-# Utilise l'image Nginx
 FROM nginx:alpine
-# Copie le build Angular depuis l'étape précédente vers le répertoire de Nginx
-COPY --from=build /app/dist/frontend /usr/share/nginx/html
-# Expose le port 80 pour accéder à l'application depuis l'extérieur du conteneur
+
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+COPY --from=build /app/dist/*/browser /usr/share/nginx/html
+
 EXPOSE 80
-# Démarre Nginx en mode non-démon (foreground)
+
 CMD ["nginx", "-g", "daemon off;"]

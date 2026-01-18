@@ -46,7 +46,7 @@ services:
 
   # 4. LE FRONTEND
   frontend:
-    image: nginx:alpine
+    build: ./frontend
     container_name: connected-frontend
     ports:
       - "4200:80"

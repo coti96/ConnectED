@@ -13,3 +13,14 @@ dist/
 # IDE
 .vscode/
 .idea/
+.DS_Store
+
+# Build et Cache
+dist/
+.angular/
+.cache/
+
+# Sécurité (Secrets)
+.env
+.env.local
+*.pem

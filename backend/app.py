@@ -1,9 +1,12 @@
 from flask import Flask, jsonify
 import os
+from flask_cors import CORS
 from neo4j import GraphDatabase
 
 
 app = Flask(__name__)
+# On autorise Angular (port 4200) à appeler Flask
+CORS(app)
 
 # Récupération des variables Docker
 uri = os.getenv("DB_URI", "bolt://db:7687")
@@ -13,7 +16,7 @@ password = os.getenv("DB_PASSWORD", "connected_password")
 # Initialisation du driver Neo4j
 driver = GraphDatabase.driver(uri, auth=(user, password))
 
-@app.route('/projects')
+@app.route('/')
 def get_projects():
     with driver.session() as session:
         result = session.run("MATCH (p:Project) RETURN p")
@@ -37,8 +40,6 @@ def get_projects():
             projects_list.append(project_data)
             
         return {"projects": projects_list} # Flask est content maintenant !
-
-
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
