@@ -2,44 +2,36 @@ from flask import Flask, jsonify
 import os
 from flask_cors import CORS
 from neo4j import GraphDatabase
-
+from database import db
+from routes.projects import projects_bp
+from routes.users import users_bp
 
 app = Flask(__name__)
 # On autorise Angular (port 4200) à appeler Flask
 CORS(app)
 
-# Récupération des variables Docker
-uri = os.getenv("DB_URI", "bolt://db:7687")
-user = os.getenv("DB_USER", "neo4j")
-password = os.getenv("DB_PASSWORD", "connected_password")
+with app.app_context():
+    try:
+        db.connect()
+    except Exception as e:
+        print(f"❌ Erreur de connexion initiale : {e}")
 
-# Initialisation du driver Neo4j
-driver = GraphDatabase.driver(uri, auth=(user, password))
+# À l'arrêt du serveur
+@app.teardown_appcontext
+def shutdown_session(exception=None):
+    db.close()
+    
+# Enregistrement des routes
+app.register_blueprint(projects_bp)
+app.register_blueprint(users_bp)
 
 @app.route('/')
-def get_projects():
+def index():
+    driver = db.get_db()
     with driver.session() as session:
-        result = session.run("MATCH (p:Project) RETURN p")
-        
-        projects_list = []
-        for record in result:
-            # 1. On récupère le nœud Neo4j
-            project_node = record["p"]
-            
-            # 2. On transforme les propriétés en un VRAI dictionnaire JSON compatible
-            # C'est ici qu'il fallait faire dict(...)
-            project_data = dict(project_node.items())
-            
-            # 3. Optionnel : Convertir les dates Neo4j en chaînes de caractères
-            # (Le JSON n'aime pas les objets 'datetime' de Neo4j)
-            if 'created_at' in project_data:
-                project_data['created_at'] = str(project_data['created_at'])
-            if 'deadline' in project_data:
-                project_data['deadline'] = str(project_data['deadline'])
-
-            projects_list.append(project_data)
-            
-        return {"projects": projects_list} # Flask est content maintenant !
+        result = session.run("RETURN 'Connexion réussie !' AS message")
+        # Renvoyer un objet JSON est plus propre pour une API
+        return jsonify({"message": result.single()["message"]})
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
