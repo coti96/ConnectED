@@ -1,0 +1,104 @@
+.hero {
+  display: flex;
+  justify-content: center;
+  padding: 5rem 2rem;
+  text-align: center;
+  background: linear-gradient(to bottom, #ffffff, #f7f4ff);
+
+  .badge {
+    background: #ebe1ff;
+    color: #6b2cd4;
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 0.9rem;
+  }
+
+  h1 {
+    margin-top: 1.5rem;
+    font-size: 3rem;
+    color: #2d106a;
+    font-weight: 800;
+  }
+
+  .subtitle {
+    margin: 1rem auto 2rem;
+    max-width: 700px;
+    font-size: 1.2rem;
+    color: #555;
+  }
+
+  .actions {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+
+    .btn-primary,
+    .btn-secondary {
+      padding: 0.9rem 1.8rem;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+
+    .btn-primary {
+      background: #6b2cd4;
+      color: white;
+      border: none;
+    }
+
+    .btn-secondary {
+      background: white;
+      border: 2px solid #6b2cd4;
+      color: #6b2cd4;
+    }
+  }
+}
+
+.why {
+  padding: 4rem 2rem;
+  text-align: center;
+
+  h2 {
+    color: #2d106a;
+    font-size: 2rem;
+    font-weight: 700;
+  }
+
+  .features {
+    margin-top: 2.5rem;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+
+    .feature {
+      background: white;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+      h3 {
+        font-size: 1.2rem;
+        margin-bottom: 0.5rem;
+        color: #3a1b81;
+      }
+    }
+  }
+}
+
+.cta {
+  padding: 4rem 2rem;
+  text-align: center;
+  background: #f7f4ff;
+
+  .btn-primary {
+    background: #6b2cd4;
+    color: white;
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+  }
+}
