@@ -1,0 +1,31 @@
+user_email,project_id,status,motivation_message,created_at
+student1@mail.com,1001,en_attente,"Je veux apprendre React et Python",2026-01-05T09:00:00
+student2@mail.com,1001,en_attente,"Passionné par la Data Science",2026-01-05T09:15:00
+student3@mail.com,1001,en_attente,"Curieuse du front-end et UI/UX",2026-01-05T09:30:00
+pro1@company.com,1002,en_attente,"Je peux encadrer les étudiants sur React",2026-01-06T10:00:00
+student4@mail.com,1002,en_attente,"Data Science et Machine Learning",2026-01-06T10:15:00
+student5@mail.com,1002,en_attente,"Python et IA sont mes points forts",2026-01-06T10:30:00
+pro2@company.com,1003,en_attente,"Expérience DevOps pour ce projet",2026-01-07T11:00:00
+student6@mail.com,1003,en_attente,"Je maîtrise Docker et Kubernetes",2026-01-07T11:15:00
+student7@mail.com,1003,en_attente,"Curieux des pipelines CI/CD",2026-01-07T11:30:00
+student8@mail.com,1004,en_attente,"Passionnée par le design UI/UX",2026-01-08T09:00:00
+pro3@company.com,1004,en_attente,"UI/UX designer expérimenté",2026-01-08T09:15:00
+student9@mail.com,1004,en_attente,"Figma et Adobe XD sont mes outils favoris",2026-01-08T09:30:00
+student10@mail.com,1005,en_attente,"Intéressé par le back-end et Node.js",2026-01-09T08:45:00
+pro4@company.com,1005,en_attente,"Je peux guider les étudiants sur Node.js",2026-01-09T09:00:00
+student11@mail.com,1005,en_attente,"Curieux du développement fullstack",2026-01-09T09:15:00
+student12@mail.com,1006,en_attente,"Passionnée par le mobile et Flutter",2026-01-10T10:00:00
+pro5@company.com,1006,en_attente,"Mobile dev senior disponible",2026-01-10T10:15:00
+student13@mail.com,1006,en_attente,"React Native et Kotlin",2026-01-10T10:30:00
+student14@mail.com,1007,en_attente,"Intéressée par Data Science",2026-01-11T11:00:00
+pro6@company.com,1007,en_attente,"Je peux mentor des étudiants en Data",2026-01-11T11:15:00
+student15@mail.com,1007,en_attente,"Python et TensorFlow",2026-01-11T11:30:00
+student16@mail.com,1008,en_attente,"Big Data et Spark m'intéressent",2026-01-12T09:00:00
+pro7@company.com,1008,en_attente,"Expert Big Data disponible",2026-01-12T09:15:00
+student17@mail.com,1008,en_attente,"Hadoop et Kafka",2026-01-12T09:30:00
+student18@mail.com,1009,en_attente,"Curieux des projets Cloud",2026-01-13T08:45:00
+pro8@company.com,1009,en_attente,"Cloud Engineer pour encadrer",2026-01-13T09:00:00
+student19@mail.com,1009,en_attente,"AWS et Azure",2026-01-13T09:15:00
+student20@mail.com,1010,en_attente,"Security et DevOps",2026-01-14T10:00:00
+pro9@company.com,1010,en_attente,"Expert sécurité disponible",2026-01-14T10:15:00
+student21@mail.com,1010,en_attente,"Intéressé par la cybersécurité",2026-01-14T10:30:00

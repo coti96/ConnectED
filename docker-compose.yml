@@ -1,5 +1,5 @@
 services:
-  # 1. LA BASE DE DONNÉES (Le socle)
+  # 1 Base Neo4j
   db:
     image: neo4j:community
     container_name: connected-db
@@ -7,18 +7,19 @@ services:
     environment:
       NEO4J_AUTH: neo4j/connected_password
     ports:
-      - "7474:7474"
-      - "7687:7687"
+      - "7474:7474" # Interface web Neo4j
+      - "7687:7687" # Bolt protocol
     volumes:
       - neo4j_data:/data
-    # Le "Healthcheck" dit aux autres services quand la DB est réellement prête
+      - ./database/csv:/var/lib/neo4j/import
+      - ./database/init:/scripts
     healthcheck:
       test: [ "CMD-SHELL", "cypher-shell -u neo4j -p connected_password 'RETURN 1'" ]
       interval: 10s
       timeout: 10s
       retries: 5
 
-  # 2. L'INITIALISATION (S'exécute une fois, après que la DB soit prête)
+  # 2️ INITIALISATION (un seul run pour importer les CSV)
   db-init:
     image: neo4j:community
     container_name: connected-db-init
@@ -27,8 +28,9 @@ services:
         condition: service_healthy
     volumes:
       - ./database/init:/scripts
+      - ./database/csv:/var/lib/neo4j/import
     entrypoint: >
-      /bin/bash -c " echo 'Injection des fixtures...'; cypher-shell -a bolt://db:7687 -u neo4j -p connected_password -f /scripts/db.cypher; echo 'Terminé !'; "
+      /bin/bash -c " set -e; echo '=== INITIALISATION DE LA BASE ==='; cypher-shell -a bolt://db:7687 -u neo4j -p connected_password -f /scripts/db_init.cypher; echo '=== TERMINÉ ==='; "
 
   # 3. LE BACKEND (Démarre en parallèle de l'init, mais attend aussi que la DB soit prête)
   backend:
