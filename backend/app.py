@@ -5,6 +5,8 @@ from neo4j import GraphDatabase
 from database import db
 from routes.projects import projects_bp
 from routes.users import users_bp
+from routes.domains import domains_bp
+from routes.technologies import technologies_bp
 
 app = Flask(__name__)
 # On autorise Angular (port 4200) à appeler Flask
@@ -24,6 +26,8 @@ def shutdown_session(exception=None):
 # Enregistrement des routes
 app.register_blueprint(projects_bp)
 app.register_blueprint(users_bp)
+app.register_blueprint(domains_bp)
+app.register_blueprint(technologies_bp)
 
 @app.route('/')
 def index():
