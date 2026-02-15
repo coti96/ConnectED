@@ -1,16 +1,12 @@
-version: '3.9'
-
 services:
-  # 1. Base Neo4j
   db:
     image: neo4j:community
     container_name: connected-db
-    restart: always
     environment:
       NEO4J_AUTH: neo4j/connected_password
     ports:
-      - "7474:7474" # Interface web Neo4j
-      - "7687:7687" # Bolt protocol
+      - "7474:7474"
+      - "7687:7687"
     volumes:
       - neo4j_data:/data
       - ./database/csv:/var/lib/neo4j/import
@@ -21,26 +17,17 @@ services:
       timeout: 10s
       retries: 5
 
-  # 2. Backend
-  backend:
-    build: ./backend
-    container_name: connected-backend
-    ports:
-      - "5000:5000"
+  db-init:
+    image: neo4j:community
+    container_name: connected-db-init
     depends_on:
       db:
         condition: service_healthy
-    environment:
-      DB_URI: bolt://db:7687
-      DB_USER: neo4j
-      DB_PASSWORD: connected_password
-
-  # 3. Frontend
-  frontend:
-    build: ./frontend
-    container_name: connected-frontend
-    ports:
-      - "4200:80"
+    volumes:
+      - ./database/init:/scripts
+      - ./database/csv:/var/lib/neo4j/import
+    entrypoint: >
+      /bin/bash -c " set -e; echo '=== INITIALISATION DE LA BASE ==='; cypher-shell -a bolt://db:7687 -u neo4j -p connected_password -f /scripts/db_init.cypher; echo '=== TERMINÉ ==='; "
 
 volumes:
   neo4j_data:
