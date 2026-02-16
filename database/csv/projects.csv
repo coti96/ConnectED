@@ -1,11 +1,11 @@
-project_id,titre,description,localisation,statut,nombre_places,creator_email,domain
-1001,Plateforme IA,Système de détection de fraude,Paris,en_cours,3,pro2@company.com,Intelligence Artificielle
-1002,App Mobile Fitness,Application mobile pour le suivi sportif,Lyon,en_cours,4,pro7@company.com,Mobile Development
-1003,Dashboard Analytics,Tableau de bord pour KPIs et visualisation de données,Marseille,en_cours,3,pro2@company.com,Data Science
-1004,Site E-commerce,Plateforme de vente en ligne avec paiement intégré,Bordeaux,en_cours,5,pro5@company.com,Développement Web
-1005,Jeu Vidéo 2D,Jeu éducatif pour enfants,Nice,en_cours,3,pro8@company.com,Gaming
-1006,Application Santé,Télé suivi médical à distance,Toulouse,en_cours,2,pro10@company.com,HealthTech
-1007,Automatisation DevOps,Pipeline CI/CD et monitoring complet,Paris,en_cours,3,pro3@company.com,DevOps
-1008,Portfolio Designer,Application web pour designers,Strasbourg,en_cours,3,pro4@company.com,Design UI/UX
-1009,Blockchain SupplyChain,Suivi logistique sur blockchain,Lyon,en_cours,3,pro9@company.com,Blockchain
-1010,Analyse Big Data,Analyse des logs et données massives,Montpellier,en_cours,4,pro2@company.com,Big Data
+titre,description,localisation,statut,nombre_places,creator_email,domain
+Plateforme IA,Système de détection de fraude,Paris,en_cours,3,pro2@company.com,Intelligence Artificielle
+App Mobile Fitness,Application mobile pour le suivi sportif,Lyon,en_cours,4,pro7@company.com,Mobile Development
+Dashboard Analytics,Tableau de bord pour KPIs et visualisation de données,Marseille,en_cours,3,pro2@company.com,Data Science
+Site E-commerce,Plateforme de vente en ligne avec paiement intégré,Bordeaux,en_cours,5,pro5@company.com,Développement Web
+Jeu Vidéo 2D,Jeu éducatif pour enfants,Nice,en_cours,3,pro8@company.com,Gaming
+Application Santé,Télé suivi médical à distance,Toulouse,en_cours,2,pro10@company.com,HealthTech
+Automatisation DevOps,Pipeline CI/CD et monitoring complet,Paris,en_cours,3,pro3@company.com,DevOps
+Portfolio Designer,Application web pour designers,Strasbourg,en_cours,3,pro4@company.com,Design UI/UX
+Blockchain SupplyChain,Suivi logistique sur blockchain,Lyon,en_cours,3,pro9@company.com,Blockchain
+Analyse Big Data,Analyse des logs et données massives,Montpellier,en_cours,4,pro2@company.com,Big Data

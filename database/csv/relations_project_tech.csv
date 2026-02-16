@@ -1,36 +1,36 @@
-project_id,tech_libelle
-1001,Python
-1001,TensorFlow
-1001,OpenAI API
-1002,Flutter
-1002,React Native
-1002,Swift
-1003,Python
-1003,Pandas
-1003,Scikit-learn
-1003,Tableau
-1004,JavaScript
-1004,React
-1004,Node.js
-1004,Angular
-1005,Unity
-1005,C#
-1005,Unreal Engine
-1006,Python
-1006,React Native
-1006,Flutter
-1007,Docker
-1007,Kubernetes
-1007,Terraform
-1007,Prometheus
-1008,Figma
-1008,Adobe XD
-1008,React
-1008,JavaScript
-1009,Solidity
-1009,Python
-1009,Blockchain
-1010,Spark
-1010,Hadoop
-1010,Kafka
-1010,Python
+project_title,tech_libelle
+Plateforme IA,Python
+Plateforme IA,TensorFlow
+Plateforme IA,OpenAI API
+App Mobile Fitness,Flutter
+App Mobile Fitness,React Native
+App Mobile Fitness,Swift
+Dashboard Analytics,Python
+Dashboard Analytics,Pandas
+Dashboard Analytics,Scikit-learn
+Dashboard Analytics,Tableau
+Site E-commerce,JavaScript
+Site E-commerce,React
+Site E-commerce,Node.js
+Site E-commerce,Angular
+Jeu Vidéo 2D,Unity
+Jeu Vidéo 2D,C#
+Jeu Vidéo 2D,Unreal Engine
+Application Santé,Python
+Application Santé,React Native
+Application Santé,Flutter
+Automatisation DevOps,Docker
+Automatisation DevOps,Kubernetes
+Automatisation DevOps,Terraform
+Automatisation DevOps,Prometheus
+Portfolio Designer,Figma
+Portfolio Designer,Adobe XD
+Portfolio Designer,React
+Portfolio Designer,JavaScript
+Blockchain SupplyChain,Solidity
+Blockchain SupplyChain,Python
+Blockchain SupplyChain,Blockchain
+Analyse Big Data,Spark
+Analyse Big Data,Hadoop
+Analyse Big Data,Kafka
+Analyse Big Data,Python
