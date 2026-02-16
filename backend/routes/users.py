@@ -1,6 +1,7 @@
 from flask import Blueprint, jsonify
 from database import db  
-from node_repository import get_nodes_by_label
+from repository.node_repository import get_nodes_by_label
+
 
 users_bp = Blueprint('users', __name__)
 
