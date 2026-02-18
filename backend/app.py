@@ -7,10 +7,12 @@ from routes.projects import projects_bp
 from routes.users import users_bp
 from routes.domains import domains_bp
 from routes.technologies import technologies_bp
+from flasgger import Swagger
 
 app = Flask(__name__)
 # On autorise Angular (port 4200) à appeler Flask
 CORS(app)
+swagger = Swagger(app)
 
 with app.app_context():
     try:
