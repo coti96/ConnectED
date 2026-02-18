@@ -50,3 +50,38 @@ def create_domain():
     except Exception as e:
         traceback.print_exc()
         return jsonify({"error": str(e)}), 500
+    
+    
+@domains_bp.route('/domains/<domain_id>', methods=['PUT'])
+def update_domain(domain_id):
+    try:
+        data = request.get_json()
+        if not data:
+            return jsonify({"error": "Invalid JSON"}), 400
+
+        try:
+            domain = get_repo().update_node("Domain", domain_id, data)
+        except ConstraintError:
+            return jsonify({"error": "Domain with this libelle already exists"}), 409
+
+        if not domain:
+            return jsonify({"error": "Domain not found"}), 404
+
+        return jsonify({"domains": [domain]}), 200
+
+    except Exception as e:
+        traceback.print_exc()
+        return jsonify({"error": str(e)}), 500
+
+
+@domains_bp.route('/domains/<domain_id>', methods=['DELETE'])
+def delete_domain(domain_id):
+    try:
+        deleted = get_repo().delete_node("Domain", domain_id)
+        if not deleted:
+            return jsonify({"error": "Domain not found"}), 404
+        return jsonify({"message": "Domain deleted successfully"}), 200
+
+    except Exception as e:
+        traceback.print_exc()
+        return jsonify({"error": str(e)}), 500
