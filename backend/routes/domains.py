@@ -91,6 +91,66 @@ def get_domain_by_id(domain_id):
         return jsonify({"error": str(e)}), 500
 
 # ---------------------------
+# GET domains FILTER BY
+# ---------------------------
+@domains_bp.route('/domains/filter', methods=['GET'])
+def filter_domains():
+    """
+    Filtre les domaines selon différents critères
+    ---
+    tags:
+      - Domains
+    parameters:
+      - name: libelle
+        in: query
+        type: string
+        required: false
+        description: Filtrer par nom du domaine
+      - name: used_in_project_id
+        in: query
+        type: string
+        required: false
+        description: Filtrer par projets utilisant ce domaine
+      - name: technology_id
+        in: query
+        type: string
+        required: false
+        description: Filtrer par technologies appartenant à ce domaine
+    responses:
+      200:
+        description: Liste des domaines correspondant aux filtres
+        schema:
+          type: object
+          properties:
+            domains:
+              type: array
+              items:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  libelle:
+                    type: string
+                  created_at:
+                    type: string
+      500:
+        description: Erreur serveur
+    """
+    try:
+        repo = get_repo()
+        query_params = request.args
+        domains = repo.get_domains_filtered(
+            libelle=query_params.get("libelle"),
+            used_in_project_id=query_params.get("used_in_project_id"),
+            technology_id=query_params.get("technology_id")
+        )
+        return jsonify({"domains": domains}), 200
+    except Exception as e:
+        traceback.print_exc()
+        return jsonify({"error": str(e)}), 500
+
+
+# ---------------------------
 # POST create domain
 # ---------------------------
 @domains_bp.route('/domains', methods=['POST'])

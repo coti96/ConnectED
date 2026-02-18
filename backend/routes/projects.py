@@ -108,6 +108,87 @@ def get_project_by_id(project_id):
         return jsonify(project), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+    
+
+# ---------------------------
+# GET projectS FILTER BY
+# ---------------------------   
+@projects_bp.route('/projects/filter', methods=['GET'])
+def filter_projects():
+    """
+    Filtre les projets selon différents critères
+    ---
+    tags:
+      - Projects
+    parameters:
+      - name: titre
+        in: query
+        type: string
+        required: false
+        description: Filtrer par titre partiel
+      - name: localisation
+        in: query
+        type: string
+        required: false
+        description: Filtrer par localisation
+      - name: domain_id
+        in: query
+        type: string
+        required: false
+        description: Filtrer par domaine lié
+      - name: technology_id
+        in: query
+        type: string
+        required: false
+        description: Filtrer par technologie utilisée
+      - name: statut
+        in: query
+        type: string
+        required: false
+        description: Filtrer par statut du projet
+    responses:
+      200:
+        description: Liste des projets correspondant aux filtres
+        schema:
+          type: object
+          properties:
+            projects:
+              type: array
+              items:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  titre:
+                    type: string
+                  description:
+                    type: string
+                  localisation:
+                    type: string
+                  nombre_places:
+                    type: integer
+                  statut:
+                    type: string
+                  created_at:
+                    type: string
+      500:
+        description: Erreur serveur
+    """
+    try:
+        repo = get_repo()
+        query_params = request.args
+        projects = repo.get_projects_filtered(
+            titre=query_params.get("titre"),
+            localisation=query_params.get("localisation"),
+            domain_id=query_params.get("domain_id"),
+            technology_id=query_params.get("technology_id"),
+            statut=query_params.get("statut")
+        )
+        return jsonify({"projects": projects}), 200
+    except Exception as e:
+        traceback.print_exc()
+        return jsonify({"error": str(e)}), 500
+
 
 # ---------------------------
 # POST create project

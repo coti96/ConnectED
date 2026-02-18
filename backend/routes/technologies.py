@@ -68,6 +68,66 @@ def get_technology_by_id(technology_id):
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+# ---------------------------
+# GET Technologies FILTER BY
+# --------------------------- 
+@technologies_bp.route('/technologies/filter', methods=['GET'])
+def filter_technologies():
+    """
+    Filtre les technologies selon différents critères
+    ---
+    tags:
+      - Technologies
+    parameters:
+      - name: libelle
+        in: query
+        type: string
+        required: false
+        description: Filtrer par nom de la technologie
+      - name: domain_id
+        in: query
+        type: string
+        required: false
+        description: Filtrer par domaine
+      - name: used_in_project_id
+        in: query
+        type: string
+        required: false
+        description: Filtrer par projets utilisant cette technologie
+    responses:
+      200:
+        description: Liste des technologies correspondant aux filtres
+        schema:
+          type: object
+          properties:
+            technologies:
+              type: array
+              items:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  libelle:
+                    type: string
+                  created_at:
+                    type: string
+      500:
+        description: Erreur serveur
+    """
+    try:
+        repo = get_repo()
+        query_params = request.args
+        technologies = repo.get_technologies_filtered(
+            libelle=query_params.get("libelle"),
+            domain_id=query_params.get("domain_id"),
+            used_in_project_id=query_params.get("used_in_project_id")
+        )
+        return jsonify({"technologies": technologies}), 200
+    except Exception as e:
+        traceback.print_exc()
+        return jsonify({"error": str(e)}), 500
+
+
 @technologies_bp.route('/technologies', methods=['POST'])
 def create_technology():
     """

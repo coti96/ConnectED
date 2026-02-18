@@ -79,7 +79,7 @@ class NodeRepository:
                 return None
             return self._serialize_node(record["n"])
         
-    def add_relation(self,source_label, source_id,relation_type,target_label,target_id, relation_properties=None):
+    def add_relation(self, source_label, source_id, relation_type, target_label, target_id, relation_properties=None):
         relation_properties = relation_properties or {}
         props_string = ""
         if relation_properties:
@@ -103,7 +103,6 @@ class NodeRepository:
             record = result.single()
             if not record:
                 return None
-
             return {
                 "source": self._serialize_node(record["source"]),
                 "target": self._serialize_node(record["target"]),
@@ -150,3 +149,197 @@ class NodeRepository:
             result = session.run(query, id=node_id)
             record = result.single()
             return record is not None and record["found"] > 0
+
+    # ─────────────────────────────────────────────
+    # MÉTHODES FILTER
+    # ─────────────────────────────────────────────
+
+    def get_domains_filtered(self, libelle=None, used_in_project_id=None, technology_id=None):
+        """
+        Filtre les domaines selon différents critères.
+        - libelle           : recherche partielle (CONTAINS) sur le libelle
+        - used_in_project_id: domaines utilisés par un projet donné
+        - technology_id     : domaines contenant une technologie donnée
+        """
+        conditions = []
+        params = {}
+
+        match_clauses = "MATCH (n:Domain)"
+
+        if used_in_project_id:
+            match_clauses = "MATCH (p:Project {id: $used_in_project_id})-[:IN_DOMAIN]->(n:Domain)"
+            params["used_in_project_id"] = used_in_project_id
+
+        if technology_id:
+            match_clauses += "\nMATCH (t:Technology {id: $technology_id})-[:IN_DOMAIN]->(n)"
+            params["technology_id"] = technology_id
+
+        if libelle:
+            conditions.append("toLower(n.libelle) CONTAINS toLower($libelle)")
+            params["libelle"] = libelle
+
+        where_clause = ("WHERE " + " AND ".join(conditions)) if conditions else ""
+
+        query = f"""
+        {match_clauses}
+        {where_clause}
+        RETURN DISTINCT n
+        ORDER BY n.libelle
+        """
+
+        with self.driver.session() as session:
+            result = session.run(query, **params)
+            return [self._serialize_node(record["n"]) for record in result]
+
+    def get_technologies_filtered(self, libelle=None, domain_id=None, used_in_project_id=None):
+        """
+        Filtre les technologies selon différents critères.
+        - libelle            : recherche partielle (CONTAINS) sur le libelle
+        - domain_id          : technologies appartenant à un domaine donné
+        - used_in_project_id : technologies utilisées par un projet donné
+        """
+        conditions = []
+        params = {}
+
+        match_clauses = "MATCH (n:Technology)"
+
+        if domain_id:
+            match_clauses = "MATCH (n:Technology)-[:IN_DOMAIN]->(:Domain {id: $domain_id})"
+            params["domain_id"] = domain_id
+
+        if used_in_project_id:
+            match_clauses += "\nMATCH (:Project {id: $used_in_project_id})-[:USES]->(n)"
+            params["used_in_project_id"] = used_in_project_id
+
+        if libelle:
+            conditions.append("toLower(n.libelle) CONTAINS toLower($libelle)")
+            params["libelle"] = libelle
+
+        where_clause = ("WHERE " + " AND ".join(conditions)) if conditions else ""
+
+        query = f"""
+        {match_clauses}
+        {where_clause}
+        RETURN DISTINCT n
+        ORDER BY n.libelle
+        """
+
+        with self.driver.session() as session:
+            result = session.run(query, **params)
+            return [self._serialize_node(record["n"]) for record in result]
+
+    def get_projects_filtered(self, titre=None, localisation=None, domain_id=None, technology_id=None, statut=None):
+        """
+        Filtre les projets selon différents critères.
+        - titre         : recherche partielle (CONTAINS) sur le titre
+        - localisation  : recherche partielle sur la localisation
+        - domain_id     : projets appartenant à un domaine donné
+        - technology_id : projets utilisant une technologie donnée
+        - statut        : statut exact du projet
+        """
+        conditions = []
+        params = {}
+
+        match_clauses = "MATCH (n:Project)"
+
+        if domain_id:
+            match_clauses = "MATCH (n:Project)-[:IN_DOMAIN]->(:Domain {id: $domain_id})"
+            params["domain_id"] = domain_id
+
+        if technology_id:
+            match_clauses += "\nMATCH (n)-[:USES]->(:Technology {id: $technology_id})"
+            params["technology_id"] = technology_id
+
+        if titre:
+            conditions.append("toLower(n.titre) CONTAINS toLower($titre)")
+            params["titre"] = titre
+
+        if localisation:
+            conditions.append("toLower(n.localisation) CONTAINS toLower($localisation)")
+            params["localisation"] = localisation
+
+        if statut:
+            conditions.append("n.statut = $statut")
+            params["statut"] = statut
+
+        where_clause = ("WHERE " + " AND ".join(conditions)) if conditions else ""
+
+        query = f"""
+        {match_clauses}
+        {where_clause}
+        RETURN DISTINCT n
+        ORDER BY n.titre
+        """
+
+        with self.driver.session() as session:
+            result = session.run(query, **params)
+            return [self._serialize_node(record["n"]) for record in result]
+
+    def get_users_filtered(self, name=None, technology_id=None, project_id=None):
+        """
+        Filtre les utilisateurs selon différents critères.
+        - name          : recherche partielle (CONTAINS) sur le nom
+        - technology_id : utilisateurs possédant une technologie donnée
+        - project_id    : utilisateurs associés à un projet donné
+        """
+        conditions = []
+        params = {}
+
+        match_clauses = "MATCH (n:User)"
+
+        if technology_id:
+            match_clauses = "MATCH (n:User)-[:HAS_TECHNOLOGY]->(:Technology {id: $technology_id})"
+            params["technology_id"] = technology_id
+
+        if project_id:
+            match_clauses += "\nMATCH (n)-[:PARTICIPATES_IN]->(:Project {id: $project_id})"
+            params["project_id"] = project_id
+
+        if name:
+            conditions.append("toLower(n.name) CONTAINS toLower($name)")
+            params["name"] = name
+
+        where_clause = ("WHERE " + " AND ".join(conditions)) if conditions else ""
+
+        query = f"""
+        {match_clauses}
+        {where_clause}
+        RETURN DISTINCT n
+        ORDER BY n.name
+        """
+
+        with self.driver.session() as session:
+            result = session.run(query, **params)
+            return [self._serialize_node(record["n"]) for record in result]
+
+    def get_recommended_projects(self, user_id, domain_id=None, localisation=None, max_results=10):
+        """
+        Retourne des projets recommandés pour un utilisateur basé sur les technologies qu'il possède.
+        """
+        filters = []
+        if domain_id:
+            filters.append("(p)-[:IN_DOMAIN]->(:Domain {id: $domain_id})")
+        if localisation:
+            filters.append("toLower(p.localisation) CONTAINS toLower($localisation)")
+
+        filter_cypher = ("WHERE " + " AND ".join(filters)) if filters else ""
+
+        query = f"""
+        MATCH (u:User {{id: $user_id}})-[:HAS_TECHNOLOGY]->(t:Technology)<-[:USES]-(p:Project)
+        {filter_cypher}
+        RETURN DISTINCT p
+        LIMIT $max_results
+        """
+
+        params = {
+            "user_id": user_id,
+            "max_results": max_results,
+        }
+        if domain_id:
+            params["domain_id"] = domain_id
+        if localisation:
+            params["localisation"] = localisation
+
+        with self.driver.session() as session:
+            result = session.run(query, **params)
+            return [self._serialize_node(record["p"]) for record in result]
