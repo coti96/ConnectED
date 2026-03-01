@@ -9,6 +9,12 @@
   </nav>
 
   <div class="actions">
-    <button routerLink="/login" class="btn-login">Se connecter</button>
+    <button *ngIf="!auth.isLoggedIn()" routerLink="/login" class="btn-login">
+      Se connecter
+    </button>
+
+    <button *ngIf="auth.isLoggedIn()" (click)="auth.logout()" class="btn-login">
+      Déconnexion
+    </button>
   </div>
 </header>
