@@ -1,0 +1,168 @@
+.hero {
+  display: flex;
+  justify-content: center;
+  padding: 5rem 2rem;
+  text-align: center;
+  background: linear-gradient(to bottom, #ffffff, #f7f4ff);
+
+  .badge {
+    background: #ebe1ff;
+    color: #6b2cd4;
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 0.9rem;
+  }
+
+  h1 {
+    margin-top: 1.5rem;
+    font-size: 3rem;
+    color: #2d106a;
+    font-weight: 800;
+  }
+
+  .subtitle {
+    margin: 1rem auto 2rem;
+    max-width: 700px;
+    font-size: 1.2rem;
+    color: #555;
+  }
+
+  .actions {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+
+    .btn-primary,
+    .btn-secondary {
+      padding: 0.9rem 1.8rem;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+
+    .btn-primary {
+      background: #6b2cd4;
+      color: white;
+      border: none;
+    }
+
+    .btn-secondary {
+      background: white;
+      border: 2px solid #6b2cd4;
+      color: #6b2cd4;
+    }
+  }
+}
+
+.why {
+  padding: 4rem 2rem;
+  text-align: center;
+
+  h2 {
+    color: #2d106a;
+    font-size: 2rem;
+    font-weight: 700;
+  }
+
+  .features {
+    margin-top: 2.5rem;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+
+    .feature {
+      background: white;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+      h3 {
+        font-size: 1.2rem;
+        margin-bottom: 0.5rem;
+        color: #3a1b81;
+      }
+    }
+  }
+}
+
+.cta {
+  padding: 4rem 2rem;
+  text-align: center;
+  background: #f7f4ff;
+
+  .btn-primary {
+    background: #6b2cd4;
+    color: white;
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+  }
+}
+
+.testimonials {
+  padding: 4rem 2rem;
+  text-align: center;
+
+  h2 {
+    color: #2d106a;
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    font-weight: 700;
+  }
+
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    max-width: 1100px;
+    margin: auto;
+  }
+
+  .card {
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+    transition: transform .2s;
+
+    &:hover {
+      transform: translateY(-5px);
+    }
+
+    .avatar {
+      width: 60px;
+      height: 60px;
+      background: #6b2cd4;
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      margin: 0 auto 1rem;
+      font-size: 1.2rem;
+    }
+
+    h3 {
+      margin: 0;
+      color: #2d106a;
+      font-size: 1.2rem;
+      font-weight: 700;
+    }
+
+    .role {
+      color: #888;
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+    }
+
+    .text {
+      font-size: 1rem;
+      color: #444;
+    }
+  }
+}
