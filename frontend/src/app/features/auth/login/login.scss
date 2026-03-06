@@ -1,0 +1,35 @@
+.login-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 100px;
+}
+
+.login-card {
+  width: 350px;
+  padding: 30px;
+  border-radius: 12px;
+  background: #f5f3fa;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px;
+}
+
+input {
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+button {
+  margin-top: 10px;
+  padding: 10px;
+  border-radius: 6px;
+  border: none;
+  background: #6b3df0;
+  color: white;
+  cursor: pointer;
+}
