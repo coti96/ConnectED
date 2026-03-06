@@ -2,7 +2,7 @@ import os
 from neo4j import GraphDatabase
 
 # 1. On définit les variables au niveau du module (MAJUSCULES pour les constantes)
-URI = os.getenv("DB_URI", "bolt://connected-db:7687")
+URI = os.getenv("DB_URI", "bolt://neo4j:7687")
 USER = os.getenv("DB_USER", "neo4j")
 PASSWORD = os.getenv("DB_PASSWORD", "connected_password")
 

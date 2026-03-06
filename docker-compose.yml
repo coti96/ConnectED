@@ -1,5 +1,4 @@
 services:
-  # 1. LA BASE DE DONNÉES (Le socle)
   db:
     image: neo4j:community
     container_name: connected-db
@@ -11,14 +10,11 @@ services:
       - "7687:7687"
     volumes:
       - neo4j_data:/data
-    # Le "Healthcheck" dit aux autres services quand la DB est réellement prête
     healthcheck:
       test: [ "CMD-SHELL", "cypher-shell -u neo4j -p connected_password 'RETURN 1'" ]
       interval: 10s
       timeout: 10s
       retries: 5
-
-  # 2. L'INITIALISATION (S'exécute une fois, après que la DB soit prête)
   db-init:
     image: neo4j:community
     container_name: connected-db-init
@@ -29,13 +25,11 @@ services:
       - ./database/init:/scripts
     entrypoint: >
       /bin/bash -c " echo 'Injection des fixtures...'; cypher-shell -a bolt://db:7687 -u neo4j -p connected_password -f /scripts/db.cypher; echo 'Terminé !'; "
-
-  # 3. LE BACKEND (Démarre en parallèle de l'init, mais attend aussi que la DB soit prête)
   backend:
     build: ./backend
     container_name: connected-backend
     ports:
-      - "5000:5000"
+        - "5000:5000"
     depends_on:
       db:
         condition: service_healthy
@@ -43,8 +37,6 @@ services:
       DB_URI: bolt://db:7687
       DB_USER: neo4j
       DB_PASSWORD: connected_password
-
-  # 4. LE FRONTEND
   frontend:
     build: ./frontend
     container_name: connected-frontend

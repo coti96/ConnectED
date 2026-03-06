@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-
+//import { ApiService } from '../../api.service';
 @Component({
   selector: 'app-landing',
   standalone: true,
@@ -7,4 +7,6 @@ import { Component } from '@angular/core';
   templateUrl: './landing.html',
   styleUrls: ['./landing.scss'],
 })
-export class LandingComponent { }
+export class LandingComponent{
+
+}
