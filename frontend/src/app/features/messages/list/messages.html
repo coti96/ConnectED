@@ -1,0 +1,33 @@
+<div class="messages-container">
+  <div class="sidebar">
+    <div class="header">
+      <h2>Discussions</h2>
+    </div>
+    
+    <div *ngIf="loading" class="loading">Chargement...</div>
+    
+    <div *ngIf="!loading && conversations.length === 0" class="empty">
+      Aucune discussion pour le moment.
+    </div>
+
+    <div class="conversations-list">
+      <div *ngFor="let user of conversations" class="conversation-item" [routerLink]="['/messages', user.email]" routerLinkActive="active">
+        <div class="avatar">
+          {{ user.prenom?.charAt(0) }}{{ user.nom?.charAt(0) }}
+        </div>
+        <div class="info">
+          <h3>{{ user.prenom }} {{ user.nom }}</h3>
+          <p class="role">{{ user.role }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="chat-area-placeholder">
+    <div class="placeholder-content">
+      <span class="icon">💬</span>
+      <h3>Sélectionnez une conversation</h3>
+      <p>Pour commencer à discuter</p>
+    </div>
+  </div>
+</div>

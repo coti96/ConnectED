@@ -92,6 +92,7 @@
         cursor: pointer;
         font-weight: 600;
         
+        &.btn-contact { background: #6b2cd4; color: white; }
         &.btn-accept { background: #2e7d32; color: white; }
         &.btn-reject { background: #c62828; color: white; }
         &.btn-reset { background: #f0f0f0; color: #666; }

@@ -29,6 +29,7 @@
         </div>
 
         <div class="buttons" *ngIf="app.status === 'PENDING'">
+          <button [routerLink]="['/messages', app.applicant.email]" class="btn-contact">💬 Discussion</button>
           <button (click)="updateStatus(app.applicant.email, 'ACCEPTED')" class="btn-accept">✅ Accepter</button>
           <button (click)="updateStatus(app.applicant.email, 'REJECTED')" class="btn-reject">❌ Refuser</button>
         </div>

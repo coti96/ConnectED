@@ -10,12 +10,16 @@ import { RecommendedProjectsComponent } from './features/projects/recommended/re
 import { ProjectDetailComponent } from './features/projects/detail/project-detail';
 import { MyApplicationsComponent } from './features/projects/applications/my-applications';
 import { ManageCandidatesComponent } from './features/projects/manage/manage-candidates';
+import { MessagesComponent } from './features/messages/list/messages';
+import { ChatComponent } from './features/messages/chat/chat';
 
 export const routes: Routes = [
   { path: '', component: LandingComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'profile', component: ProfileComponent },
+  { path: 'messages', component: MessagesComponent },
+  { path: 'messages/:email', component: ChatComponent },
   { path: 'projects', component: ProjectListComponent },
   { path: 'projects/create', component: CreateProjectComponent },
   { path: 'projects/my-applications', component: MyApplicationsComponent }, // AVANT :id

@@ -1,0 +1,24 @@
+<div class="chat-container">
+  <div class="chat-header">
+    <button routerLink="/messages" class="back-btn">←</button>
+    <div class="user-info">
+      <h3>Discussion avec {{ otherEmail }}</h3>
+    </div>
+  </div>
+
+  <div class="messages-list" #scrollContainer>
+    <div *ngIf="loading" class="loading">Chargement...</div>
+    
+    <div *ngFor="let msg of messages" 
+         class="message-bubble" 
+         [ngClass]="{'sent': msg.sender_email === currentUserEmail, 'received': msg.sender_email !== currentUserEmail}">
+      <div class="content">{{ msg.content }}</div>
+      <div class="time">{{ msg.timestamp | date:'shortTime' }}</div>
+    </div>
+  </div>
+
+  <div class="input-area">
+    <input type="text" [(ngModel)]="newMessage" placeholder="Écrivez votre message..." (keyup.enter)="sendMessage()">
+    <button (click)="sendMessage()" [disabled]="!newMessage.trim()">Envoyer</button>
+  </div>
+</div>
