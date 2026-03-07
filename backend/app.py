@@ -1,13 +1,17 @@
 from flask import Flask, jsonify
 import os
 from flask_cors import CORS
-from neo4j import GraphDatabase
+from flask_jwt_extended import JWTManager
 from database import db
 from routes.projects import projects_bp
 from routes.users import users_bp
+from routes.auth import auth_bp
 
 app = Flask(__name__)
+app.config['JWT_SECRET_KEY'] = 'super-secret-key-change-me-in-prod'  # Change this!
 CORS(app)
+jwt = JWTManager(app)
+
 # On autorise Angular (port 4200) à appeler Flask
 with app.app_context():
     try:
@@ -21,6 +25,7 @@ def shutdown_session(exception=None):
 # Enregistrement des routes
 app.register_blueprint(projects_bp)
 app.register_blueprint(users_bp)
+app.register_blueprint(auth_bp)
 
 @app.route('/api/health')
 def index():

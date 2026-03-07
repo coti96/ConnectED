@@ -5,15 +5,15 @@ import {AuthService} from '../../../shared/services/auth';
 import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-login',
+  selector: 'app-register',
   standalone: true,
   imports: [ReactiveFormsModule, CommonModule, RouterModule],
-  templateUrl: './login.html',
-  styleUrls: ['./login.scss'],
+  templateUrl: './register.html',
+  styleUrls: ['../login/login.scss'], // Reuse login styles
 })
-export class LoginComponent {
+export class RegisterComponent {
 
-  loginForm!: FormGroup;
+  registerForm!: FormGroup;
   errorMessage: string = '';
 
   constructor(
@@ -21,25 +21,29 @@ export class LoginComponent {
     private auth: AuthService,
     private router: Router
   ) {
-    this.loginForm = this.fb.group({
+    this.registerForm = this.fb.group({
+      nom: ['', Validators.required],
+      prenom: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required]]
+      password: ['', [Validators.required, Validators.minLength(6)]],
+      role: ['etudiant', Validators.required]
     });
   }
 
   onSubmit(): void {
-    if (this.loginForm.valid) {
+    if (this.registerForm.valid) {
       this.errorMessage = '';
       
-      this.auth.login(this.loginForm.value)
+      this.auth.register(this.registerForm.value)
         .subscribe({
           next: (res: any) => {
-            console.log('Connexion réussie', res);
-            this.router.navigate(['/']);
+            console.log('Inscription réussie', res);
+            // Auto login or redirect to login
+            this.router.navigate(['/login']);
           },
           error: (err) => {
-            console.error('Erreur connexion:', err);
-            this.errorMessage = err.error?.error || 'Erreur de connexion';
+            console.error('Erreur inscription:', err);
+            this.errorMessage = err.error?.error || 'Erreur lors de l\'inscription';
           }
         });
     }

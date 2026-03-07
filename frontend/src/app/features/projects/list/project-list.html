@@ -1,0 +1,50 @@
+<section class="projects-container">
+  <div class="header">
+    <h1>Explorez les projets</h1>
+    
+    <div class="actions">
+      <!-- On ne peut créer un projet que si on est connecté et PRO ou ENCADRANT (ou étudiant selon cahier des charges) -->
+      <!-- Selon le cahier des charges, les étudiants peuvent aussi créer des projets -->
+      <button *ngIf="auth.isLoggedIn()" routerLink="/projects/create" class="btn-primary">
+        + Nouveau Projet
+      </button>
+    </div>
+  </div>
+
+  <div *ngIf="loading" class="loading">
+    Chargement des projets...
+  </div>
+
+  <div *ngIf="!loading && projects.length === 0" class="empty">
+    Aucun projet pour le moment. Soyez le premier à en créer un !
+  </div>
+
+  <div class="projects-grid">
+    <div *ngFor="let project of projects" class="project-card">
+      <div class="card-header">
+        <span class="badge status" [class.open]="project.statut === 'en_cours'">
+          {{ project.statut === 'en_cours' ? 'Ouvert' : project.statut }}
+        </span>
+        <span class="badge domain">{{ project.domain || 'Projet' }}</span>
+      </div>
+
+      <h3>{{ project.titre }}</h3>
+      <p class="description">{{ project.description | slice:0:120 }}...</p>
+
+      <div class="technologies">
+        <span *ngFor="let tech of project.technologies" class="tech-tag">{{ tech }}</span>
+      </div>
+
+      <div class="footer">
+        <div class="meta">
+          <span class="places">👤 {{ project.nombre_places }} places</span>
+          <span class="deadline">📅 {{ project.deadline | date:'dd/MM/yyyy' }}</span>
+        </div>
+        
+        <button class="btn-details" [routerLink]="['/projects', project.id]">
+          Voir détails
+        </button>
+      </div>
+    </div>
+  </div>
+</section>

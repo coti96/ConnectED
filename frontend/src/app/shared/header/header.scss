@@ -32,13 +32,41 @@
     }
   }
 
-  .actions .btn-login {
-    background: #6b2cd4;
-    color: white;
-    padding: 0.6rem 1.3rem;
-    border-radius: 8px;
-    border: none;
-    cursor: pointer;
-    font-weight: 600;
+  .actions {
+    .btn-login {
+      background: #6b2cd4;
+      color: white;
+      padding: 0.6rem 1.3rem;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      font-weight: 600;
+      text-decoration: none;
+      
+      &.logout {
+        background: #f0f0f0;
+        color: #444;
+        
+        &:hover {
+          background: #e0e0e0;
+        }
+      }
+    }
+
+    .user-actions {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+
+      .profile-link {
+        font-weight: 600;
+        color: #4a3a7c;
+        text-decoration: none;
+        
+        &:hover {
+          color: #6b2cd4;
+        }
+      }
+    }
   }
 }

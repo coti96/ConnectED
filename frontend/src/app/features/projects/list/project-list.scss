@@ -1,0 +1,155 @@
+.projects-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px;
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+
+    h1 {
+      font-size: 2.5rem;
+      color: #2d106a;
+      font-weight: 800;
+    }
+
+    .btn-primary {
+      background: #6b2cd4;
+      color: white;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.2s;
+
+      &:hover {
+        background: #5a2fd0;
+      }
+    }
+  }
+
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 30px;
+  }
+
+  .project-card {
+    background: white;
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+    transition: transform 0.2s, box-shadow 0.2s;
+    border: 1px solid transparent;
+
+    &:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(107, 44, 212, 0.1);
+      border-color: #e0d4fc;
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 16px;
+
+      .badge {
+        font-size: 0.8rem;
+        padding: 4px 10px;
+        border-radius: 20px;
+        font-weight: 600;
+        text-transform: uppercase;
+        
+        &.status {
+          background: #ffebee;
+          color: #c62828;
+          
+          &.open {
+            background: #e8f5e9;
+            color: #2e7d32;
+          }
+        }
+
+        &.domain {
+          background: #f5f3fa;
+          color: #6b2cd4;
+        }
+      }
+    }
+
+    h3 {
+      font-size: 1.4rem;
+      margin: 0 0 12px;
+      color: #2d106a;
+      line-height: 1.3;
+    }
+
+    .description {
+      color: #555;
+      font-size: 0.95rem;
+      line-height: 1.5;
+      margin-bottom: 20px;
+      height: 60px;
+      overflow: hidden;
+    }
+
+    .technologies {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 20px;
+      height: 60px; // Hauteur fixe pour alignement
+      overflow: hidden;
+
+      .tech-tag {
+        background: #f0f0f0;
+        color: #444;
+        padding: 4px 10px;
+        border-radius: 6px;
+        font-size: 0.85rem;
+        font-weight: 500;
+      }
+    }
+
+    .footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 16px;
+      border-top: 1px solid #eee;
+
+      .meta {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        font-size: 0.85rem;
+        color: #888;
+      }
+
+      .btn-details {
+        color: #6b2cd4;
+        background: transparent;
+        border: 2px solid #e0d4fc;
+        padding: 8px 16px;
+        border-radius: 8px;
+        font-weight: 600;
+        cursor: pointer;
+        
+        &:hover {
+          background: #e0d4fc;
+        }
+      }
+    }
+  }
+
+  .loading, .empty {
+    text-align: center;
+    padding: 60px;
+    color: #888;
+    font-size: 1.2rem;
+  }
+}

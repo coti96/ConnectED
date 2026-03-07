@@ -1,0 +1,57 @@
+.match-card {
+  border: 2px solid #6b3df0;
+  position: relative;
+  background: linear-gradient(to bottom right, #ffffff, #f7f4ff);
+
+  .match-badge {
+    position: absolute;
+    top: -12px;
+    right: 20px;
+    background: #6b3df0;
+    color: white;
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    box-shadow: 0 2px 8px rgba(107, 61, 240, 0.3);
+  }
+
+  .tech-tag {
+    &.match {
+      background: #e8f5e9;
+      color: #2e7d32;
+      border: 1px solid #c8e6c9;
+    }
+  }
+}
+
+.subtitle {
+  color: #666;
+  margin-top: 5px;
+}
+
+.hint {
+  font-size: 0.9rem;
+  color: #888;
+  margin-top: 10px;
+  
+  a {
+    color: #6b3df0;
+    font-weight: 600;
+  }
+}
+
+.btn-secondary {
+  background: white;
+  color: #6b2cd4;
+  border: 2px solid #6b2cd4;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+
+  &:hover {
+    background: #f5f3fa;
+  }
+}

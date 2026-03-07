@@ -13,8 +13,11 @@
       Se connecter
     </button>
 
-    <button *ngIf="auth.isLoggedIn()" (click)="auth.logout()" class="btn-login">
-      Déconnexion
-    </button>
+    <div *ngIf="auth.isLoggedIn()" class="user-actions">
+      <a routerLink="/profile" class="profile-link">Mon Profil</a>
+      <button (click)="auth.logout()" class="btn-login logout">
+        Déconnexion
+      </button>
+    </div>
   </div>
 </header>
