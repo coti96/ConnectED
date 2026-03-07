@@ -8,6 +8,7 @@ from routes.users import users_bp
 from routes.auth import auth_bp
 from routes.applications import applications_bp
 from routes.messages import messages_bp
+from routes.dashboard import dashboard_bp
 
 app = Flask(__name__)
 app.config['JWT_SECRET_KEY'] = 'super-secret-key-change-me-in-prod'  # Change this!
@@ -30,6 +31,7 @@ app.register_blueprint(users_bp)
 app.register_blueprint(auth_bp)
 app.register_blueprint(applications_bp)
 app.register_blueprint(messages_bp)
+app.register_blueprint(dashboard_bp)
 
 @app.route('/api/health')
 def index():

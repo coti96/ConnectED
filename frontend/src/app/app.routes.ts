@@ -12,11 +12,13 @@ import { MyApplicationsComponent } from './features/projects/applications/my-app
 import { ManageCandidatesComponent } from './features/projects/manage/manage-candidates';
 import { MessagesComponent } from './features/messages/list/messages';
 import { ChatComponent } from './features/messages/chat/chat';
+import { DashboardComponent } from './features/dashboard/dashboard';
 
 export const routes: Routes = [
   { path: '', component: LandingComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
+  { path: 'dashboard', component: DashboardComponent },
   { path: 'profile', component: ProfileComponent },
   { path: 'messages', component: MessagesComponent },
   { path: 'messages/:email', component: ChatComponent },
