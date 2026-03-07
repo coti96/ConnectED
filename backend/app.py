@@ -6,6 +6,7 @@ from database import db
 from routes.projects import projects_bp
 from routes.users import users_bp
 from routes.auth import auth_bp
+from routes.applications import applications_bp
 
 app = Flask(__name__)
 app.config['JWT_SECRET_KEY'] = 'super-secret-key-change-me-in-prod'  # Change this!
@@ -26,6 +27,7 @@ def shutdown_session(exception=None):
 app.register_blueprint(projects_bp)
 app.register_blueprint(users_bp)
 app.register_blueprint(auth_bp)
+app.register_blueprint(applications_bp)
 
 @app.route('/api/health')
 def index():

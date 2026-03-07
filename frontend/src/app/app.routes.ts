@@ -7,6 +7,10 @@ import { ProjectListComponent } from './features/projects/list/project-list';
 import { CreateProjectComponent } from './features/projects/create/create-project';
 import { RecommendedProjectsComponent } from './features/projects/recommended/recommended';
 
+import { ProjectDetailComponent } from './features/projects/detail/project-detail';
+import { MyApplicationsComponent } from './features/projects/applications/my-applications';
+import { ManageCandidatesComponent } from './features/projects/manage/manage-candidates';
+
 export const routes: Routes = [
   { path: '', component: LandingComponent },
   { path: 'login', component: LoginComponent },
@@ -14,5 +18,8 @@ export const routes: Routes = [
   { path: 'profile', component: ProfileComponent },
   { path: 'projects', component: ProjectListComponent },
   { path: 'projects/create', component: CreateProjectComponent },
+  { path: 'projects/my-applications', component: MyApplicationsComponent }, // AVANT :id
+  { path: 'projects/:id', component: ProjectDetailComponent },
+  { path: 'projects/:id/manage', component: ManageCandidatesComponent },
   { path: 'recommended', component: RecommendedProjectsComponent }
 ];

@@ -1,0 +1,60 @@
+<section class="projects-container">
+  <div class="header">
+    <button routerLink="/projects" class="btn-back">← Retour aux projets</button>
+  </div>
+
+  <div *ngIf="loading" class="loading">Chargement...</div>
+
+  <div *ngIf="project" class="project-detail-card">
+    <div class="card-header">
+      <span class="badge status" [class.open]="project.statut === 'en_cours'">
+        {{ project.statut === 'en_cours' ? 'Ouvert' : project.statut }}
+      </span>
+      <span class="badge domain">{{ project.domain }}</span>
+    </div>
+
+    <h1>{{ project.titre }}</h1>
+    
+    <div class="meta-info">
+      <span>👤 {{ project.nombre_places }} places disponibles</span>
+      <span>📅 Deadline : {{ project.deadline | date:'dd/MM/yyyy' }}</span>
+      <span *ngIf="project.creator">🎓 Créé par {{ project.creator.prenom }} {{ project.creator.nom }}</span>
+    </div>
+
+    <div class="description-full">
+      <h3>Description</h3>
+      <p>{{ project.description }}</p>
+    </div>
+
+    <div class="technologies">
+      <h3>Technologies requises</h3>
+      <div class="tags">
+        <span *ngFor="let tech of project.technologies" class="tech-tag">{{ tech }}</span>
+      </div>
+    </div>
+
+    <div class="actions-footer" *ngIf="auth.isLoggedIn()">
+      <div *ngIf="message" class="message success">{{ message }}</div>
+
+      <!-- Si c'est MON projet -->
+      <button *ngIf="isCreator" [routerLink]="['/projects', project.id, 'manage']" class="btn-manage">
+        ⚙️ Gérer les candidatures
+      </button>
+
+      <!-- Si je suis candidat -->
+      <button *ngIf="!isCreator && !hasApplied" (click)="apply()" class="btn-apply">
+        🚀 Postuler à ce projet
+      </button>
+      
+      <button *ngIf="hasApplied" disabled class="btn-applied">
+        ✅ Candidature envoyée
+      </button>
+    </div>
+    
+    <div class="actions-footer" *ngIf="!auth.isLoggedIn()">
+      <p>Connectez-vous pour postuler à ce projet.</p>
+      <button routerLink="/login" class="btn-primary">Se connecter</button>
+    </div>
+
+  </div>
+</section>

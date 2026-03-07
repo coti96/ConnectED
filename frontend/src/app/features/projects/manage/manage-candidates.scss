@@ -1,0 +1,101 @@
+.manage-container {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 20px;
+}
+
+.header {
+  margin-bottom: 40px;
+  
+  h1 {
+    margin-bottom: 10px;
+    color: #2d106a;
+  }
+  
+  .subtitle {
+    color: #666;
+    margin-bottom: 20px;
+  }
+}
+
+.candidate-card {
+  background: white;
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  
+  &.accepted {
+    border-left: 5px solid #2e7d32;
+  }
+  
+  .candidate-info {
+    h3 {
+      margin: 0 0 5px;
+      color: #2d106a;
+    }
+    
+    .role {
+      font-weight: 600;
+      color: #6b2cd4;
+      margin-bottom: 5px;
+    }
+    
+    .email {
+      color: #666;
+      font-size: 0.9rem;
+      margin-bottom: 15px;
+    }
+    
+    .techs {
+      display: flex;
+      gap: 8px;
+      
+      .tech-tag {
+        background: #f0f0f0;
+        padding: 4px 10px;
+        border-radius: 6px;
+        font-size: 0.8rem;
+      }
+    }
+  }
+  
+  .actions {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 15px;
+    
+    .status-badge {
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-weight: bold;
+      text-transform: uppercase;
+      font-size: 0.8rem;
+      
+      &.PENDING { background: #fff3e0; color: #f57c00; }
+      &.ACCEPTED { background: #e8f5e9; color: #2e7d32; }
+      &.REJECTED { background: #ffebee; color: #c62828; }
+    }
+    
+    .buttons {
+      display: flex;
+      gap: 10px;
+      
+      button {
+        padding: 8px 16px;
+        border-radius: 8px;
+        border: none;
+        cursor: pointer;
+        font-weight: 600;
+        
+        &.btn-accept { background: #2e7d32; color: white; }
+        &.btn-reject { background: #c62828; color: white; }
+        &.btn-reset { background: #f0f0f0; color: #666; }
+      }
+    }
+  }
+}

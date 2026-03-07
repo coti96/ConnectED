@@ -1,0 +1,42 @@
+<div class="manage-container">
+  <div class="header" *ngIf="project">
+    <h1>Gestion des candidatures</h1>
+    <h2 class="subtitle">Projet : {{ project.titre }}</h2>
+    <button [routerLink]="['/projects', projectId]" class="btn-back">← Retour au projet</button>
+  </div>
+
+  <div *ngIf="loading" class="loading">Chargement des candidats...</div>
+
+  <div *ngIf="!loading && applications.length === 0" class="empty">
+    Aucune candidature reçue pour le moment.
+  </div>
+
+  <div class="candidates-list" *ngIf="applications.length > 0">
+    <div *ngFor="let app of applications" class="candidate-card" [class.accepted]="app.status === 'ACCEPTED'">
+      <div class="candidate-info">
+        <h3>{{ app.applicant.prenom }} {{ app.applicant.nom }}</h3>
+        <p class="role">{{ app.applicant.role }}</p>
+        <p class="email">{{ app.applicant.email }}</p>
+        
+        <div class="techs" *ngIf="app.applicant.technologies">
+          <span *ngFor="let tech of app.applicant.technologies" class="tech-tag">{{ tech }}</span>
+        </div>
+      </div>
+
+      <div class="actions">
+        <div class="status-badge" [ngClass]="app.status">
+          {{ app.status === 'PENDING' ? 'En attente' : (app.status === 'ACCEPTED' ? 'Accepté' : 'Refusé') }}
+        </div>
+
+        <div class="buttons" *ngIf="app.status === 'PENDING'">
+          <button (click)="updateStatus(app.applicant.email, 'ACCEPTED')" class="btn-accept">✅ Accepter</button>
+          <button (click)="updateStatus(app.applicant.email, 'REJECTED')" class="btn-reject">❌ Refuser</button>
+        </div>
+        
+        <div class="buttons" *ngIf="app.status !== 'PENDING'">
+          <button (click)="updateStatus(app.applicant.email, 'PENDING')" class="btn-reset">Réinitialiser</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

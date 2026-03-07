@@ -14,6 +14,7 @@
     </button>
 
     <div *ngIf="auth.isLoggedIn()" class="user-actions">
+      <a routerLink="/projects/my-applications" class="profile-link">Mes Candidatures</a>
       <a routerLink="/profile" class="profile-link">Mon Profil</a>
       <button (click)="auth.logout()" class="btn-login logout">
         Déconnexion

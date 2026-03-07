@@ -1,0 +1,36 @@
+<section class="projects-container">
+  <div class="header">
+    <h1>Mes Candidatures</h1>
+    <button routerLink="/projects" class="btn-primary">Chercher d'autres projets</button>
+  </div>
+
+  <div *ngIf="loading" class="loading">Chargement...</div>
+
+  <div *ngIf="!loading && applications.length === 0" class="empty">
+    Vous n'avez pas encore postulé à des projets.
+  </div>
+
+  <div class="projects-grid">
+    <div *ngFor="let app of applications" class="project-card">
+      <div class="card-header">
+        <span class="badge" [ngClass]="{
+          'status-pending': app.status === 'PENDING',
+          'status-accepted': app.status === 'ACCEPTED',
+          'status-rejected': app.status === 'REJECTED'
+        }">
+          {{ app.status === 'PENDING' ? 'En attente' : (app.status === 'ACCEPTED' ? 'Accepté' : 'Refusé') }}
+        </span>
+        <span class="date">📅 {{ app.date | date:'dd/MM/yyyy' }}</span>
+      </div>
+
+      <h3>{{ app.project.titre }}</h3>
+      <p class="description">{{ app.project.description | slice:0:100 }}...</p>
+
+      <div class="footer">
+        <button class="btn-details" [routerLink]="['/projects', app.project.id]">
+          Voir le projet
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
