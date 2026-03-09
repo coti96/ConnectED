@@ -1,0 +1,19 @@
+user_email,project_title,status,motivation_message,created_at
+student1@mail.com,Plateforme IA,en_attente,"Je veux apprendre React et Python",2026-01-05T09:00:00
+student2@mail.com,Plateforme IA,en_attente,"Passionné par la Data Science",2026-01-05T09:15:00
+student3@mail.com,Plateforme IA,en_attente,"Curieuse du front-end et UI/UX",2026-01-05T09:30:00
+pro1@company.com,App Mobile Fitness,en_attente,"Je peux encadrer les étudiants sur React",2026-01-06T10:00:00
+student4@mail.com,App Mobile Fitness,en_attente,"Data Science et Machine Learning",2026-01-06T10:15:00
+student5@mail.com,App Mobile Fitness,en_attente,"Python et IA sont mes points forts",2026-01-06T10:30:00
+pro2@company.com,Dashboard Analytics,en_attente,"Expérience DevOps pour ce projet",2026-01-07T11:00:00
+student6@mail.com,Dashboard Analytics,en_attente,"Je maîtrise Docker et Kubernetes",2026-01-07T11:15:00
+student7@mail.com,Dashboard Analytics,en_attente,"Curieux des pipelines CI/CD",2026-01-07T11:30:00
+student8@mail.com,Site E-commerce,en_attente,"Passionnée par le design UI/UX",2026-01-08T09:00:00
+pro3@company.com,Site E-commerce,en_attente,"UI/UX designer expérimenté",2026-01-08T09:15:00
+student9@mail.com,Site E-commerce,en_attente,"Figma et Adobe XD sont mes outils favoris",2026-01-08T09:30:00
+student10@mail.com,Jeu Vidéo 2D,en_attente,"Intéressé par le back-end et Node.js",2026-01-09T08:45:00
+pro4@company.com,Jeu Vidéo 2D,en_attente,"Je peux guider les étudiants sur Node.js",2026-01-09T09:00:00
+student11@mail.com,Jeu Vidéo 2D,en_attente,"Curieux du développement fullstack",2026-01-09T09:15:00
+student12@mail.com,Application Santé,en_attente,"Passionnée par le mobile et Flutter",2026-01-10T10:00:00
+pro5@company.com,Application Santé,en_attente,"Mobile dev senior disponible",2026-01-10T10:15:00
+student13@mail.com,A

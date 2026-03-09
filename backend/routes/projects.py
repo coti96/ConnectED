@@ -6,6 +6,15 @@ projects_bp = Blueprint('projects', __name__)
 
 @projects_bp.route('/projects', methods=['GET'])
 def get_projects():
+    """
+    Récupère tous les projets
+    ---
+    tags:
+      - Projects
+    responses:
+      200:
+        description: Liste des projets
+    """
     try:
         projects = ProjectModel.get_all()
         return jsonify({"projects": projects})
@@ -15,6 +24,29 @@ def get_projects():
 @projects_bp.route('/projects', methods=['POST', 'OPTIONS'])
 @jwt_required()
 def create_project():
+    """
+    Crée un nouveau projet
+    ---
+    tags:
+      - Projects
+    parameters:
+      - in: body
+        name: body
+        required: true
+        schema:
+          type: object
+          properties:
+            titre:
+              type: string
+            description:
+              type: string
+            domaine:
+              type: string
+            nombre_places:
+              type: integer
+            deadline:
+              type: string
+    """
     if request.method == 'OPTIONS':
         return jsonify({}), 200
         
@@ -34,6 +66,17 @@ def create_project():
 
 @projects_bp.route('/projects/<project_id>', methods=['GET'])
 def get_project(project_id):
+    """
+    Récupère un projet par son ID
+    ---
+    tags:
+      - Projects
+    parameters:
+      - name: project_id
+        in: path
+        type: string
+        required: true
+    """
     try:
         project = ProjectModel.get_by_id(project_id)
         if not project:
@@ -45,6 +88,12 @@ def get_project(project_id):
 @projects_bp.route('/projects/recommended', methods=['GET', 'OPTIONS'])
 @jwt_required()
 def get_recommended_projects():
+    """
+    Récupère les projets recommandés pour l'utilisateur connecté
+    ---
+    tags:
+      - Projects
+    """
     if request.method == 'OPTIONS':
         return jsonify({}), 200
         

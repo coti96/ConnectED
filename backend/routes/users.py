@@ -6,6 +6,12 @@ users_bp = Blueprint('users', __name__)
 
 @users_bp.route('/users', methods=['GET'])
 def get_users():
+    """
+    Récupère tous les utilisateurs
+    ---
+    tags:
+      - Users
+    """
     try:
         users_list = UserModel.get_all()
         # Nettoyage
@@ -20,6 +26,12 @@ def get_users():
 @users_bp.route('/profile', methods=['GET'])
 @jwt_required()
 def get_profile():
+    """
+    Récupère le profil de l'utilisateur connecté
+    ---
+    tags:
+      - Users
+    """
     current_user = get_jwt_identity()
     # Gestion sécurisée de l'identité (string ou dict)
     email = current_user['email'] if isinstance(current_user, dict) else current_user
@@ -39,6 +51,12 @@ def get_profile():
 
 @users_bp.route('/profile', methods=['PUT', 'OPTIONS'])
 def update_profile():
+    """
+    Met à jour le profil de l'utilisateur connecté
+    ---
+    tags:
+      - Users
+    """
     if request.method == 'OPTIONS':
         return jsonify({}), 200
         

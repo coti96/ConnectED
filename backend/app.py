@@ -3,12 +3,16 @@ import os
 from flask_cors import CORS
 from flask_jwt_extended import JWTManager
 from database import db
+from flasgger import Swagger
+
 from routes.projects import projects_bp
 from routes.users import users_bp
 from routes.auth import auth_bp
 from routes.applications import applications_bp
 from routes.messages import messages_bp
 from routes.dashboard import dashboard_bp
+from routes.domains import domains_bp
+from routes.technologies import technologies_bp
 
 app = Flask(__name__)
 # On change la clé secrète pour une version plus longue (32+ octets) pour éviter les warnings JWT
@@ -16,6 +20,7 @@ app.config['JWT_SECRET_KEY'] = 'this-is-a-very-long-and-secure-secret-key-for-co
 # Configuration CORS permissive et explicite pour le développement
 CORS(app, resources={r"/*": {"origins": "*"}}, supports_credentials=True)
 jwt = JWTManager(app)
+swagger = Swagger(app)
 
 @jwt.unauthorized_loader
 def unauthorized_response(callback):
@@ -55,6 +60,8 @@ app.register_blueprint(auth_bp)
 app.register_blueprint(applications_bp)
 app.register_blueprint(messages_bp)
 app.register_blueprint(dashboard_bp)
+app.register_blueprint(domains_bp)
+app.register_blueprint(technologies_bp)
 
 @app.route('/api/health')
 def index():

@@ -1,0 +1,41 @@
+user_email,tech_libelle
+student1@mail.com,React
+student1@mail.com,JavaScript
+student2@mail.com,Python
+student2@mail.com,Pandas
+student3@mail.com,Figma
+student3@mail.com,Adobe XD
+student4@mail.com,Flutter
+student4@mail.com,React Native
+student5@mail.com,React
+student5@mail.com,Angular
+student6@mail.com,JavaScript
+student6@mail.com,Vue
+student7@mail.com,Python
+student7@mail.com,TensorFlow
+student8@mail.com,Figma
+student8@mail.com,Adobe XD
+student9@mail.com,Flutter
+student9@mail.com,Swift
+student10@mail.com,React
+student10@mail.com,JavaScript
+pro1@company.com,React
+pro1@company.com,Node.js
+pro2@company.com,Python
+pro2@company.com,TensorFlow
+pro3@company.com,Docker
+pro3@company.com,Kubernetes
+pro4@company.com,Figma
+pro4@company.com,Adobe XD
+pro5@company.com,Node.js
+pro5@company.com,React
+pro6@company.com,Python
+pro6@company.com,Pandas
+pro7@company.com,Flutter
+pro7@company.com,React Native
+pro8@company.com,JavaScript
+pro8@company.com,React
+pro9@company.com,AWS
+pro9@company.com,Azure
+pro10@company.com,Python
+pro10@company.com,OpenAI API
