@@ -1,58 +1,77 @@
-<section class="projects-container">
-  <div class="header">
+<section class="project-detail-container">
+  <div class="header-nav">
     <button routerLink="/projects" class="btn-back">← Retour aux projets</button>
   </div>
 
-  <div *ngIf="loading" class="loading">Chargement...</div>
+  <div *ngIf="loading" class="loading">Chargement du projet...</div>
+  <div *ngIf="error" class="error-message">{{ error }}</div>
 
-  <div *ngIf="project" class="project-detail-card">
-    <div class="card-header">
-      <span class="badge status" [class.open]="project.statut === 'en_cours'">
-        {{ project.statut === 'en_cours' ? 'Ouvert' : project.statut }}
-      </span>
-      <span class="badge domain">{{ project.domain }}</span>
+  <div *ngIf="!loading && project" class="detail-card">
+    <div class="card-top">
+      <div class="status-badges">
+        <span class="badge status" [class.open]="project.statut === 'en_cours'">
+          {{ project.statut === 'en_cours' ? 'Ouvert' : project.statut }}
+        </span>
+        <span class="badge domain">{{ project.domain || project.domaine }}</span>
+      </div>
+      <div class="deadline-badge">
+        📅 Deadline : {{ project.deadline | date:'dd/MM/yyyy' }}
+      </div>
     </div>
 
     <h1>{{ project.titre }}</h1>
     
-    <div class="meta-info">
-      <span>👤 {{ project.nombre_places }} places disponibles</span>
-      <span>📅 Deadline : {{ project.deadline | date:'dd/MM/yyyy' }}</span>
-      <span *ngIf="project.creator">🎓 Créé par {{ project.creator.prenom }} {{ project.creator.nom }}</span>
+    <div class="meta-row">
+      <div class="meta-item">
+        <span class="icon">👤</span>
+        <strong>{{ project.nombre_places }}</strong> places disponibles
+      </div>
+      <div class="meta-item" *ngIf="project.creator">
+        <span class="icon">🎓</span>
+        Proposé par <strong>{{ project.creator.prenom }} {{ project.creator.nom }}</strong>
+      </div>
     </div>
 
-    <div class="description-full">
-      <h3>Description</h3>
-      <p>{{ project.description }}</p>
+    <div class="content-section">
+      <h3>Description du projet</h3>
+      <p class="description-text">{{ project.description }}</p>
     </div>
 
-    <div class="technologies">
-      <h3>Technologies requises</h3>
-      <div class="tags">
+    <div class="content-section">
+      <h3>Technologies & Compétences requises</h3>
+      <div class="tech-list">
         <span *ngFor="let tech of project.technologies" class="tech-tag">{{ tech }}</span>
       </div>
     </div>
 
-    <div class="actions-footer" *ngIf="auth.isLoggedIn()">
-      <div *ngIf="message" class="message success">{{ message }}</div>
-
-      <!-- Si c'est MON projet -->
-      <button *ngIf="isCreator" [routerLink]="['/projects', project.id, 'manage']" class="btn-manage">
-        ⚙️ Gérer les candidatures
-      </button>
-
-      <!-- Si je suis candidat -->
-      <button *ngIf="!isCreator && !hasApplied" (click)="apply()" class="btn-apply">
-        🚀 Postuler à ce projet
-      </button>
+    <!-- Actions Zone -->
+    <div class="actions-zone" *ngIf="auth.isLoggedIn()">
       
-      <button *ngIf="hasApplied" disabled class="btn-applied">
-        ✅ Candidature envoyée
-      </button>
+      <!-- Message de succès/erreur -->
+      <div *ngIf="message" class="alert success">{{ message }}</div>
+
+      <!-- Créateur -->
+      <div *ngIf="isCreator" class="creator-actions">
+        <p>Vous êtes le créateur de ce projet.</p>
+        <button [routerLink]="['/projects', project.id, 'manage']" class="btn-manage">
+          👥 Gérer les candidatures
+        </button>
+      </div>
+
+      <!-- Candidat -->
+      <div *ngIf="!isCreator" class="candidate-actions">
+        <button *ngIf="!hasApplied" (click)="apply()" class="btn-apply">
+          🚀 Postuler maintenant
+        </button>
+        
+        <button *ngIf="hasApplied" disabled class="btn-applied">
+          ✅ Vous avez déjà postulé
+        </button>
+      </div>
     </div>
     
-    <div class="actions-footer" *ngIf="!auth.isLoggedIn()">
-      <p>Connectez-vous pour postuler à ce projet.</p>
+    <div class="actions-zone login-prompt" *ngIf="!auth.isLoggedIn()">
+      <p>Vous devez être connecté pour postuler.</p>
       <button routerLink="/login" class="btn-primary">Se connecter</button>
     </div>
 

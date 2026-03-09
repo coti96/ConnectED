@@ -49,11 +49,11 @@
         <div class="row">
           <div class="form-group">
             <label>École</label>
-            <input type="text" formControlName="ecole" />
+            <input type="text" formControlName="ecole" placeholder="Ex: ESIEE Paris" />
           </div>
           <div class="form-group">
             <label>Filière</label>
-            <input type="text" formControlName="filiere" />
+            <input type="text" formControlName="filiere" placeholder="Ex: Informatique" />
           </div>
         </div>
       </div>
@@ -76,10 +76,13 @@
       <!-- Compétences (Tags) -->
       <div class="section">
         <h3>Mes Compétences & Technos</h3>
-        <div class="tags-input" *ngIf="isEditing">
+        <p class="hint" *ngIf="isEditing">Appuyez sur Entrée pour ajouter une compétence.</p>
+        
+        <div class="tags-input-container" *ngIf="isEditing">
           <input 
+            #techInput
             type="text" 
-            placeholder="Ajouter une techno (ex: Python) + Entrée" 
+            placeholder="Ajouter une techno (ex: Python)..." 
             (keydown.enter)="addTech($event); $event.preventDefault()"
           />
         </div>
@@ -87,16 +90,20 @@
         <div class="tags-list">
           <span *ngFor="let tech of technologies" class="tag">
             {{ tech }}
-            <span *ngIf="isEditing" class="remove" (click)="removeTech(tech)">×</span>
+            <button *ngIf="isEditing" type="button" class="remove-btn" (click)="removeTech(tech)">×</button>
           </span>
           <span *ngIf="technologies.length === 0" class="no-tags">Aucune compétence ajoutée</span>
         </div>
       </div>
 
-      <button *ngIf="isEditing" type="submit" class="btn-save" [disabled]="profileForm.invalid">
-        Enregistrer les modifications
-      </button>
+      <div class="actions" *ngIf="isEditing">
+        <button type="submit" class="btn-save" [disabled]="profileForm.invalid">
+          Enregistrer les modifications
+        </button>
+      </div>
 
     </form>
+  </div>
+</section>
   </div>
 </section>

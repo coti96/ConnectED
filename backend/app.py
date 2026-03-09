@@ -11,9 +11,32 @@ from routes.messages import messages_bp
 from routes.dashboard import dashboard_bp
 
 app = Flask(__name__)
-app.config['JWT_SECRET_KEY'] = 'super-secret-key-change-me-in-prod'  # Change this!
-CORS(app)
+# On change la clé secrète pour une version plus longue (32+ octets) pour éviter les warnings JWT
+app.config['JWT_SECRET_KEY'] = 'this-is-a-very-long-and-secure-secret-key-for-connected-2026-esiee'
+# Configuration CORS permissive et explicite pour le développement
+CORS(app, resources={r"/*": {"origins": "*"}}, supports_credentials=True)
 jwt = JWTManager(app)
+
+@jwt.unauthorized_loader
+def unauthorized_response(callback):
+    return jsonify({
+        'ok': False,
+        'message': 'Missing Authorization Header'
+    }), 401
+
+@jwt.invalid_token_loader
+def invalid_token_callback(callback):
+    return jsonify({
+        'ok': False,
+        'message': 'Invalid Token'
+    }), 422
+
+@jwt.expired_token_loader
+def expired_token_callback(jwt_header, jwt_payload):
+    return jsonify({
+        'ok': False,
+        'message': 'Token has expired'
+    }), 401
 
 # On autorise Angular (port 4200) à appeler Flask
 with app.app_context():

@@ -13,6 +13,10 @@ export class ProjectService {
   getProjects(): Observable<any> {
     return this.http.get(this.apiUrl);
   }
+
+  getProjectById(id: string): Observable<any> {
+    return this.http.get(`${this.apiUrl}/${id}`);
+  }
   
   getRecommendedProjects(): Observable<any> {
     const token = localStorage.getItem('token');

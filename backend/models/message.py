@@ -20,18 +20,21 @@ class MessageModel:
             RETURN m
             """
             result = session.run(query, sender_email=sender_email, receiver_email=receiver_email, content=content)
-            return result.single() is not None
+            record = result.single()
+            return record is not None
 
     @staticmethod
     def get_conversations(user_email):
         """Récupère la liste des personnes avec qui l'utilisateur a discuté"""
         driver = db.get_db()
         with driver.session() as session:
+            # Cette requête cherche tous les messages envoyés OU reçus par l'utilisateur
+            # et retourne l'AUTRE personne impliquée.
             query = """
             MATCH (u:User {email: $email})
-            OPTIONAL MATCH (u)-[:SENT]->(m1:Message)-[:TO]->(other1:User)
-            OPTIONAL MATCH (other2:User)-[:SENT]->(m2:Message)-[:TO]->(u)
-            WITH u, collect(other1) + collect(other2) as others
+            OPTIONAL MATCH (u)-[:SENT]->(:Message)-[:TO]->(other1:User)
+            OPTIONAL MATCH (other2:User)-[:SENT]->(:Message)-[:TO]->(u)
+            WITH u, collect(DISTINCT other1) + collect(DISTINCT other2) as others
             UNWIND others as other
             WITH DISTINCT other
             WHERE other IS NOT NULL
@@ -40,10 +43,19 @@ class MessageModel:
             result = session.run(query, email=user_email)
             
             conversations = []
+            seen_emails = set()
+            
             for record in result:
-                user_data = dict(record['other'].items())
+                user_node = record['other']
+                user_data = dict(user_node.items())
+                
+                # Nettoyage et déduplication (au cas où la requête renvoie des doublons)
                 if 'password_hash' in user_data: del user_data['password_hash']
-                conversations.append(user_data)
+                
+                if user_data['email'] not in seen_emails and user_data['email'] != user_email:
+                    conversations.append(user_data)
+                    seen_emails.add(user_data['email'])
+                    
             return conversations
 
     @staticmethod
@@ -64,7 +76,12 @@ class MessageModel:
             messages = []
             for record in result:
                 msg_data = dict(record['m'].items())
-                msg_data['timestamp'] = str(msg_data['timestamp'])
+                # Conversion sécurisée du timestamp
+                if hasattr(msg_data['timestamp'], 'iso_format'):
+                    msg_data['timestamp'] = msg_data['timestamp'].iso_format()
+                else:
+                    msg_data['timestamp'] = str(msg_data['timestamp'])
+                    
                 msg_data['sender_email'] = record['sender']['email']
                 messages.append(msg_data)
             return messages

@@ -2,6 +2,53 @@
 
 # ConnectED 
 
+ConnectED est une plateforme innovante de mise en relation entre étudiants et porteurs de projets, propulsée par l'intelligence artificielle et une base de données orientée graphe.
+
+## 🌟 Fonctionnalités Principales
+
+Le projet est désormais complet et inclut les modules suivants :
+
+### 1. Authentification & Profils
+- **Inscription/Connexion** sécurisée (JWT).
+- **Profils Utilisateurs** détaillés avec gestion des compétences dynamiques.
+- **Rôles** : Étudiants, Créateurs de projets, Administrateurs.
+
+### 2. Gestion des Projets
+- **Création de projets** avec description, compétences requises et date limite.
+- **Catalogue de projets** avec recherche et filtres.
+- **Détails complets** : Visualisation des besoins et du créateur.
+
+### 3. Système de Matching Intelligent (Graph-Based)
+- Algorithme de recommandation basé sur **Neo4j**.
+- Analyse la compatibilité entre les compétences de l'utilisateur et les besoins du projet.
+- Score de pertinence (%) affiché en temps réel.
+
+### 4. Gestion des Candidatures
+- **Postuler** en un clic aux projets recommandés.
+- **Suivi des candidatures** : En attente, Accepté, Refusé.
+- **Pour les créateurs** : Interface de gestion des candidats avec validation/refus.
+
+### 5. Messagerie Instantanée
+- **Chat intégré** en temps réel entre candidats et porteurs de projet.
+- Historique des conversations.
+- Accès direct depuis le profil ou la candidature.
+
+### 6. Tableau de Bord (Dashboard)
+- Vue d'ensemble personnalisée à la connexion.
+- Statistiques clés (Candidatures, Projets, Messages).
+- Fil d'activité récent.
+
+---
+
+## 🛠️ Architecture Technique
+
+- **Frontend** : Angular 16+ (Standalone Components, Signals).
+- **Backend** : Python Flask (REST API).
+- **Base de Données** : Neo4j (Graph Database) pour gérer les relations complexes (User -[:HAS_SKILL]-> Skill <-[:REQUIRES]- Project).
+- **Conteneurisation** : Docker & Docker Compose.
+
+---
+
 ## Phase 0 : Guide installation projet
 
 Cette **Phase 0** correspond à l'initialisation technique du projet avec Docker et Git.

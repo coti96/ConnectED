@@ -11,16 +11,41 @@
     </div>
   </div>
 
+  <!-- BARRE DE RECHERCHE ET FILTRES -->
+  <div class="filters-container">
+    <div class="search-box">
+      <input 
+        type="text" 
+        placeholder="Rechercher par titre ou technologie..." 
+        (input)="onSearch($event)"
+        class="search-input"
+      >
+      <span class="search-icon">🔍</span>
+    </div>
+    
+    <div class="filter-box">
+      <select (change)="onFilterDomain($event)" class="filter-select">
+        <option value="">Tous les domaines</option>
+        <option value="Web Development">Développement Web</option>
+        <option value="Mobile App">Application Mobile</option>
+        <option value="Artificial Intelligence">Intelligence Artificielle</option>
+        <option value="Virtual Reality">Réalité Virtuelle</option>
+        <option value="Blockchain">Blockchain</option>
+      </select>
+    </div>
+  </div>
+
   <div *ngIf="loading" class="loading">
     Chargement des projets...
   </div>
 
-  <div *ngIf="!loading && projects.length === 0" class="empty">
-    Aucun projet pour le moment. Soyez le premier à en créer un !
+  <div *ngIf="!loading && filteredProjects.length === 0" class="empty">
+    Aucun projet trouvé pour cette recherche.
   </div>
 
   <div class="projects-grid">
-    <div *ngFor="let project of projects" class="project-card">
+    <!-- Ajout de [routerLink] sur la carte elle-même et style cursor:pointer -->
+    <div *ngFor="let project of filteredProjects" class="project-card" [routerLink]="['/projects', project.id]" style="cursor: pointer;">
       <div class="card-header">
         <span class="badge status" [class.open]="project.statut === 'en_cours'">
           {{ project.statut === 'en_cours' ? 'Ouvert' : project.statut }}
@@ -41,9 +66,15 @@
           <span class="deadline">📅 {{ project.deadline | date:'dd/MM/yyyy' }}</span>
         </div>
         
-        <button class="btn-details" [routerLink]="['/projects', project.id]">
-          Voir détails
-        </button>
+        <div class="card-actions">
+          <!-- stopPropagation est important pour ne pas déclencher le lien de la carte ET le bouton -->
+          <button class="btn-contact" (click)="contactCreator(project); $event.stopPropagation()">
+            ✉️
+          </button>
+          <button class="btn-details">
+            Voir détails
+          </button>
+        </div>
       </div>
     </div>
   </div>

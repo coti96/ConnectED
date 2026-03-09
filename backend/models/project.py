@@ -17,6 +17,11 @@ class ProjectModel:
             projects = []
             for record in result:
                 project_data = dict(record["p"].items())
+                # Conversion des dates Neo4j en string
+                for key, value in project_data.items():
+                    if hasattr(value, 'iso_format'):
+                        project_data[key] = value.iso_format()
+                        
                 project_data['id'] = record["p"].element_id
                 project_data['technologies'] = record["technologies"]
                 
@@ -30,7 +35,42 @@ class ProjectModel:
             return projects
 
     @staticmethod
+    def get_by_id(project_id):
+        driver = db.get_db()
+        with driver.session() as session:
+            query = """
+            MATCH (p:Project)
+            WHERE elementId(p) = $project_id
+            OPTIONAL MATCH (p)<-[:CREATED_BY]-(u:User)
+            OPTIONAL MATCH (p)-[:REQUIRES_TECH]->(t:Technology)
+            RETURN p, u, collect(t.libelle) as technologies
+            """
+            result = session.run(query, project_id=project_id)
+            record = result.single()
+            
+            if not record:
+                return None
+                
+            project_data = dict(record["p"].items())
+            # Conversion des dates Neo4j en string
+            for key, value in project_data.items():
+                if hasattr(value, 'iso_format'):
+                    project_data[key] = value.iso_format()
+
+            project_data['id'] = record["p"].element_id
+            project_data['technologies'] = record["technologies"]
+            
+            if record["u"]:
+                project_data['creator'] = {
+                    'nom': record["u"].get('nom'),
+                    'prenom': record["u"].get('prenom'),
+                    'email': record["u"].get('email')
+                }
+            return project_data
+
+    @staticmethod
     def create(data, email):
+        # ... (reste du code inchangé, mais on doit tout réécrire car Write écrase le fichier)
         driver = db.get_db()
         with driver.session() as session:
             query = """
@@ -60,7 +100,10 @@ class ProjectModel:
             }
             
             result = session.run(query, **params)
-            project_id = result.single()['p'].element_id
+            record = result.single()
+            if not record:
+                return None
+            project_id = record['p'].element_id
             
             # Add technologies
             if 'technologies' in data and isinstance(data['technologies'], list):
@@ -96,6 +139,11 @@ class ProjectModel:
             
             for record in result:
                 data = dict(record["p"].items())
+                # Conversion des dates
+                for key, value in data.items():
+                    if hasattr(value, 'iso_format'):
+                        data[key] = value.iso_format()
+
                 data['id'] = record["p"].element_id
                 data['match_score'] = record["score"]
                 data['common_technologies'] = record["common_techs"]

@@ -29,19 +29,35 @@ services:
     build: ./backend
     container_name: connected-backend
     ports:
-        - "5000:5000"
+      - "5000:5000"
+    volumes:
+      - ./backend:/app
+    environment:
+      - NEO4J_URI=bolt://db:7687
+      - NEO4J_USER=neo4j
+      - NEO4J_PASSWORD=connected_password
+      - FLASK_ENV=development
+      - FLASK_DEBUG=1
+    command: python -m flask run --host=0.0.0.0
     depends_on:
       db:
         condition: service_healthy
-    environment:
-      DB_URI: bolt://db:7687
-      DB_USER: neo4j
-      DB_PASSWORD: connected_password
+    restart: always
   frontend:
-    build: ./frontend
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.dev
     container_name: connected-frontend
     ports:
-      - "4200:80"
+      - "4200:4200"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+    depends_on:
+      - backend
+    restart: always
 
 volumes:
   neo4j_data:

@@ -13,7 +13,7 @@ import { AuthService } from '../../shared/services/auth';
 })
 export class DashboardComponent implements OnInit {
   data: any = null;
-  loading = true;
+  loading: boolean = true;
 
   constructor(
     private dashboardService: DashboardService,
@@ -27,7 +27,7 @@ export class DashboardComponent implements OnInit {
         this.loading = false;
       },
       error: (err: any) => {
-        console.error('Erreur chargement dashboard', err);
+        console.error('Erreur dashboard', err);
         this.loading = false;
       }
     });

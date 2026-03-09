@@ -27,5 +27,9 @@ export const routes: Routes = [
   { path: 'projects/my-applications', component: MyApplicationsComponent }, // AVANT :id
   { path: 'projects/:id', component: ProjectDetailComponent },
   { path: 'projects/:id/manage', component: ManageCandidatesComponent },
-  { path: 'recommended', component: RecommendedProjectsComponent }
+  { path: 'recommended', component: RecommendedProjectsComponent },
+  // Rediriger /about vers l'accueil pour éviter l'erreur
+  { path: 'about', redirectTo: '', pathMatch: 'full' },
+  // Wildcard route pour attraper toutes les URLs inconnues
+  { path: '**', redirectTo: '' }
 ];

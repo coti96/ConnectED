@@ -32,8 +32,8 @@ export class ManageCandidatesComponent implements OnInit {
 
   loadData(): void {
     // 1. Charger les infos du projet
-    this.projectService.getProjects().subscribe((res: any) => {
-      this.project = res.projects.find((p: any) => p.id === this.projectId);
+    this.projectService.getProjectById(this.projectId).subscribe((res: any) => {
+      this.project = res.project;
     });
 
     // 2. Charger les candidatures

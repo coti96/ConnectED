@@ -1,19 +1,21 @@
 <!-- HERO SECTION -->
-<section class="hero">
-  <div class="content">
-    <span class="badge">Nouvelle plateforme collaborative</span>
+<section class="hero-container">
+  <div class="hero-content">
+    <span class="hero-badge">Nouvelle plateforme collaborative</span>
 
-    <h1>Connectez-vous pour créer l'avenir</h1>
+    <h1 class="hero-title">Connectez-vous pour créer l'avenir</h1>
 
-    <p class="subtitle">
+    <p class="hero-subtitle">
       ConnectED réunit étudiants, professionnels et encadrants autour de projets
       collaboratifs. Trouvez votre équipe idéale grâce à notre système intelligent
       de correspondance.
     </p>
 
-    <div class="actions">
-      <button class="btn-primary">Commencer maintenant</button>
-      <button class="btn-secondary">Découvrir les projets</button>
+    <!-- BOUTONS SIMPLIFIÉS ET ACCESSIBLES -->
+    <div class="hero-actions">
+      <!-- Utilisation propre de routerLink -->
+      <a routerLink="/register" class="cta-button primary">Commencer maintenant</a>
+      <a routerLink="/projects" class="cta-button secondary">Découvrir les projets</a>
     </div>
   </div>
 </section>

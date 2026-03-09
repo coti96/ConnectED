@@ -28,16 +28,28 @@ def send_message():
         
     return jsonify({"message": "Message envoyé"}), 201
 
-@messages_bp.route('/conversations', methods=['GET'])
+@messages_bp.route('/conversations', methods=['GET', 'OPTIONS'])
 @jwt_required()
 def get_conversations():
+    if request.method == 'OPTIONS':
+        return jsonify({}), 200
+        
     current_user = get_jwt_identity()
-    conversations = MessageModel.get_conversations(current_user['email'])
+    # Gestion sécurisée de l'identité
+    email = current_user['email'] if isinstance(current_user, dict) else current_user
+    
+    conversations = MessageModel.get_conversations(email)
     return jsonify({"conversations": conversations})
 
-@messages_bp.route('/messages/<other_email>', methods=['GET'])
+@messages_bp.route('/messages/<other_email>', methods=['GET', 'OPTIONS'])
 @jwt_required()
 def get_chat_history(other_email):
+    if request.method == 'OPTIONS':
+        return jsonify({}), 200
+        
     current_user = get_jwt_identity()
-    messages = MessageModel.get_messages(current_user['email'], other_email)
+    # Gestion sécurisée de l'identité
+    email = current_user['email'] if isinstance(current_user, dict) else current_user
+    
+    messages = MessageModel.get_messages(email, other_email)
     return jsonify({"messages": messages})

@@ -9,7 +9,7 @@
 
     <!-- Stats Cards -->
     <div class="stats-grid">
-      <div class="stat-card blue" routerLink="/projects/my-applications">
+      <div *ngIf="auth.currentUser()?.role === 'student'" class="stat-card blue" routerLink="/projects/my-applications">
         <span class="icon">🚀</span>
         <div class="stat-info">
           <h3>{{ data.stats.applications_sent }}</h3>
@@ -17,7 +17,7 @@
         </div>
       </div>
 
-      <div class="stat-card purple" routerLink="/projects">
+      <div *ngIf="auth.currentUser()?.role === 'creator' || auth.currentUser()?.role === 'professional'" class="stat-card purple" routerLink="/projects/manage">
         <span class="icon">📂</span>
         <div class="stat-info">
           <h3>{{ data.stats.projects_created }}</h3>
@@ -67,10 +67,10 @@
     <div class="quick-actions">
       <h2>Que voulez-vous faire ?</h2>
       <div class="actions-grid">
-        <button routerLink="/projects/create" class="action-btn">
+        <button *ngIf="auth.currentUser()?.role === 'creator' || auth.currentUser()?.role === 'professional'" routerLink="/projects/create" class="action-btn">
           ➕ Créer un projet
         </button>
-        <button routerLink="/projects" class="action-btn">
+        <button *ngIf="auth.currentUser()?.role === 'student'" routerLink="/projects" class="action-btn">
           🔍 Chercher un projet
         </button>
         <button routerLink="/recommended" class="action-btn highlight">

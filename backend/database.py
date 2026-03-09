@@ -2,9 +2,10 @@ import os
 from neo4j import GraphDatabase
 
 # 1. On définit les variables au niveau du module (MAJUSCULES pour les constantes)
-URI = os.getenv("DB_URI", "bolt://neo4j:7687")
-USER = os.getenv("DB_USER", "neo4j")
-PASSWORD = os.getenv("DB_PASSWORD", "connected_password")
+# IMPORTANT: Le nom du service dans docker-compose est 'db', pas 'neo4j'
+URI = os.getenv("NEO4J_URI", "bolt://db:7687")
+USER = os.getenv("NEO4J_USER", "neo4j")
+PASSWORD = os.getenv("NEO4J_PASSWORD", "connected_password")
 
 class Neo4jDatabase:
     def __init__(self):
@@ -13,8 +14,15 @@ class Neo4jDatabase:
     def connect(self):
         if not self.driver:
             # 2. Ici, on utilise les variables globales définies plus haut
-            self.driver = GraphDatabase.driver(URI, auth=(USER, PASSWORD))
-            print(f"✅ Connecté à Neo4j sur {URI}")
+            try:
+                self.driver = GraphDatabase.driver(URI, auth=(USER, PASSWORD))
+                # Test de connexion immédiat
+                self.driver.verify_connectivity()
+                print(f"✅ Connecté à Neo4j sur {URI}")
+            except Exception as e:
+                print(f"❌ Erreur de connexion Neo4j ({URI}): {e}")
+                self.driver = None
+                raise e
 
     def get_db(self):
         if not self.driver:

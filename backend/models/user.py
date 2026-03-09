@@ -73,28 +73,35 @@ class UserModel:
             # Update basic fields
             fields = []
             params = {'email': email}
+            # Liste des champs autorisés à la modification
             allowed = ['nom', 'prenom', 'ville', 'bio_courte', 'ecole', 'filiere', 'entreprise', 'fonction']
             
             for field in allowed:
+                # On vérifie si le champ est présent dans les données reçues (même vide)
                 if field in data:
                     fields.append(f"u.{field} = ${field}")
                     params[field] = data[field]
             
+            # S'il y a des champs à mettre à jour
             if fields:
                 query = f"MATCH (u:User {{email: $email}}) SET {', '.join(fields)} RETURN u"
                 session.run(query, **params)
             
-            # Update technologies
+            # Update technologies (seulement si la liste est fournie)
             if technologies is not None and isinstance(technologies, list):
+                # 1. Supprimer les anciennes relations HAS_TECH
                 session.run("""
                 MATCH (u:User {email: $email})-[r:HAS_TECH]->()
                 DELETE r
                 """, email=email)
                 
-                for tech in technologies:
-                    session.run("""
-                    MATCH (u:User {email: $email})
-                    MERGE (t:Technology {libelle: $tech})
-                    MERGE (u)-[:HAS_TECH]->(t)
-                    """, email=email, tech=tech)
+                # 2. Créer les nouvelles relations
+                if technologies: # Si la liste n'est pas vide
+                    for tech in technologies:
+                        if tech and tech.strip(): # Ignorer les chaînes vides
+                            session.run("""
+                            MATCH (u:User {email: $email})
+                            MERGE (t:Technology {libelle: $tech})
+                            MERGE (u)-[:HAS_TECH]->(t)
+                            """, email=email, tech=tech.strip())
             return True
