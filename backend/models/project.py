@@ -22,7 +22,7 @@ class ProjectModel:
                     if hasattr(value, 'iso_format'):
                         project_data[key] = value.iso_format()
                         
-                project_data['id'] = record["p"].element_id
+                project_data['id'] = record["p"].get('id')
                 project_data['technologies'] = record["technologies"]
                 
                 if record["u"]:
@@ -40,7 +40,7 @@ class ProjectModel:
         with driver.session() as session:
             query = """
             MATCH (p:Project)
-            WHERE elementId(p) = $project_id
+            WHERE p.id = $project_id
             OPTIONAL MATCH (p)<-[:CREATED_BY]-(u:User)
             OPTIONAL MATCH (p)-[:REQUIRES_TECH]->(t:Technology)
             RETURN p, u, collect(t.libelle) as technologies
@@ -57,7 +57,7 @@ class ProjectModel:
                 if hasattr(value, 'iso_format'):
                     project_data[key] = value.iso_format()
 
-            project_data['id'] = record["p"].element_id
+            project_data['id'] = record["p"].get('id')
             project_data['technologies'] = record["technologies"]
             
             if record["u"]:
@@ -103,7 +103,7 @@ class ProjectModel:
             record = result.single()
             if not record:
                 return None
-            project_id = record['p'].element_id
+            project_id = record["p"].get('id')
             
             # Add technologies
             if 'technologies' in data and isinstance(data['technologies'], list):
@@ -148,7 +148,8 @@ class ProjectModel:
                     if hasattr(value, 'iso_format'):
                         data[key] = value.iso_format()
 
-                data['id'] = record["p"].element_id
+                data['id'] = record["p"].get('id')
+                print(f"ID projet: {data['id']}")  
                 data['match_score'] = record["score"]
                 data['common_technologies'] = record["common_techs"]
                 data['technologies'] = record["all_techs"]
@@ -178,7 +179,7 @@ class ProjectModel:
                         if hasattr(value, 'iso_format'):
                             data[key] = value.iso_format()
                             
-                    data['id'] = record["p"].element_id
+                    data['id'] = record["p"].get('id')
                     data['match_score'] = 0 # Pas de match spécifique
                     data['common_technologies'] = []
                     data['technologies'] = record["all_techs"]

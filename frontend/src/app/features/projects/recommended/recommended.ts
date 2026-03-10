@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { ProjectService } from '../project.service';
@@ -10,7 +10,7 @@ import { IconComponent } from '../../../shared/icon/icon';
   standalone: true,
   imports: [CommonModule, RouterModule, IconComponent],
   templateUrl: './recommended.html',
-  styleUrls: ['../list/project-list.scss', './recommended.scss'] // Réutiliser le style + custom
+  styleUrls: ['../list/project-list.scss', './recommended.scss']
 })
 export class RecommendedProjectsComponent implements OnInit {
   projects: any[] = [];
@@ -18,18 +18,21 @@ export class RecommendedProjectsComponent implements OnInit {
 
   constructor(
     private projectService: ProjectService,
-    public auth: AuthService
-  ) {}
+    public auth: AuthService,
+    private cdr: ChangeDetectorRef
+  ) { }
 
   ngOnInit(): void {
     this.projectService.getRecommendedProjects().subscribe({
       next: (res: any) => {
         this.projects = res.recommendations;
         this.loading = false;
+        this.cdr.detectChanges();
       },
       error: (err) => {
-        console.error('Erreur chargement recommandations', err);
+        console.error('Erreur:', err);
         this.loading = false;
+        this.cdr.detectChanges();
       }
     });
   }
