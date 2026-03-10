@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { ProjectService } from '../project.service';
@@ -15,7 +15,6 @@ import { IconComponent } from '../../../shared/icon/icon';
 })
 export class ProjectDetailComponent implements OnInit {
   project: any;
-  loading = true;
   isCreator = false;
   hasApplied = false;
   message = '';
@@ -25,7 +24,8 @@ export class ProjectDetailComponent implements OnInit {
     private route: ActivatedRoute,
     private projectService: ProjectService,
     private appService: ApplicationService,
-    public auth: AuthService
+    public auth: AuthService,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -39,22 +39,22 @@ export class ProjectDetailComponent implements OnInit {
     this.projectService.getProjectById(id).subscribe({
       next: (res: any) => {
         this.project = res.project;
-        this.loading = false;
-        
+        this.cdr.detectChanges();
+        console.log('Détails du projet:', this.project);
         if (this.auth.isLoggedIn()) {
           const user = this.auth.currentUser();
           // Vérification si créateur (objet creator)
           this.isCreator = this.project.creator?.email === user.email;
           
-          if (!this.isCreator) {
-            this.checkIfApplied();
-          }
+          // if (!this.isCreator) {
+          //   this.checkIfApplied();
+          // }
         }
       },
       error: (err) => {
         console.error('Erreur chargement projet', err);
         this.error = 'Impossible de charger le projet.';
-        this.loading = false;
+        this.cdr.detectChanges();
       }
     });
   }

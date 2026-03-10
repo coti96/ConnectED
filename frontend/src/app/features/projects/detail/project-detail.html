@@ -5,11 +5,9 @@
       Retour aux projets
     </button>
   </div>
-
-  <div *ngIf="loading" class="loading">Chargement du projet...</div>
+  <div *ngIf="!project" class="loading">Chargement du projet...</div>
   <div *ngIf="error" class="error-message">{{ error }}</div>
-
-  <div *ngIf="!loading && project" class="detail-card">
+  <div *ngIf="project" class="detail-card">
     <div class="card-top">
       <div class="status-badges">
         <span class="badge status" [class.open]="project.statut === 'en_cours'">
