@@ -10,12 +10,13 @@ import { IconComponent } from '../../../shared/icon/icon';
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, RouterModule, IconComponent],
   templateUrl: './create-project.html',
-  styleUrls: ['../../auth/login/login.scss'] // Réutiliser le style des formulaires auth pour la cohérence
+  styleUrls: ['../../auth/login/login.scss', './create-project.scss'] // Réutiliser le style des formulaires auth pour la cohérence
 })
 export class CreateProjectComponent {
   projectForm: FormGroup;
   technologies: string[] = [];
   message: string = '';
+  descriptionMax = 1200;
 
   constructor(
     private fb: FormBuilder,
@@ -24,11 +25,16 @@ export class CreateProjectComponent {
   ) {
     this.projectForm = this.fb.group({
       titre: ['', Validators.required],
-      description: ['', Validators.required],
+      description: ['', [Validators.required, Validators.maxLength(this.descriptionMax)]],
       domaine: ['', Validators.required],
       nombre_places: [1, [Validators.required, Validators.min(1)]],
       deadline: ['', Validators.required]
     });
+  }
+
+  get descriptionLength(): number {
+    const value = this.projectForm.get('description')?.value;
+    return typeof value === 'string' ? value.length : 0;
   }
 
   addTech(event: any): void {
@@ -64,7 +70,11 @@ export class CreateProjectComponent {
         },
         error: (err) => {
           console.error('Erreur création projet', err);
-          this.message = 'Erreur lors de la création du projet.';
+          if (err?.status === 401) {
+            this.message = 'Session expirée. Veuillez vous reconnecter.';
+            return;
+          }
+          this.message = err?.error?.error || err?.error?.message || 'Erreur lors de la création du projet.';
         }
       });
     }

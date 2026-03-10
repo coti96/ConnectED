@@ -79,6 +79,28 @@
         box-shadow: 0 0 0 4px rgba(107, 61, 240, 0.1);
       }
     }
+
+    textarea {
+      width: 100%;
+      min-height: 240px;
+      padding: 12px 15px;
+      border-radius: 10px;
+      border: 1px solid #e0e0e0;
+      font-size: 1rem;
+      line-height: 1.6;
+      transition: all 0.2s;
+      background: #f9f9f9;
+      box-sizing: border-box;
+      font-family: inherit;
+      resize: vertical;
+
+      &:focus {
+        outline: none;
+        border-color: #6b3df0;
+        background: white;
+        box-shadow: 0 0 0 4px rgba(107, 61, 240, 0.1);
+      }
+    }
     
     .input-icon {
       position: absolute;

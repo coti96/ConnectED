@@ -9,6 +9,7 @@ messages_bp = Blueprint('messages', __name__)
 @jwt_required()
 def send_message():
     current_user = get_jwt_identity()
+    email = current_user['email'] if isinstance(current_user, dict) else current_user
     data = request.get_json()
     
     receiver_email = data.get('receiver_email')
@@ -22,7 +23,7 @@ def send_message():
     if not receiver:
         return jsonify({"error": "Utilisateur introuvable"}), 404
         
-    success = MessageModel.create(current_user['email'], receiver_email, content)
+    success = MessageModel.create(email, receiver_email, content)
     if not success:
         return jsonify({"error": "Erreur lors de l'envoi"}), 500
         

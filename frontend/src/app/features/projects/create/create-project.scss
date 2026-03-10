@@ -1,0 +1,38 @@
+.textarea-wrapper {
+  textarea {
+    width: 100%;
+    min-height: 200px;
+    padding: 12px 15px;
+    border-radius: 10px;
+    border: 1px solid #e0e0e0;
+    font-size: 1rem;
+    line-height: 1.6;
+    background: #f9f9f9;
+    box-sizing: border-box;
+    font-family: inherit;
+    resize: vertical;
+
+    &:focus {
+      outline: none;
+      border-color: #6b3df0;
+      background: white;
+      box-shadow: 0 0 0 4px rgba(107, 61, 240, 0.1);
+    }
+  }
+
+  .textarea-footer {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    margin-top: 8px;
+    font-size: 0.85rem;
+    color: #777;
+  }
+
+  .counter {
+    font-variant-numeric: tabular-nums;
+    font-weight: 700;
+    color: #6b2cd4;
+  }
+}
+

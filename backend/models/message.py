@@ -48,6 +48,9 @@ class MessageModel:
             for record in result:
                 user_node = record['other']
                 user_data = dict(user_node.items())
+                for key, value in list(user_data.items()):
+                    if hasattr(value, 'iso_format'):
+                        user_data[key] = value.iso_format()
                 
                 # Nettoyage et déduplication (au cas où la requête renvoie des doublons)
                 if 'password_hash' in user_data: del user_data['password_hash']

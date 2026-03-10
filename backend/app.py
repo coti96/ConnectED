@@ -4,6 +4,7 @@ from flask_cors import CORS
 from flask_jwt_extended import JWTManager
 from database import db
 from flasgger import Swagger
+from datetime import timedelta
 
 from routes.projects import projects_bp
 from routes.users import users_bp
@@ -17,8 +18,13 @@ from routes.technologies import technologies_bp
 app = Flask(__name__)
 # On change la clé secrète pour une version plus longue (32+ octets) pour éviter les warnings JWT
 app.config['JWT_SECRET_KEY'] = 'this-is-a-very-long-and-secure-secret-key-for-connected-2026-esiee'
-# Configuration CORS permissive et explicite pour le développement
-CORS(app, resources={r"/*": {"origins": "*"}}, supports_credentials=True)
+app.config['JWT_ACCESS_TOKEN_EXPIRES'] = timedelta(days=7)
+CORS(
+    app,
+    resources={r"/*": {"origins": ["http://localhost:4200", "http://127.0.0.1:4200"]}},
+    supports_credentials=True,
+    allow_headers=["Content-Type", "Authorization"],
+)
 jwt = JWTManager(app)
 swagger = Swagger(app)
 
@@ -50,10 +56,6 @@ with app.app_context():
         db.connect()
     except Exception as e:
         print(f" Erreur de connexion initiale : {e}")
-# À l'arrêt du serveur
-@app.teardown_appcontext
-def shutdown_session(exception=None):
-    db.close()   
 # Enregistrement des routes
 app.register_blueprint(projects_bp)
 app.register_blueprint(users_bp)

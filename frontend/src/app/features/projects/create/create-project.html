@@ -31,8 +31,17 @@
 
       <div class="form-group">
         <label>Description complète</label>
-        <div class="input-wrapper">
-          <textarea formControlName="description" rows="5" placeholder="Décrivez le but du projet, les défis..."></textarea>
+        <div class="input-wrapper textarea-wrapper">
+          <textarea
+            formControlName="description"
+            [attr.maxlength]="descriptionMax"
+            rows="8"
+            placeholder="Décrivez le but du projet, le contexte, les livrables attendus, et le profil recherché."
+          ></textarea>
+          <div class="textarea-footer">
+            <span class="hint">Objectif, contraintes, stack, organisation, livrables.</span>
+            <span class="counter">{{ descriptionLength }}/{{ descriptionMax }}</span>
+          </div>
         </div>
       </div>
 
