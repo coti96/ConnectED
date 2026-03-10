@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { ProjectService } from '../project.service';
 import { AuthService } from '../../../shared/services/auth';
+import { IconComponent } from '../../../shared/icon/icon';
 
 @Component({
   selector: 'app-recommended-projects',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, IconComponent],
   templateUrl: './recommended.html',
   styleUrls: ['../list/project-list.scss', './recommended.scss'] // Réutiliser le style + custom
 })

@@ -1,6 +1,9 @@
 <section class="project-detail-container">
   <div class="header-nav">
-    <button routerLink="/projects" class="btn-back">← Retour aux projets</button>
+    <button routerLink="/projects" class="btn-back">
+      <app-icon name="back" [size]="18"></app-icon>
+      Retour aux projets
+    </button>
   </div>
 
   <div *ngIf="loading" class="loading">Chargement du projet...</div>
@@ -15,7 +18,8 @@
         <span class="badge domain">{{ project.domain || project.domaine }}</span>
       </div>
       <div class="deadline-badge">
-        📅 Deadline : {{ project.deadline | date:'dd/MM/yyyy' }}
+        <app-icon name="calendar" [size]="16"></app-icon>
+        Deadline : {{ project.deadline | date:'dd/MM/yyyy' }}
       </div>
     </div>
 
@@ -23,11 +27,11 @@
     
     <div class="meta-row">
       <div class="meta-item">
-        <span class="icon">👤</span>
+        <span class="icon"><app-icon name="users" [size]="18"></app-icon></span>
         <strong>{{ project.nombre_places }}</strong> places disponibles
       </div>
       <div class="meta-item" *ngIf="project.creator">
-        <span class="icon">🎓</span>
+        <span class="icon"><app-icon name="profile" [size]="18"></app-icon></span>
         Proposé par <strong>{{ project.creator.prenom }} {{ project.creator.nom }}</strong>
       </div>
     </div>
@@ -54,18 +58,21 @@
       <div *ngIf="isCreator" class="creator-actions">
         <p>Vous êtes le créateur de ce projet.</p>
         <button [routerLink]="['/projects', project.id, 'manage']" class="btn-manage">
-          👥 Gérer les candidatures
+          <app-icon name="applications" [size]="18"></app-icon>
+          Gérer les candidatures
         </button>
       </div>
 
       <!-- Candidat -->
       <div *ngIf="!isCreator" class="candidate-actions">
         <button *ngIf="!hasApplied" (click)="apply()" class="btn-apply">
-          🚀 Postuler maintenant
+          <app-icon name="applications" [size]="18"></app-icon>
+          Postuler
         </button>
         
         <button *ngIf="hasApplied" disabled class="btn-applied">
-          ✅ Vous avez déjà postulé
+          <app-icon name="check" [size]="18"></app-icon>
+          Déjà postulé
         </button>
       </div>
     </div>

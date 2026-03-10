@@ -14,7 +14,7 @@ class DashboardModel:
             WITH u, count(r1) as applications_sent
             
             // Compter les projets créés
-            OPTIONAL MATCH (u)-[:CREATED]->(p2:Project)
+            OPTIONAL MATCH (u)-[:CREATED_BY]->(p2:Project)
             WITH u, applications_sent, count(p2) as projects_created
             
             // Compter les messages non lus (si on gérait le statut 'read')
@@ -52,7 +52,7 @@ class DashboardModel:
 
             # Récupérer les derniers projets créés
             query_projects = """
-            MATCH (u:User {email: $email})-[:CREATED]->(p:Project)
+            MATCH (u:User {email: $email})-[:CREATED_BY]->(p:Project)
             RETURN p.titre as title, p.created_at as date
             ORDER BY p.created_at DESC LIMIT 5
             """

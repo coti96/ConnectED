@@ -17,6 +17,7 @@
   padding: 0;
   display: flex;
   align-items: center;
+  gap: 0.5rem;
   transition: color 0.2s;
 
   &:hover {
@@ -72,6 +73,9 @@
 }
 
 .deadline-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
   font-size: 0.9rem;
   color: #6b7280;
   background: #f9fafb;
@@ -103,7 +107,10 @@ h1 {
     font-size: 1rem;
 
     .icon {
-      font-size: 1.2rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #6b2cd4;
     }
 
     strong {
@@ -185,6 +192,9 @@ h1 {
 }
 
 .btn-apply {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
   background: #6b2cd4;
   color: white;
   border: none;
@@ -204,6 +214,9 @@ h1 {
 }
 
 .btn-manage {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
   background: #2563eb;
   color: white;
   border: none;
@@ -220,6 +233,9 @@ h1 {
 }
 
 .btn-applied {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
   background: #d1d5db;
   color: #4b5563;
   border: none;

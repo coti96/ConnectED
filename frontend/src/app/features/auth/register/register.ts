@@ -3,11 +3,12 @@ import { ReactiveFormsModule, FormBuilder, Validators, FormGroup } from '@angula
 import { Router, RouterModule } from '@angular/router';
 import {AuthService} from '../../../shared/services/auth';
 import { CommonModule } from '@angular/common';
+import { IconComponent } from '../../../shared/icon/icon';
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule, RouterModule],
+  imports: [ReactiveFormsModule, CommonModule, RouterModule, IconComponent],
   templateUrl: './register.html',
   styleUrls: ['../login/login.scss'], // Reuse login styles
 })

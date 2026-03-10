@@ -1,0 +1,173 @@
+<svg
+  class="icon"
+  [attr.width]="size"
+  [attr.height]="size"
+  viewBox="0 0 24 24"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+  [ngSwitch]="name"
+>
+  <ng-container *ngSwitchCase="'home'">
+    <path d="M3 10.5L12 3l9 7.5" />
+    <path d="M5 10v10h14V10" />
+  </ng-container>
+
+  <ng-container *ngSwitchCase="'projects'">
+    <path d="M9 7V5h6v2" />
+    <path d="M6 7h12a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2z" />
+    <path d="M9 11h6" />
+  </ng-container>
+
+  <ng-container *ngSwitchCase="'recommended'">
+    <path d="M12 3l2.6 5.4 6 .9-4.3 4.2 1 6-5.3-2.9-5.3 2.9 1-6L3.4 9.3l6-.9L12 3z" />
+  </ng-container>
+
+  <ng-container *ngSwitchCase="'messages'">
+    <path d="M21 15a4 4 0 0 1-4 4H9l-5 2V7a4 4 0 0 1 4-4h9a4 4 0 0 1 4 4v8z" />
+  </ng-container>
+
+  <ng-container *ngSwitchCase="'applications'">
+    <path d="M8 4h8l2 2v14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z" />
+    <path d="M9 10h6" />
+    <path d="M9 14h6" />
+    <path d="M9 18h4" />
+  </ng-container>
+
+  <ng-container *ngSwitchCase="'profile'">
+    <path d="M12 12a4 4 0 1 0-4-4 4 4 0 0 0 4 4z" />
+    <path d="M4 21a8 8 0 0 1 16 0" />
+  </ng-container>
+
+  <ng-container *ngSwitchCase="'logout'">
+    <path d="M10 17l-1 0a4 4 0 0 1-4-4V8a4 4 0 0 1 4-4h1" />
+    <path d="M15 7l5 5-5 5" />
+    <path d="M20 12H10" />
+  </ng-container>
+
+  <ng-container *ngSwitchCase="'back'">
+    <path d="M15 18l-6-6 6-6" />
+  </ng-container>
+
+  <ng-container *ngSwitchCase="'plus'">
+    <path d="M12 5v14" />
+    <path d="M5 12h14" />
+  </ng-container>
+
+  <ng-container *ngSwitchCase="'search'">
+    <path d="M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15z" />
+    <path d="M16 16l5 5" />
+  </ng-container>
+
+  <ng-container *ngSwitchCase="'calendar'">
+    <path d="M7 4v3" />
+    <path d="M17 4v3" />
+    <path d="M4 8h16" />
+    <path d="M6 6h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2z" />
+  </ng-container>
+
+  <ng-container *ngSwitchCase="'users'">
+    <path d="M16 11a3 3 0 1 0-3-3 3 3 0 0 0 3 3z" />
+    <path d="M8 12a3 3 0 1 0-3-3 3 3 0 0 0 3 3z" />
+    <path d="M2 21a6 6 0 0 1 12 0" />
+    <path d="M13 21a5 5 0 0 1 9 0" />
+  </ng-container>
+
+  <ng-container *ngSwitchCase="'mail'">
+    <path d="M4 6h16v12H4V6z" />
+    <path d="M4 7l8 6 8-6" />
+  </ng-container>
+
+  <ng-container *ngSwitchCase="'info'">
+    <path d="M12 22a10 10 0 1 1 0-20 10 10 0 0 1 0 20z" />
+    <path d="M12 10v7" />
+    <path d="M12 7h.01" />
+  </ng-container>
+
+  <ng-container *ngSwitchCase="'warning'">
+    <path d="M12 3l10 18H2L12 3z" />
+    <path d="M12 9v5" />
+    <path d="M12 17h.01" />
+  </ng-container>
+
+  <ng-container *ngSwitchCase="'globe'">
+    <path d="M12 22a10 10 0 1 1 0-20 10 10 0 0 1 0 20z" />
+    <path d="M2 12h20" />
+    <path d="M12 2a15 15 0 0 1 0 20" />
+    <path d="M12 2a15 15 0 0 0 0 20" />
+  </ng-container>
+
+  <ng-container *ngSwitchCase="'idea'">
+    <path d="M9 18h6" />
+    <path d="M10 22h4" />
+    <path d="M8 10a4 4 0 1 1 8 0c0 2-1 3-2 4s-1 2-1 3h-2c0-1 0-2-1-3s-2-2-2-4z" />
+  </ng-container>
+
+  <ng-container *ngSwitchCase="'lock'">
+    <path d="M7 11V8a5 5 0 0 1 10 0v3" />
+    <path d="M6 11h12v10H6V11z" />
+  </ng-container>
+
+  <ng-container *ngSwitchCase="'chevronDown'">
+    <path d="M6 9l6 6 6-6" />
+  </ng-container>
+
+  <ng-container *ngSwitchCase="'pin'">
+    <path d="M12 22s7-4.5 7-12a7 7 0 1 0-14 0c0 7.5 7 12 7 12z" />
+    <path d="M12 10.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z" />
+  </ng-container>
+
+  <ng-container *ngSwitchCase="'bell'">
+    <path d="M18 8a6 6 0 1 0-12 0c0 7-3 7-3 7h18s-3 0-3-7z" />
+    <path d="M10 19a2 2 0 0 0 4 0" />
+  </ng-container>
+
+  <ng-container *ngSwitchCase="'puzzle'">
+    <path d="M14 3a2 2 0 0 1 2 2v2h2a2 2 0 0 1 2 2v3h-2a2 2 0 1 0 0 4h2v3a2 2 0 0 1-2 2h-3v-2a2 2 0 1 0-4 0v2H8a2 2 0 0 1-2-2v-2H4a2 2 0 0 1-2-2v-3h2a2 2 0 1 0 0-4H2V9a2 2 0 0 1 2-2h2V5a2 2 0 0 1 2-2h3v2a2 2 0 1 0 4 0V3h1z" />
+  </ng-container>
+
+  <ng-container *ngSwitchCase="'graduationCap'">
+    <path d="M3 7l9-4 9 4-9 4-9-4z" />
+    <path d="M21 7v6" />
+    <path d="M6 11v5c0 1 3 3 6 3s6-2 6-3v-5" />
+  </ng-container>
+
+  <ng-container *ngSwitchCase="'keyboard'">
+    <path d="M4 7h16a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2z" />
+    <path d="M6 10h1" />
+    <path d="M9 10h1" />
+    <path d="M12 10h1" />
+    <path d="M15 10h1" />
+    <path d="M18 10h1" />
+    <path d="M6 13h12" />
+  </ng-container>
+
+  <ng-container *ngSwitchCase="'emptyInbox'">
+    <path d="M4 4h16v10H4V4z" />
+    <path d="M4 14l3 6h10l3-6" />
+    <path d="M9 12h6" />
+  </ng-container>
+
+  <ng-container *ngSwitchCase="'refresh'">
+    <path d="M20 6v6h-6" />
+    <path d="M4 18v-6h6" />
+    <path d="M20 12a8 8 0 0 0-14-5" />
+    <path d="M4 12a8 8 0 0 0 14 5" />
+  </ng-container>
+
+  <ng-container *ngSwitchCase="'check'">
+    <path d="M20 6L9 17l-5-5" />
+  </ng-container>
+
+  <ng-container *ngSwitchCase="'x'">
+    <path d="M6 6l12 12" />
+    <path d="M18 6l-12 12" />
+  </ng-container>
+
+  <ng-container *ngSwitchCase="'activity'">
+    <path d="M3 12h4l2-6 4 12 2-6h6" />
+  </ng-container>
+
+  <ng-container *ngSwitchCase="'badge'">
+    <path d="M12 2l3 3h4v4l3 3-3 3v4h-4l-3 3-3-3H5v-4l-3-3 3-3V5h4l3-3z" />
+  </ng-container>
+</svg>

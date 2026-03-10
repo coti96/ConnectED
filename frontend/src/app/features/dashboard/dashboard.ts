@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { DashboardService } from './dashboard.service';
 import { AuthService } from '../../shared/services/auth';
+import { IconComponent } from '../../shared/icon/icon';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, IconComponent],
   templateUrl: './dashboard.html',
   styleUrls: ['./dashboard.scss']
 })

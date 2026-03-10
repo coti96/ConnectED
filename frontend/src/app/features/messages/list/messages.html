@@ -1,6 +1,6 @@
-<div class="messages-container">
+<div class="messages-layout">
   <div class="sidebar">
-    <div class="header">
+    <div class="sidebar-header">
       <h2>Discussions</h2>
     </div>
     
@@ -17,17 +17,18 @@
         </div>
         <div class="info">
           <h3>{{ user.prenom }} {{ user.nom }}</h3>
-          <p class="role">{{ user.role }}</p>
+          <p class="role">
+            <app-icon [name]="user.role === 'etudiant' ? 'graduationCap' : 'projects'" [size]="16"></app-icon>
+            {{ user.role === 'etudiant' ? 'Étudiant' : (user.role === 'professionnel' ? 'Professionnel' : user.role) }}
+          </p>
         </div>
       </div>
     </div>
   </div>
 
-  <div class="chat-area-placeholder">
-    <div class="placeholder-content">
-      <span class="icon">💬</span>
-      <h3>Sélectionnez une conversation</h3>
-      <p>Pour commencer à discuter</p>
-    </div>
+  <div class="empty-state">
+    <div class="icon"><app-icon name="messages" [size]="44"></app-icon></div>
+    <h3>Sélectionnez une conversation</h3>
+    <p>Pour commencer à discuter avec un membre</p>
   </div>
 </div>

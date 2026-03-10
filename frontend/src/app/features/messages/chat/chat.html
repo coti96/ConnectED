@@ -1,24 +1,49 @@
-<div class="chat-container">
-  <div class="chat-header">
-    <button routerLink="/messages" class="back-btn">←</button>
-    <div class="user-info">
+<div class="messages-layout">
+  <div class="sidebar">
+    <div class="sidebar-header">
+      <h2>Discussions</h2>
+      <button routerLink="/messages" class="back-link">Retour</button>
+    </div>
+    
+    <div class="conversations-list">
+      <!-- On pourrait réafficher la liste ici pour naviguer, 
+           mais pour l'instant on se concentre sur le chat -->
+      <div class="conversation-item active">
+        <div class="avatar">{{ otherEmail?.charAt(0) }}</div>
+        <div class="info">
+          <h3>{{ otherEmail }}</h3>
+          <p>En ligne</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="chat-area">
+    <div class="chat-header">
       <h3>Discussion avec {{ otherEmail }}</h3>
     </div>
-  </div>
 
-  <div class="messages-list" #scrollContainer>
-    <div *ngIf="loading" class="loading">Chargement...</div>
-    
-    <div *ngFor="let msg of messages" 
-         class="message-bubble" 
-         [ngClass]="{'sent': msg.sender_email === currentUserEmail, 'received': msg.sender_email !== currentUserEmail}">
-      <div class="content">{{ msg.content }}</div>
-      <div class="time">{{ msg.timestamp | date:'shortTime' }}</div>
+    <div class="messages-list" #scrollContainer>
+      <div *ngIf="loading" class="loading">Chargement...</div>
+      
+      <div *ngFor="let msg of messages" 
+           class="message-bubble" 
+           [ngClass]="{'sent': msg.sender_email === currentUserEmail, 'received': msg.sender_email !== currentUserEmail}">
+        <div class="content">{{ msg.content }}</div>
+        <div class="time">{{ msg.timestamp | date:'HH:mm' }}</div>
+      </div>
     </div>
-  </div>
 
-  <div class="input-area">
-    <input type="text" [(ngModel)]="newMessage" placeholder="Écrivez votre message..." (keyup.enter)="sendMessage()">
-    <button (click)="sendMessage()" [disabled]="!newMessage.trim()">Envoyer</button>
+    <div class="input-area">
+      <input 
+        type="text" 
+        [(ngModel)]="newMessage" 
+        placeholder="Écrivez votre message..." 
+        (keyup.enter)="sendMessage()"
+      >
+      <button (click)="sendMessage()" [disabled]="!newMessage.trim()">
+        ➤
+      </button>
+    </div>
   </div>
 </div>

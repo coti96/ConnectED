@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { LandingComponent } from './features/landing/landing';
+import { HomeComponent } from './features/home/home';
 import { LoginComponent } from './features/auth/login/login';
 import { RegisterComponent } from './features/auth/register/register';
 import { ProfileComponent } from './features/profile/profile';
@@ -13,21 +13,31 @@ import { ManageCandidatesComponent } from './features/projects/manage/manage-can
 import { MessagesComponent } from './features/messages/list/messages';
 import { ChatComponent } from './features/messages/chat/chat';
 import { DashboardComponent } from './features/dashboard/dashboard';
+import { ProjectsShellComponent } from './features/projects/shell/projects-shell';
+import { MyProjectsComponent } from './features/projects/my-projects/my-projects';
 
 export const routes: Routes = [
-  { path: '', component: LandingComponent },
+  { path: '', component: HomeComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'dashboard', component: DashboardComponent },
   { path: 'profile', component: ProfileComponent },
   { path: 'messages', component: MessagesComponent },
   { path: 'messages/:email', component: ChatComponent },
-  { path: 'projects', component: ProjectListComponent },
-  { path: 'projects/create', component: CreateProjectComponent },
-  { path: 'projects/my-applications', component: MyApplicationsComponent }, // AVANT :id
-  { path: 'projects/:id', component: ProjectDetailComponent },
-  { path: 'projects/:id/manage', component: ManageCandidatesComponent },
-  { path: 'recommended', component: RecommendedProjectsComponent },
+  {
+    path: 'projects',
+    component: ProjectsShellComponent,
+    children: [
+      { path: '', component: ProjectListComponent },
+      { path: 'recommended', component: RecommendedProjectsComponent },
+      { path: 'my-applications', component: MyApplicationsComponent },
+      { path: 'my-projects', component: MyProjectsComponent },
+      { path: 'create', component: CreateProjectComponent },
+      { path: ':id/manage', component: ManageCandidatesComponent },
+      { path: ':id', component: ProjectDetailComponent }
+    ]
+  },
+  { path: 'recommended', redirectTo: 'projects/recommended', pathMatch: 'full' },
   // Rediriger /about vers l'accueil pour éviter l'erreur
   { path: 'about', redirectTo: '', pathMatch: 'full' },
   // Wildcard route pour attraper toutes les URLs inconnues

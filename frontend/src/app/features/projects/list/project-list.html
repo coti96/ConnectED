@@ -1,12 +1,11 @@
 <section class="projects-container">
   <div class="header">
-    <h1>Explorez les projets</h1>
+     <h1>Explorez les projets</h1>
     
     <div class="actions">
-      <!-- On ne peut créer un projet que si on est connecté et PRO ou ENCADRANT (ou étudiant selon cahier des charges) -->
-      <!-- Selon le cahier des charges, les étudiants peuvent aussi créer des projets -->
       <button *ngIf="auth.isLoggedIn()" routerLink="/projects/create" class="btn-primary">
-        + Nouveau Projet
+        <app-icon name="plus" [size]="18"></app-icon>
+        Nouveau projet
       </button>
     </div>
   </div>
@@ -20,12 +19,14 @@
         (input)="onSearch($event)"
         class="search-input"
       >
-      <span class="search-icon">🔍</span>
+      <span class="search-icon"><app-icon name="search" [size]="18"></app-icon></span>
     </div>
     
     <div class="filter-box">
       <select (change)="onFilterDomain($event)" class="filter-select">
         <option value="">Tous les domaines</option>
+        <option value="Santé">Santé</option>
+        <option value="Environnement">Environnement</option>
         <option value="Web Development">Développement Web</option>
         <option value="Mobile App">Application Mobile</option>
         <option value="Artificial Intelligence">Intelligence Artificielle</option>
@@ -44,17 +45,16 @@
   </div>
 
   <div class="projects-grid">
-    <!-- Ajout de [routerLink] sur la carte elle-même et style cursor:pointer -->
     <div *ngFor="let project of filteredProjects" class="project-card" [routerLink]="['/projects', project.id]" style="cursor: pointer;">
       <div class="card-header">
         <span class="badge status" [class.open]="project.statut === 'en_cours'">
           {{ project.statut === 'en_cours' ? 'Ouvert' : project.statut }}
         </span>
-        <span class="badge domain">{{ project.domain || 'Projet' }}</span>
+        <span class="badge domain">{{ project.domaine || project.domain || 'Projet' }}</span>
       </div>
 
-      <h3>{{ project.titre }}</h3>
-      <p class="description">{{ project.description | slice:0:120 }}...</p>
+      <h3>{{ project.titre || 'Sans titre' }}</h3>
+      <p class="description">{{ (project.description || 'Aucune description disponible') | slice:0:120 }}...</p>
 
       <div class="technologies">
         <span *ngFor="let tech of project.technologies" class="tech-tag">{{ tech }}</span>
@@ -62,14 +62,19 @@
 
       <div class="footer">
         <div class="meta">
-          <span class="places">👤 {{ project.nombre_places }} places</span>
-          <span class="deadline">📅 {{ project.deadline | date:'dd/MM/yyyy' }}</span>
+          <span class="places">
+            <app-icon name="users" [size]="16"></app-icon>
+            {{ project.nombre_places || 1 }} places
+          </span>
+          <span class="deadline">
+            <app-icon name="calendar" [size]="16"></app-icon>
+            {{ (project.deadline | date:'dd/MM/yyyy') || 'Date inconnue' }}
+          </span>
         </div>
         
         <div class="card-actions">
-          <!-- stopPropagation est important pour ne pas déclencher le lien de la carte ET le bouton -->
           <button class="btn-contact" (click)="contactCreator(project); $event.stopPropagation()">
-            ✉️
+            <app-icon name="mail" [size]="18"></app-icon>
           </button>
           <button class="btn-details">
             Voir détails

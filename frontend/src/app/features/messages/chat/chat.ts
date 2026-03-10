@@ -10,7 +10,7 @@ import { AuthService } from '../../../shared/services/auth';
   standalone: true,
   imports: [CommonModule, FormsModule, RouterModule],
   templateUrl: './chat.html',
-  styleUrls: ['./chat.scss']
+  styleUrls: ['../list/messages.scss', './chat.scss'] // Réutiliser le style de la liste
 })
 export class ChatComponent implements OnInit, AfterViewChecked {
   @ViewChild('scrollContainer') private scrollContainer!: ElementRef;

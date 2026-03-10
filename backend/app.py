@@ -30,10 +30,11 @@ def unauthorized_response(callback):
     }), 401
 
 @jwt.invalid_token_loader
-def invalid_token_callback(callback):
+def invalid_token_callback(reason):
     return jsonify({
         'ok': False,
-        'message': 'Invalid Token'
+        'message': 'Invalid Token',
+        'detail': reason
     }), 422
 
 @jwt.expired_token_loader

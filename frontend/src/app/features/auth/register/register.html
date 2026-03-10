@@ -1,50 +1,70 @@
-<section class="login-container">
-  <div class="login-card">
-    <h2>Inscription</h2>
+<div class="auth-wrapper">
+  <div class="auth-card">
+    <div class="auth-header">
+      <h2>Inscription</h2>
+      <p>Rejoignez la communauté ConnectED</p>
+    </div>
 
     <div *ngIf="errorMessage" class="error-message">
-      {{ errorMessage }}
+      <span class="icon"><app-icon name="warning" [size]="18"></app-icon></span> {{ errorMessage }}
     </div>
 
     <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
 
-      <div class="form-group">
-        <label>Nom</label>
-        <input type="text" formControlName="nom" />
-      </div>
+      <div class="form-row">
+        <div class="form-group half">
+          <label>Prénom</label>
+          <div class="input-wrapper">
+            <input type="text" formControlName="prenom" placeholder="Jean" />
+            <span class="input-icon"><app-icon name="profile" [size]="18"></app-icon></span>
+          </div>
+        </div>
 
-      <div class="form-group">
-        <label>Prénom</label>
-        <input type="text" formControlName="prenom" />
+        <div class="form-group half">
+          <label>Nom</label>
+          <div class="input-wrapper">
+            <input type="text" formControlName="nom" placeholder="Dupont" />
+            <span class="input-icon"><app-icon name="profile" [size]="18"></app-icon></span>
+          </div>
+        </div>
       </div>
 
       <div class="form-group">
         <label>Email</label>
-        <input type="email" formControlName="email" />
+        <div class="input-wrapper">
+          <input type="email" formControlName="email" placeholder="jean.dupont@example.com" />
+          <span class="input-icon"><app-icon name="mail" [size]="18"></app-icon></span>
+        </div>
       </div>
 
       <div class="form-group">
         <label>Mot de passe</label>
-        <input type="password" formControlName="password" />
+        <div class="input-wrapper">
+          <input type="password" formControlName="password" placeholder="••••••••" />
+          <span class="input-icon"><app-icon name="lock" [size]="18"></app-icon></span>
+        </div>
       </div>
 
       <div class="form-group">
         <label>Je suis</label>
-        <select formControlName="role">
-          <option value="etudiant">Étudiant</option>
-          <option value="professionnel">Professionnel</option>
-          <option value="encadrant">Encadrant</option>
-        </select>
+        <div class="input-wrapper">
+          <select formControlName="role">
+            <option value="etudiant">Étudiant</option>
+            <option value="professionnel">Professionnel</option>
+            <option value="encadrant">Encadrant</option>
+          </select>
+          <span class="input-icon"><app-icon name="chevronDown" [size]="18"></app-icon></span>
+        </div>
       </div>
 
-      <button type="submit" [disabled]="registerForm.invalid">
+      <button type="submit" [disabled]="registerForm.invalid" class="btn-primary">
         S'inscrire
       </button>
 
-      <div class="register-link">
+      <div class="auth-footer">
         Déjà un compte ? <a routerLink="/login">Se connecter</a>
       </div>
 
     </form>
   </div>
-</section>
+</div>

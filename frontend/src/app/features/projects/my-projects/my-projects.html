@@ -1,0 +1,27 @@
+<section class="container">
+  <div class="header">
+    <h1>Mes projets</h1>
+    <a routerLink="/projects/create" class="btn-primary">+ Créer un projet</a>
+  </div>
+
+  <div *ngIf="loading" class="state">Chargement…</div>
+
+  <div *ngIf="!loading && projects.length === 0" class="state">
+    Aucun projet pour le moment.
+  </div>
+
+  <div class="grid" *ngIf="!loading && projects.length > 0">
+    <div class="card" *ngFor="let p of projects">
+      <div class="top">
+        <div class="title">{{ p.titre }}</div>
+        <div class="badge">{{ p.statut === 'en_cours' ? 'Ouvert' : p.statut }}</div>
+      </div>
+      <div class="desc">{{ (p.description || '') | slice:0:120 }}...</div>
+      <div class="actions">
+        <a class="btn" [routerLink]="['/projects', p.id]">Voir détail</a>
+        <a class="btn primary" [routerLink]="['/projects', p.id, 'manage']">Gérer candidatures</a>
+      </div>
+    </div>
+  </div>
+</section>
+

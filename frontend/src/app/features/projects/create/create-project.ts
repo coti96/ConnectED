@@ -1,15 +1,16 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { ProjectService } from '../project.service';
+import { IconComponent } from '../../../shared/icon/icon';
 
 @Component({
   selector: 'app-create-project',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, RouterModule, IconComponent],
   templateUrl: './create-project.html',
-  styleUrls: ['../../profile/profile.scss'] // Réutiliser le style du profil pour la cohérence
+  styleUrls: ['../../auth/login/login.scss'] // Réutiliser le style des formulaires auth pour la cohérence
 })
 export class CreateProjectComponent {
   projectForm: FormGroup;

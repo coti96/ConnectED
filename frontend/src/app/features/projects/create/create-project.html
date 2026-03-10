@@ -1,75 +1,87 @@
-<section class="profile-container">
-  <div class="profile-card">
-    <div class="header">
+<div class="auth-wrapper">
+  <div class="auth-card" style="max-width: 800px;">
+    <div class="auth-header">
       <h2>Créer un nouveau projet</h2>
-      <button routerLink="/projects" class="btn-edit">
-        Retour
-      </button>
+      <p>Lancez votre idée et trouvez des collaborateurs</p>
     </div>
 
-    <div *ngIf="message" class="message error">
-      {{ message }}
+    <div *ngIf="message" class="error-message">
+      <span class="icon"><app-icon name="warning" [size]="18"></app-icon></span> {{ message }}
     </div>
 
     <form [formGroup]="projectForm" (ngSubmit)="onSubmit()">
       
-      <div class="section">
-        <h3>Détails du projet</h3>
-        
-        <div class="form-group">
-          <label>Titre du projet</label>
+      <div class="section-title">Détails du projet</div>
+      
+      <div class="form-group">
+        <label>Titre du projet</label>
+        <div class="input-wrapper">
           <input type="text" formControlName="titre" placeholder="Ex: Application mobile de covoiturage" />
-        </div>
-
-        <div class="form-group">
-          <label>Description complète</label>
-          <textarea formControlName="description" rows="5" placeholder="Décrivez le but du projet, les défis..."></textarea>
-        </div>
-
-        <div class="row">
-          <div class="form-group">
-            <label>Domaine</label>
-            <input type="text" formControlName="domaine" placeholder="Ex: Développement Web, IA, Data..." />
-          </div>
-          
-          <div class="form-group">
-            <label>Nombre de places</label>
-            <input type="number" formControlName="nombre_places" min="1" />
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label>Date limite (Deadline)</label>
-          <input type="date" formControlName="deadline" />
+          <span class="input-icon"><app-icon name="idea" [size]="18"></app-icon></span>
         </div>
       </div>
 
-      <!-- Compétences (Tags) -->
-      <div class="section">
-        <h3>Technologies requises</h3>
-        <p class="subtitle">Ajoutez les technos que vous recherchez (Appuyez sur Entrée)</p>
-        
-        <div class="tags-input">
+      <div class="form-group">
+        <label>Domaine</label>
+        <div class="input-wrapper">
+          <input type="text" formControlName="domaine" placeholder="Ex: Développement Web, IA, Data..." />
+          <span class="input-icon"><app-icon name="globe" [size]="18"></app-icon></span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Description complète</label>
+        <div class="input-wrapper">
+          <textarea formControlName="description" rows="5" placeholder="Décrivez le but du projet, les défis..."></textarea>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group half">
+          <label>Nombre de places</label>
+          <div class="input-wrapper">
+            <input type="number" formControlName="nombre_places" min="1" placeholder="1" />
+            <span class="input-icon"><app-icon name="users" [size]="18"></app-icon></span>
+          </div>
+        </div>
+
+        <div class="form-group half">
+          <label>Date limite (Deadline)</label>
+          <div class="input-wrapper">
+            <input type="date" formControlName="deadline" />
+          </div>
+        </div>
+      </div>
+
+      <div class="section-title">Technologies requises</div>
+      <p class="subtitle">Ajoutez les technos que vous recherchez (Appuyez sur Entrée)</p>
+      
+      <div class="form-group">
+        <div class="input-wrapper">
           <input 
             type="text" 
             placeholder="Ajouter une techno (ex: React) + Entrée" 
             (keydown.enter)="addTech($event); $event.preventDefault()"
           />
-        </div>
-        
-        <div class="tags-list">
-          <span *ngFor="let tech of technologies" class="tag">
-            {{ tech }}
-            <span class="remove" (click)="removeTech(tech)">×</span>
-          </span>
-          <span *ngIf="technologies.length === 0" class="no-tags">Aucune technologie ajoutée</span>
+          <span class="input-icon"><app-icon name="keyboard" [size]="18"></app-icon></span>
         </div>
       </div>
+      
+      <div class="tags-list">
+        <span *ngFor="let tech of technologies" class="tag">
+          {{ tech }}
+          <span class="remove" (click)="removeTech(tech)">×</span>
+        </span>
+        <span *ngIf="technologies.length === 0" class="no-tags">Aucune technologie ajoutée</span>
+      </div>
 
-      <button type="submit" class="btn-save" [disabled]="projectForm.invalid">
-        Publier le projet
-      </button>
+      <div class="form-actions">
+        <button type="button" routerLink="/projects" class="btn-secondary">Annuler</button>
+        <button type="submit" class="btn-primary" [disabled]="projectForm.invalid">
+          Publier le projet
+        </button>
+      </div>
 
     </form>
   </div>
-</section>
+</div>

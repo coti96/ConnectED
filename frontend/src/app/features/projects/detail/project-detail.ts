@@ -4,11 +4,12 @@ import { ActivatedRoute, RouterModule } from '@angular/router';
 import { ProjectService } from '../project.service';
 import { ApplicationService } from '../application.service';
 import { AuthService } from '../../../shared/services/auth';
+import { IconComponent } from '../../../shared/icon/icon';
 
 @Component({
   selector: 'app-project-detail',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, IconComponent],
   templateUrl: './project-detail.html',
   styleUrls: ['./project-detail.scss']
 })
@@ -63,7 +64,7 @@ export class ProjectDetailComponent implements OnInit {
       next: (res: any) => {
         // On vérifie si une candidature existe pour ce projet
         if (res.applications && Array.isArray(res.applications)) {
-          this.hasApplied = res.applications.some((app: any) => app.project_id === this.project.id);
+          this.hasApplied = res.applications.some((app: any) => app?.project?.id === this.project.id);
         }
       },
       error: (err) => console.error(err)

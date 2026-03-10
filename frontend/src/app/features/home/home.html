@@ -1,0 +1,95 @@
+<ng-container *ngIf="auth.isLoggedIn(); else guest">
+  <section class="home">
+    <aside class="col left">
+      <div class="card profile-card">
+        <div class="avatar">{{ initial() }}</div>
+        <div class="name">
+          {{ auth.currentUser()?.prenom }} {{ auth.currentUser()?.nom }}
+        </div>
+        <div class="email">{{ auth.currentUser()?.email }}</div>
+        <a routerLink="/profile" class="link">Voir mon profil</a>
+      </div>
+
+      <div class="card stats-card" *ngIf="dashboard?.stats">
+        <a class="stat-row" routerLink="/projects/my-applications" *ngIf="auth.currentUser()?.role === 'student'">
+          <span class="label">Candidatures</span>
+          <span class="value">{{ dashboard.stats.applications_sent }}</span>
+        </a>
+        <a class="stat-row" routerLink="/projects/my-projects" *ngIf="auth.currentUser()?.role === 'creator' || auth.currentUser()?.role === 'professional'">
+          <span class="label">Projets créés</span>
+          <span class="value">{{ dashboard.stats.projects_created }}</span>
+        </a>
+        <a class="stat-row" routerLink="/messages">
+          <span class="label">Messages</span>
+          <span class="value">{{ dashboard.stats.messages_received }}</span>
+        </a>
+      </div>
+    </aside>
+
+    <main class="col center">
+      <div class="card composer">
+        <div class="composer-top">
+          <div class="composer-avatar">{{ initial() }}</div>
+          <div class="composer-placeholder">Partager une mise à jour…</div>
+        </div>
+        <div class="composer-actions">
+          <button class="chip" disabled>Projet</button>
+          <button class="chip" disabled>Question</button>
+          <button class="chip" disabled>Annonce</button>
+        </div>
+      </div>
+
+      <div class="card feed">
+        <div class="feed-title">Activité</div>
+
+        <div *ngIf="loading" class="state">Chargement…</div>
+        <div *ngIf="!loading && error" class="state error">{{ error }}</div>
+
+        <div *ngIf="!loading && !error && (!dashboard?.recent_activity || dashboard.recent_activity.length === 0)" class="state">
+          Aucune activité récente.
+        </div>
+
+        <div class="feed-list" *ngIf="!loading && !error && dashboard?.recent_activity?.length">
+          <div class="feed-item" *ngFor="let item of dashboard.recent_activity">
+            <div class="feed-icon">
+              <app-icon [name]="item.type === 'application' ? 'applications' : 'projects'" [size]="18"></app-icon>
+            </div>
+            <div class="feed-body">
+              <div class="feed-line">
+                <span class="feed-label">{{ item.type === 'application' ? 'Candidature' : 'Projet' }}</span>
+                <strong class="feed-title-text">{{ item.title }}</strong>
+              </div>
+              <div class="feed-date">{{ item.date | date:'dd/MM/yyyy HH:mm' }}</div>
+            </div>
+            <div class="feed-badge" *ngIf="item.status">
+              {{ item.status === 'PENDING' ? 'En attente' : (item.status === 'ACCEPTED' ? 'Accepté' : 'Refusé') }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <aside class="col right">
+      <div class="card rec-card">
+        <div class="rec-title">Projets recommandés</div>
+
+        <div *ngIf="recommendations.length === 0" class="state">
+          Aucun projet recommandé pour le moment.
+        </div>
+
+        <div class="rec-list" *ngIf="recommendations.length > 0">
+          <a class="rec-item" *ngFor="let p of recommendations" [routerLink]="['/projects', p.id]">
+            <div class="rec-name">{{ p.titre }}</div>
+            <div class="rec-meta">{{ p.domaine || p.domain || 'Projet' }}</div>
+          </a>
+        </div>
+
+        <a routerLink="/projects" class="rec-more">Voir tous les projets</a>
+      </div>
+    </aside>
+  </section>
+</ng-container>
+
+<ng-template #guest>
+  <app-landing></app-landing>
+</ng-template>

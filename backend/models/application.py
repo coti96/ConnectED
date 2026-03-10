@@ -61,6 +61,7 @@ class ApplicationModel:
     def get_my_applications(email):
         driver = db.get_db()
         with driver.session() as session:
+            # Récupération plus robuste des propriétés
             query = """
             MATCH (u:User {email: $email})-[r:APPLIED_TO]->(p:Project)
             RETURN p, r
@@ -69,19 +70,34 @@ class ApplicationModel:
             
             my_apps = []
             for record in result:
-                project = dict(record['p'].items())
-                app_data = dict(record['r'].items())
+                # Convertir le noeud Project en dictionnaire
+                project_node = record['p']
+                # Convertir les propriétés du noeud en dictionnaire
+                project = dict(project_node.items())
                 
-                # Nettoyage
-                project['id'] = record['p'].element_id
+                # Récupérer l'ID (soit via 'id' property si elle existe, soit via element_id)
+                # IMPORTANT: Neo4j Python driver 5.x utilise element_id pour l'ID interne
+                if 'id' not in project:
+                    project['id'] = project_node.element_id
+                
+                # Convertir la relation APPLIED_TO en dictionnaire
+                app_rel = record['r']
+                app_data = dict(app_rel.items())
+                
+                # Nettoyage des dates
                 for key in ['created_at', 'deadline']:
-                    if key in project: project[key] = str(project[key])
-                if 'date' in app_data: app_data['date'] = str(app_data['date'])
+                    if key in project: 
+                        project[key] = str(project[key])
+                        
+                if 'date' in app_data: 
+                    app_data['date'] = str(app_data['date'])
                 
+                # Construction de l'objet de retour
                 my_apps.append({
                     'project': project,
                     'status': app_data.get('status', 'PENDING'),
-                    'date': app_data.get('date')
+                    'date': app_data.get('date'),
+                    'motivation_message': app_data.get('motivation_message', '')
                 })
             return my_apps
 

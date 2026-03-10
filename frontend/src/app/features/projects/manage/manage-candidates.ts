@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { ApplicationService } from '../application.service';
 import { ProjectService } from '../project.service';
+import { IconComponent } from '../../../shared/icon/icon';
 
 @Component({
   selector: 'app-manage-candidates',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, IconComponent],
   templateUrl: './manage-candidates.html',
   styleUrls: ['./manage-candidates.scss']
 })
@@ -58,5 +59,9 @@ export class ManageCandidatesComponent implements OnInit {
       },
       error: (err) => alert('Erreur mise à jour statut')
     });
+  }
+
+  getCount(status: string): number {
+    return this.applications.filter(app => app.status === status).length;
   }
 }

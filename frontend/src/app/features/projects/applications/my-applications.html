@@ -1,35 +1,51 @@
 <section class="projects-container">
   <div class="header">
     <h1>Mes Candidatures</h1>
-    <button routerLink="/projects" class="btn-primary">Chercher d'autres projets</button>
+    <a routerLink="/projects" class="btn-primary">Chercher d'autres projets</a>
   </div>
 
-  <div *ngIf="loading" class="loading">Chargement...</div>
-
-  <div *ngIf="!loading && applications.length === 0" class="empty">
-    Vous n'avez pas encore postulé à des projets.
+  <div *ngIf="loading" class="loading">
+    <div class="spinner"></div>
+    <p>Chargement de vos candidatures...</p>
   </div>
 
-  <div class="projects-grid">
-    <div *ngFor="let app of applications" class="project-card">
+  <div *ngIf="!loading && applications.length === 0" class="empty-state">
+    <div class="empty-icon"><app-icon name="emptyInbox" [size]="28"></app-icon></div>
+    <h3>Aucune candidature pour le moment</h3>
+    <p>Explorez les projets disponibles et postulez pour rejoindre une équipe !</p>
+    <a routerLink="/projects" class="btn-secondary">Voir les projets</a>
+  </div>
+
+  <div class="projects-grid" *ngIf="!loading && applications.length > 0">
+    <div *ngFor="let app of applications" class="project-card application-card">
       <div class="card-header">
-        <span class="badge" [ngClass]="{
-          'status-pending': app.status === 'PENDING',
-          'status-accepted': app.status === 'ACCEPTED',
-          'status-rejected': app.status === 'REJECTED'
+        <span class="status-badge" [ngClass]="{
+          'pending': app.status === 'PENDING',
+          'accepted': app.status === 'ACCEPTED',
+          'rejected': app.status === 'REJECTED'
         }">
           {{ app.status === 'PENDING' ? 'En attente' : (app.status === 'ACCEPTED' ? 'Accepté' : 'Refusé') }}
         </span>
-        <span class="date">📅 {{ app.date | date:'dd/MM/yyyy' }}</span>
+        <span class="date">
+          <app-icon name="calendar" [size]="16"></app-icon>
+          {{ app.date | date:'dd/MM/yyyy' }}
+        </span>
       </div>
 
-      <h3>{{ app.project.titre }}</h3>
-      <p class="description">{{ app.project.description | slice:0:100 }}...</p>
+      <div class="card-body">
+        <h3>{{ app.project.titre }}</h3>
+        <p class="description">{{ app.project.description }}</p>
+        
+        <div class="motivation" *ngIf="app.motivation_message">
+          <strong>Votre message :</strong>
+          <p>"{{ app.motivation_message }}"</p>
+        </div>
+      </div>
 
-      <div class="footer">
-        <button class="btn-details" [routerLink]="['/projects', app.project.id]">
+      <div class="card-footer">
+        <a [routerLink]="['/projects', app.project.id]" class="btn-details">
           Voir le projet
-        </button>
+        </a>
       </div>
     </div>
   </div>

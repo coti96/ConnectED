@@ -36,6 +36,9 @@
 
   .actions {
     .btn-login {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
       background: #6b2cd4;
       color: white;
       padding: 0.6rem 1.3rem;
@@ -61,6 +64,9 @@
       gap: 1.5rem;
 
       .profile-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
         font-weight: 600;
         color: #4a3a7c;
         text-decoration: none;

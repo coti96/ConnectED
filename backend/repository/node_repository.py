@@ -194,9 +194,6 @@ class NodeRepository:
     def get_technologies_filtered(self, libelle=None, domain_id=None, used_in_project_id=None):
         """
         Filtre les technologies selon différents critères.
-        - libelle            : recherche partielle (CONTAINS) sur le libelle
-        - domain_id          : technologies appartenant à un domaine donné
-        - used_in_project_id : technologies utilisées par un projet donné
         """
         conditions = []
         params = {}
@@ -208,7 +205,8 @@ class NodeRepository:
             params["domain_id"] = domain_id
 
         if used_in_project_id:
-            match_clauses += "\nMATCH (:Project {id: $used_in_project_id})-[:USES]->(n)"
+            # Correction: REQUIRES_TECH au lieu de USES
+            match_clauses += "\nMATCH (:Project {id: $used_in_project_id})-[:REQUIRES_TECH]->(n)"
             params["used_in_project_id"] = used_in_project_id
 
         if libelle:
@@ -231,11 +229,6 @@ class NodeRepository:
     def get_projects_filtered(self, titre=None, localisation=None, domain_id=None, technology_id=None, statut=None):
         """
         Filtre les projets selon différents critères.
-        - titre         : recherche partielle (CONTAINS) sur le titre
-        - localisation  : recherche partielle sur la localisation
-        - domain_id     : projets appartenant à un domaine donné
-        - technology_id : projets utilisant une technologie donnée
-        - statut        : statut exact du projet
         """
         conditions = []
         params = {}
@@ -247,7 +240,8 @@ class NodeRepository:
             params["domain_id"] = domain_id
 
         if technology_id:
-            match_clauses += "\nMATCH (n)-[:USES]->(:Technology {id: $technology_id})"
+            # Correction: REQUIRES_TECH au lieu de USES
+            match_clauses += "\nMATCH (n)-[:REQUIRES_TECH]->(:Technology {id: $technology_id})"
             params["technology_id"] = technology_id
 
         if titre:
@@ -278,9 +272,6 @@ class NodeRepository:
     def get_users_filtered(self, name=None, technology_id=None, project_id=None):
         """
         Filtre les utilisateurs selon différents critères.
-        - name          : recherche partielle (CONTAINS) sur le nom
-        - technology_id : utilisateurs possédant une technologie donnée
-        - project_id    : utilisateurs associés à un projet donné
         """
         conditions = []
         params = {}
@@ -288,15 +279,17 @@ class NodeRepository:
         match_clauses = "MATCH (n:User)"
 
         if technology_id:
-            match_clauses = "MATCH (n:User)-[:HAS_TECHNOLOGY]->(:Technology {id: $technology_id})"
+            # Correction: HAS_TECH au lieu de HAS_TECHNOLOGY
+            match_clauses = "MATCH (n:User)-[:HAS_TECH]->(:Technology {id: $technology_id})"
             params["technology_id"] = technology_id
 
         if project_id:
-            match_clauses += "\nMATCH (n)-[:PARTICIPATES_IN]->(:Project {id: $project_id})"
+            # Correction: APPLIED_TO au lieu de PARTICIPATES_IN (pour l'instant)
+            match_clauses += "\nMATCH (n)-[:APPLIED_TO]->(:Project {id: $project_id})"
             params["project_id"] = project_id
 
         if name:
-            conditions.append("toLower(n.name) CONTAINS toLower($name)")
+            conditions.append("toLower(n.nom) CONTAINS toLower($name) OR toLower(n.prenom) CONTAINS toLower($name)")
             params["name"] = name
 
         where_clause = ("WHERE " + " AND ".join(conditions)) if conditions else ""
@@ -305,7 +298,7 @@ class NodeRepository:
         {match_clauses}
         {where_clause}
         RETURN DISTINCT n
-        ORDER BY n.name
+        ORDER BY n.nom
         """
 
         with self.driver.session() as session:
@@ -324,8 +317,9 @@ class NodeRepository:
 
         filter_cypher = ("WHERE " + " AND ".join(filters)) if filters else ""
 
+        # Note: On utilise REQUIRES_TECH au lieu de USES pour être cohérent avec le seed
         query = f"""
-        MATCH (u:User {{id: $user_id}})-[:HAS_TECHNOLOGY]->(t:Technology)<-[:USES]-(p:Project)
+        MATCH (u:User {{id: $user_id}})-[:HAS_TECH]->(t:Technology)<-[:REQUIRES_TECH]-(p:Project)
         {filter_cypher}
         RETURN DISTINCT p
         LIMIT $max_results

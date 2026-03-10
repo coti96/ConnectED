@@ -120,14 +120,18 @@ class ProjectModel:
     def get_recommended(email):
         driver = db.get_db()
         with driver.session() as session:
+            # 1. On cherche d'abord des correspondances directes (via technologies)
             query = """
             MATCH (u:User {email: $email})
             MATCH (u)-[:HAS_TECH]->(t:Technology)<-[:REQUIRES_TECH]-(p:Project)
-            WHERE NOT (u)-[:CREATED_BY]->(p) AND p.statut = 'en_cours'
+            WHERE NOT (u)-[:CREATED_BY]->(p) 
+              AND (p.statut = 'en_cours' OR p.statut IS NULL)
             
-            WITH p, collect(t.libelle) as common_techs, count(t) as score
+            WITH p, collect(DISTINCT t.libelle) as common_techs, count(DISTINCT t) as score
+            
             OPTIONAL MATCH (p)-[:REQUIRES_TECH]->(all_t:Technology)
-            WITH p, common_techs, score, collect(all_t.libelle) as all_techs
+            WITH p, common_techs, score, collect(DISTINCT all_t.libelle) as all_techs
+            
             OPTIONAL MATCH (p)<-[:CREATED_BY]-(creator:User)
             
             RETURN p, score, common_techs, all_techs, creator
@@ -155,4 +159,35 @@ class ProjectModel:
                         'prenom': record["creator"].get('prenom')
                     }
                 recommendations.append(data)
+                
+            # 2. Si aucune recommandation par techno, on renvoie les projets récents par défaut
+            if not recommendations:
+                print(f"⚠️ Aucune recommandation par techno pour {email}, chargement des projets récents...")
+                fallback_query = """
+                MATCH (p:Project)
+                WHERE (p.statut = 'en_cours' OR p.statut IS NULL)
+                OPTIONAL MATCH (p)-[:REQUIRES_TECH]->(t:Technology)
+                OPTIONAL MATCH (p)<-[:CREATED_BY]-(creator:User)
+                RETURN p, collect(DISTINCT t.libelle) as all_techs, creator
+                ORDER BY p.created_at DESC LIMIT 5
+                """
+                result = session.run(fallback_query)
+                for record in result:
+                    data = dict(record["p"].items())
+                    for key, value in data.items():
+                        if hasattr(value, 'iso_format'):
+                            data[key] = value.iso_format()
+                            
+                    data['id'] = record["p"].element_id
+                    data['match_score'] = 0 # Pas de match spécifique
+                    data['common_technologies'] = []
+                    data['technologies'] = record["all_techs"]
+                    
+                    if record["creator"]:
+                        data['creator'] = {
+                            'nom': record["creator"].get('nom'),
+                            'prenom': record["creator"].get('prenom')
+                        }
+                    recommendations.append(data)
+
             return recommendations

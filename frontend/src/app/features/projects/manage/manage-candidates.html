@@ -1,42 +1,89 @@
 <div class="manage-container">
-  <div class="header" *ngIf="project">
-    <h1>Gestion des candidatures</h1>
-    <h2 class="subtitle">Projet : {{ project.titre }}</h2>
-    <button [routerLink]="['/projects', projectId]" class="btn-back">← Retour au projet</button>
-  </div>
-
-  <div *ngIf="loading" class="loading">Chargement des candidats...</div>
-
-  <div *ngIf="!loading && applications.length === 0" class="empty">
-    Aucune candidature reçue pour le moment.
-  </div>
-
-  <div class="candidates-list" *ngIf="applications.length > 0">
-    <div *ngFor="let app of applications" class="candidate-card" [class.accepted]="app.status === 'ACCEPTED'">
-      <div class="candidate-info">
-        <h3>{{ app.applicant.prenom }} {{ app.applicant.nom }}</h3>
-        <p class="role">{{ app.applicant.role }}</p>
-        <p class="email">{{ app.applicant.email }}</p>
-        
-        <div class="techs" *ngIf="app.applicant.technologies">
-          <span *ngFor="let tech of app.applicant.technologies" class="tech-tag">{{ tech }}</span>
-        </div>
+  <div class="header-section" *ngIf="project">
+    <div class="title-group">
+      <button [routerLink]="['/projects', projectId]" class="btn-back">
+        <app-icon name="back" [size]="18"></app-icon>
+      </button>
+      <div>
+        <h1>Gestion des candidatures</h1>
+        <p class="subtitle">Projet : <strong>{{ project.titre }}</strong></p>
       </div>
+    </div>
+    <div class="stats-summary" *ngIf="applications.length > 0">
+      <div class="stat-item">
+        <span class="count">{{ applications.length }}</span>
+        <span class="label">Total</span>
+      </div>
+      <div class="stat-item pending">
+        <span class="count">{{ getCount('PENDING') }}</span>
+        <span class="label">En attente</span>
+      </div>
+      <div class="stat-item accepted">
+        <span class="count">{{ getCount('ACCEPTED') }}</span>
+        <span class="label">Acceptés</span>
+      </div>
+    </div>
+  </div>
 
-      <div class="actions">
+  <div *ngIf="loading" class="loading-state">
+    <div class="spinner"></div>
+    <p>Chargement des candidats...</p>
+  </div>
+
+  <div *ngIf="!loading && applications.length === 0" class="empty-state">
+    <div class="icon"><app-icon name="emptyInbox" [size]="40"></app-icon></div>
+    <h3>Aucune candidature reçue</h3>
+    <p>Partagez votre projet pour attirer des talents !</p>
+  </div>
+
+  <div class="candidates-grid" *ngIf="!loading && applications.length > 0">
+    <div *ngFor="let app of applications" class="candidate-card" [ngClass]="app.status">
+      <div class="card-header">
+        <div class="avatar">
+          {{ app.applicant.prenom?.charAt(0) }}{{ app.applicant.nom?.charAt(0) }}
+        </div>
+        <div class="info">
+          <h3>{{ app.applicant.prenom }} {{ app.applicant.nom }}</h3>
+          <p class="role">
+            <app-icon [name]="app.applicant.role === 'etudiant' ? 'graduationCap' : 'projects'" [size]="16"></app-icon>
+            {{ app.applicant.role === 'etudiant' ? 'Étudiant' : 'Professionnel' }}
+          </p>
+        </div>
         <div class="status-badge" [ngClass]="app.status">
           {{ app.status === 'PENDING' ? 'En attente' : (app.status === 'ACCEPTED' ? 'Accepté' : 'Refusé') }}
         </div>
+      </div>
 
-        <div class="buttons" *ngIf="app.status === 'PENDING'">
-          <button [routerLink]="['/messages', app.applicant.email]" class="btn-contact">💬 Discussion</button>
-          <button (click)="updateStatus(app.applicant.email, 'ACCEPTED')" class="btn-accept">✅ Accepter</button>
-          <button (click)="updateStatus(app.applicant.email, 'REJECTED')" class="btn-reject">❌ Refuser</button>
+      <div class="card-body">
+        <div class="email">
+          <span class="icon"><app-icon name="mail" [size]="16"></app-icon></span> {{ app.applicant.email }}
         </div>
         
-        <div class="buttons" *ngIf="app.status !== 'PENDING'">
-          <button (click)="updateStatus(app.applicant.email, 'PENDING')" class="btn-reset">Réinitialiser</button>
+        <div class="techs" *ngIf="app.applicant.technologies && app.applicant.technologies.length > 0">
+          <span *ngFor="let tech of app.applicant.technologies" class="tech-tag">{{ tech }}</span>
         </div>
+        <div class="no-techs" *ngIf="!app.applicant.technologies || app.applicant.technologies.length === 0">
+          Aucune compétence renseignée
+        </div>
+      </div>
+
+      <div class="card-actions">
+        <button [routerLink]="['/messages', app.applicant.email]" class="btn-action contact">
+          <span class="icon"><app-icon name="messages" [size]="16"></app-icon></span> Discuter
+        </button>
+        
+        <div class="decision-buttons" *ngIf="app.status === 'PENDING'">
+          <button (click)="updateStatus(app.applicant.email, 'ACCEPTED')" class="btn-action accept">
+            <span class="icon"><app-icon name="check" [size]="16"></app-icon></span> Accepter
+          </button>
+          <button (click)="updateStatus(app.applicant.email, 'REJECTED')" class="btn-action reject">
+            <span class="icon"><app-icon name="x" [size]="16"></app-icon></span> Refuser
+          </button>
+        </div>
+        
+        <button *ngIf="app.status !== 'PENDING'" (click)="updateStatus(app.applicant.email, 'PENDING')" class="btn-action reset">
+          <span class="icon"><app-icon name="refresh" [size]="16"></app-icon></span> Changer d'avis
+        </button>
       </div>
     </div>
   </div>

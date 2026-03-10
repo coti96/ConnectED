@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { RouterModule, ActivatedRoute, Router } from '@angular/router';
 import { MessageService } from '../message.service';
 import { AuthService } from '../../../shared/services/auth';
+import { IconComponent } from '../../../shared/icon/icon';
 
 @Component({
   selector: 'app-messages',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, IconComponent],
   templateUrl: './messages.html',
   styleUrls: ['./messages.scss']
 })

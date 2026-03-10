@@ -4,11 +4,12 @@ import { RouterModule, Router, NavigationEnd } from '@angular/router';
 import { ProjectService } from '../project.service';
 import { AuthService } from '../../../shared/services/auth';
 import { Subscription, filter } from 'rxjs';
+import { IconComponent } from '../../../shared/icon/icon';
 
 @Component({
   selector: 'app-project-list',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, IconComponent],
   templateUrl: './project-list.html',
   styleUrls: ['./project-list.scss']
 })
@@ -36,10 +37,8 @@ export class ProjectListComponent implements OnInit, OnDestroy {
 
   loadProjects() {
     this.loading = true;
-    console.log('Chargement des projets...');
     this.projectService.getProjects().subscribe({
       next: (res: any) => {
-        console.log('Projets reçus:', res);
         this.projects = res.projects || [];
         this.filteredProjects = this.projects;
         this.loading = false;

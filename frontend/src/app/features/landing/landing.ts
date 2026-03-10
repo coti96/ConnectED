@@ -1,13 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../shared/services/auth';
+import { CommonModule } from '@angular/common';
+import { IconComponent } from '../../shared/icon/icon';
 
 @Component({
   selector: 'app-landing',
   standalone: true,
-  imports: [RouterModule],
+  imports: [RouterModule, CommonModule, IconComponent],
   templateUrl: './landing.html',
   styleUrls: ['./landing.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class LandingComponent implements OnInit {
 
@@ -17,11 +20,8 @@ export class LandingComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // Si l'utilisateur est déjà connecté, on le redirige vers le Dashboard
-    if (this.auth.isLoggedIn()) {
-      console.log('User logged in, redirecting to dashboard');
-      this.router.navigate(['/dashboard']);
-    }
+    // On ne redirige plus automatiquement vers le dashboard
+    // L'utilisateur doit pouvoir voir la landing page même s'il est connecté
   }
 
   goToLogin() {

@@ -4,7 +4,9 @@
   </div>
 
   <nav class="links">
+    <a routerLink="/">Accueil</a>
     <a routerLink="/projects">Projets</a>
+    <a routerLink="/projects/recommended" *ngIf="auth.isLoggedIn()">Recommandés</a>
     <!-- On enlève le lien À propos qui cause l'erreur -->
     <!-- <a routerLink="/about">À propos</a> -->
   </nav>
@@ -16,21 +18,30 @@
 
     <div *ngIf="auth.isLoggedIn()" class="user-actions">
       <!-- LIENS GÉNÉRAUX -->
-      <a routerLink="/messages" class="profile-link">💬 Messages</a>
+      <a routerLink="/messages" class="profile-link">
+        <app-icon name="messages" [size]="18"></app-icon>
+        <span>Messages</span>
+      </a>
       
       <!-- LIENS ÉTUDIANTS -->
       <a *ngIf="auth.currentUser()?.role === 'student'" routerLink="/projects/my-applications" class="profile-link">
-        📋 Mes Candidatures
+        <app-icon name="applications" [size]="18"></app-icon>
+        <span>Mes candidatures</span>
       </a>
 
       <!-- LIENS CRÉATEURS / PROS -->
-      <a *ngIf="auth.currentUser()?.role === 'creator' || auth.currentUser()?.role === 'professional'" routerLink="/projects/manage" class="profile-link">
-        🛠️ Gérer mes projets
+      <a *ngIf="auth.currentUser()?.role === 'creator' || auth.currentUser()?.role === 'professional'" routerLink="/projects/my-projects" class="profile-link">
+        <app-icon name="projects" [size]="18"></app-icon>
+        <span>Mes projets</span>
       </a>
 
-      <a routerLink="/profile" class="profile-link">👤 Mon Profil</a>
+      <a routerLink="/profile" class="profile-link">
+        <app-icon name="profile" [size]="18"></app-icon>
+        <span>Mon profil</span>
+      </a>
       
       <button (click)="auth.logout()" class="btn-login logout">
+        <app-icon name="logout" [size]="18"></app-icon>
         Déconnexion
       </button>
     </div>

@@ -2,13 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { ApplicationService } from '../application.service';
+import { IconComponent } from '../../../shared/icon/icon';
 
 @Component({
   selector: 'app-my-applications',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, IconComponent],
   templateUrl: './my-applications.html',
-  styleUrls: ['../list/project-list.scss'] // Réutiliser le style des projets
+  styleUrls: ['../list/project-list.scss', './my-applications.scss'] // Réutiliser le style des projets
 })
 export class MyApplicationsComponent implements OnInit {
   applications: any[] = [];

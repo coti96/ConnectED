@@ -54,7 +54,7 @@ def login():
             "nom": user_node.get('nom'),
             "prenom": user_node.get('prenom')
         }
-        access_token = create_access_token(identity=identity)
+        access_token = create_access_token(identity=identity["email"])
         
         return jsonify({
             "message": "Connexion réussie",

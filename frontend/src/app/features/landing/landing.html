@@ -1,9 +1,17 @@
 <!-- HERO SECTION -->
 <section class="hero-container">
+  <div class="hero-bg">
+    <div class="circle circle-1"></div>
+    <div class="circle circle-2"></div>
+  </div>
+  
   <div class="hero-content">
-    <span class="hero-badge">Nouvelle plateforme collaborative</span>
+    <span class="hero-badge">
+      <app-icon name="badge" [size]="16"></app-icon>
+      Nouvelle plateforme collaborative
+    </span>
 
-    <h1 class="hero-title">Connectez-vous pour créer l'avenir</h1>
+    <h1 class="hero-title">Connectez-vous pour <br><span class="highlight">créer l'avenir</span></h1>
 
     <p class="hero-subtitle">
       ConnectED réunit étudiants, professionnels et encadrants autour de projets
@@ -11,73 +19,92 @@
       de correspondance.
     </p>
 
-    <!-- BOUTONS SIMPLIFIÉS ET ACCESSIBLES -->
     <div class="hero-actions">
-      <!-- Utilisation propre de routerLink -->
       <a routerLink="/register" class="cta-button primary">Commencer maintenant</a>
       <a routerLink="/projects" class="cta-button secondary">Découvrir les projets</a>
+    </div>
+
+    <div class="hero-stats">
+      <div class="stat">
+        <span class="number">500+</span>
+        <span class="label">Étudiants</span>
+      </div>
+      <div class="stat">
+        <span class="number">120+</span>
+        <span class="label">Projets</span>
+      </div>
+      <div class="stat">
+        <span class="number">50+</span>
+        <span class="label">Partenaires</span>
+      </div>
+    </div>
+  </div>
+  
+  <div class="hero-image">
+    <!-- Placeholder visuel moderne (représentation abstraite de connexion) -->
+    <div class="abstract-visual">
+      <div class="card card-1">
+        <span class="icon"><app-icon name="idea" [size]="18"></app-icon></span>
+        <div class="lines">
+          <span class="line short"></span>
+          <span class="line long"></span>
+        </div>
+      </div>
+      <div class="card card-2">
+        <span class="icon"><app-icon name="projects" [size]="18"></app-icon></span>
+        <div class="lines">
+          <span class="line short"></span>
+          <span class="line long"></span>
+        </div>
+      </div>
+      <div class="connection-line"></div>
+      <div class="user-avatar user-1">M</div>
+      <div class="user-avatar user-2">J</div>
+      <div class="user-avatar user-3">S</div>
     </div>
   </div>
 </section>
 
 <!-- WHY SECTION -->
 <section class="why">
-  <h2>Pourquoi choisir ConnectED ?</h2>
+  <div class="section-header">
+    <span class="subtitle">Fonctionnalités</span>
+    <h2>Pourquoi choisir ConnectED ?</h2>
+    <p>Tout ce dont vous avez besoin pour réussir vos projets collaboratifs.</p>
+  </div>
 
   <div class="features">
-    <div class="feature">
+    <div class="feature-card">
+      <div class="icon-wrapper"><app-icon name="puzzle" [size]="22"></app-icon></div>
       <h3>Connexions intelligentes</h3>
-      <p>Trouvez des collaborateurs selon vos compétences et centres d'intérêt.</p>
+      <p>Notre algorithme vous recommande les meilleurs profils et projets selon vos compétences.</p>
     </div>
 
-    <div class="feature">
+    <div class="feature-card">
+      <div class="icon-wrapper"><app-icon name="projects" [size]="22"></app-icon></div>
       <h3>Projets innovants</h3>
-      <p>Publiez et découvrez des projets passionnants dans tous les domaines.</p>
+      <p>Accédez à une banque de projets variés : Tech, Design, Marketing, et bien plus encore.</p>
     </div>
 
-    <div class="feature">
-      <h3>Proximité géographique</h3>
-      <p>Collaborez avec des personnes proches de votre localisation.</p>
+    <div class="feature-card">
+      <div class="icon-wrapper"><app-icon name="pin" [size]="22"></app-icon></div>
+      <h3>Proximité</h3>
+      <p>Trouvez des collaborateurs près de chez vous ou travaillez à distance facilement.</p>
     </div>
 
-    <div class="feature">
-      <h3>Notifications intelligentes</h3>
-      <p>Recevez des alertes pour des projets qui vous correspondent.</p>
-    </div>
-  </div>
-</section>
-
-<!-- TESTIMONIALS SECTION -->
-<section class="testimonials">
-  <h2>Ce que disent nos utilisateurs</h2>
-
-  <div class="cards">
-    <div class="card">
-      <div class="avatar">MD</div>
-      <h3>Marie Dubois</h3>
-      <p class="role">Étudiante en informatique</p>
-      <p class="text">“Grâce à ConnectED, j’ai trouvé une équipe fantastique pour mon projet de fin d’études !”</p>
-    </div>
-
-    <div class="card">
-      <div class="avatar">TM</div>
-      <h3>Thomas Martin</h3>
-      <p class="role">Développeur Senior</p>
-      <p class="text">“Une plateforme excellente pour partager mon expertise et encadrer de jeunes talents.”</p>
-    </div>
-
-    <div class="card">
-      <div class="avatar">SC</div>
-      <h3>Sophie Chen</h3>
-      <p class="role">Cheffe de projet</p>
-      <p class="text">“L’algorithme de correspondance est très précis, j’ai rapidement trouvé les bonnes personnes.”</p>
+    <div class="feature-card">
+      <div class="icon-wrapper"><app-icon name="bell" [size]="22"></app-icon></div>
+      <h3>Suivi temps réel</h3>
+      <p>Restez informé des nouvelles opportunités grâce aux notifications intelligentes.</p>
     </div>
   </div>
 </section>
-
 
 <!-- CTA SECTION -->
-<section class="cta">
-  <h2>Prêt à rejoindre la communauté ?</h2>
-  <button class="btn-primary">Rejoindre ConnectED</button>
+<section class="cta-section">
+  <div class="cta-content">
+    <h2>Prêt à lancer votre prochain projet ?</h2>
+    <p>Rejoignez la communauté ConnectED dès aujourd'hui et transformez vos idées en réalité.</p>
+    <a routerLink="/register" class="btn-white">Créer un compte gratuit</a>
+  </div>
 </section>

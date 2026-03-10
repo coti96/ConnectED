@@ -24,7 +24,8 @@
   <div class="projects-grid">
     <div *ngFor="let project of projects" class="project-card match-card">
       <div class="match-badge">
-        🎯 {{ project.match_score }} compétence(s) en commun
+        <app-icon name="recommended" [size]="16"></app-icon>
+        {{ project.match_score }} compétence(s) en commun
       </div>
 
       <div class="card-header">
@@ -40,7 +41,8 @@
       <div class="technologies">
         <!-- Technos en commun (en vert) -->
         <span *ngFor="let tech of project.common_technologies" class="tech-tag match">
-          ✓ {{ tech }}
+          <app-icon name="check" [size]="14"></app-icon>
+          {{ tech }}
         </span>
         <!-- Autres technos -->
         <span *ngFor="let tech of project.technologies" class="tech-tag" [hidden]="project.common_technologies.includes(tech)">
@@ -53,7 +55,10 @@
           <span class="creator" *ngIf="project.creator">
             Par {{ project.creator.prenom }} {{ project.creator.nom }}
           </span>
-          <span class="places">👤 {{ project.nombre_places }} places</span>
+          <span class="places">
+            <app-icon name="users" [size]="16"></app-icon>
+            {{ project.nombre_places }} places
+          </span>
         </div>
         
         <button class="btn-details" [routerLink]="['/projects', project.id]">
