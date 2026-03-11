@@ -39,6 +39,7 @@ export class ProjectDetailComponent implements OnInit {
     this.projectService.getProjectById(id).subscribe({
       next: (res: any) => {
         this.project = res.project;
+        console.log('Projet chargé:', this.project);
         this.cdr.detectChanges();
         console.log('Détails du projet:', this.project);
         if (this.auth.isLoggedIn()) {
@@ -46,9 +47,9 @@ export class ProjectDetailComponent implements OnInit {
           // Vérification si créateur (objet creator)
           this.isCreator = this.project.creator?.email === user.email;
           
-          // if (!this.isCreator) {
-          //   this.checkIfApplied();
-          // }
+          if (!this.isCreator) {
+            this.checkIfApplied();
+          }
         }
       },
       error: (err) => {

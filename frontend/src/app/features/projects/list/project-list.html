@@ -68,7 +68,7 @@
           </span>
           <span class="deadline">
             <app-icon name="calendar" [size]="16"></app-icon>
-            {{ (project.deadline | date:'dd/MM/yyyy') || 'Date inconnue' }}
+            {{ (project.createdAt| date:'dd/MM/yyyy') || 'Date inconnue' }}
           </span>
         </div>
         

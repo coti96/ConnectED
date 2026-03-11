@@ -8,7 +8,7 @@ class ProjectModel:
         with driver.session() as session:
             query = """
             MATCH (p:Project)
-            OPTIONAL MATCH (p)<-[:CREATED_BY]-(u:User)
+            OPTIONAL MATCH (p)-[:CREATED_BY]->(u:User)
             OPTIONAL MATCH (p)-[:REQUIRES_TECH]->(t:Technology)
             RETURN p, u, collect(t.libelle) as technologies
             """
@@ -41,7 +41,7 @@ class ProjectModel:
             query = """
             MATCH (p:Project)
             WHERE p.id = $project_id
-            OPTIONAL MATCH (p)<-[:CREATED_BY]-(u:User)
+            OPTIONAL MATCH (p)-[:CREATED_BY]->(u:User)
             OPTIONAL MATCH (p)-[:REQUIRES_TECH]->(t:Technology)
             RETURN p, u, collect(t.libelle) as technologies
             """
@@ -70,7 +70,7 @@ class ProjectModel:
 
     @staticmethod
     def create(data, email):
-        # ... (reste du code inchangé, mais on doit tout réécrire car Write écrase le fichier)
+
         driver = db.get_db()
         with driver.session() as session:
             query = """
