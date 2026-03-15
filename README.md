@@ -18,6 +18,9 @@ ConnectED est une plateforme de mise en relation entre étudiants, porteurs de p
 - Base de données : Neo4j (Bolt).
 - Déploiement local : Docker Compose.
 
+## Kubernetes (optionnel)
+Le dossier `k8s/` contient des manifests Kubernetes (déploiement et services). Il n’est pas nécessaire pour exécuter le projet en local ni pour la correction si vous utilisez Docker Compose.
+
 ## Démarrage rapide (Docker Compose)
 
 Prérequis :
