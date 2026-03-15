@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ProfileService } from './profile.service';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-profile',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, FormsModule],
   templateUrl: './profile.html',
   styleUrls: ['./profile.scss']
 })
@@ -17,6 +18,9 @@ export class ProfileComponent implements OnInit {
   userRole: string = '';
   isEditing = false;
   message = '';
+  passwordMessage = '';
+  currentPassword = '';
+  newPassword = '';
 
   constructor(
     private fb: FormBuilder,
@@ -32,7 +36,11 @@ export class ProfileComponent implements OnInit {
       ecole: [''],
       filiere: [''],
       entreprise: [''],
-      fonction: ['']
+      fonction: [''],
+      github_url: [''],
+      linkedin_url: [''],
+      portfolio_url: [''],
+      availability: ['']
     });
   }
 
@@ -49,7 +57,6 @@ export class ProfileComponent implements OnInit {
 
     this.profileService.getProfile().subscribe({
       next: (data: any) => {
-        console.log('Profil chargé:', data);
         this.userRole = data.role;
         this.technologies = data.technologies || [];
         
@@ -62,7 +69,11 @@ export class ProfileComponent implements OnInit {
           ecole: data.ecole,
           filiere: data.filiere,
           entreprise: data.entreprise,
-          fonction: data.fonction
+          fonction: data.fonction,
+          github_url: data.github_url,
+          linkedin_url: data.linkedin_url,
+          portfolio_url: data.portfolio_url,
+          availability: data.availability
         });
 
         if (!this.isEditing) {
@@ -124,5 +135,22 @@ export class ProfileComponent implements OnInit {
         }
       });
     }
+  }
+
+  updatePassword(): void {
+    if (!this.isEditing) return;
+    if (!this.currentPassword || !this.newPassword) return;
+
+    this.profileService.updatePassword(this.currentPassword, this.newPassword).subscribe({
+      next: () => {
+        this.passwordMessage = 'Mot de passe mis à jour.';
+        this.currentPassword = '';
+        this.newPassword = '';
+        setTimeout(() => (this.passwordMessage = ''), 3000);
+      },
+      error: (err) => {
+        this.passwordMessage = err?.error?.error || 'Erreur changement mot de passe.';
+      }
+    });
   }
 }

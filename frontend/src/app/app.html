@@ -1,2 +1,12 @@
 <app-header></app-header>
+<div class="fatal-error" *ngIf="errors.fatalError() as msg">
+  <div class="fatal-error__content">
+    <strong>Erreur</strong>
+    <div class="fatal-error__text">{{ msg }}</div>
+    <div class="fatal-error__actions">
+      <button class="fatal-error__btn" (click)="reload()">Recharger</button>
+      <button class="fatal-error__btn secondary" (click)="errors.clearFatalError()">Fermer</button>
+    </div>
+  </div>
+</div>
 <router-outlet></router-outlet>

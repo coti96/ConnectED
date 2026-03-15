@@ -4,6 +4,8 @@
     <a routerLink="/projects" class="btn-primary">Chercher d'autres projets</a>
   </div>
 
+  <div *ngIf="message" class="alert success">{{ message }}</div>
+
   <div *ngIf="loading" class="loading">
     <div class="spinner"></div>
     <p>Chargement de vos candidatures...</p>
@@ -28,7 +30,7 @@
         </span>
         <span class="date">
           <app-icon name="calendar" [size]="16"></app-icon>
-          {{ app.date | date:'dd/MM/yyyy' }}
+          {{ (app.date | neo4jDate) | date:'dd/MM/yyyy' }}
         </span>
       </div>
 
@@ -46,6 +48,14 @@
         <a [routerLink]="['/projects', app.project.id]" class="btn-details">
           Voir le projet
         </a>
+        <button
+          *ngIf="app.status === 'PENDING'"
+          type="button"
+          class="btn-details secondary"
+          (click)="cancel(app.project.id)"
+        >
+          Annuler
+        </button>
       </div>
     </div>
   </div>

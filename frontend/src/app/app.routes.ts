@@ -15,25 +15,31 @@ import { ChatComponent } from './features/messages/chat/chat';
 import { DashboardComponent } from './features/dashboard/dashboard';
 import { ProjectsShellComponent } from './features/projects/shell/projects-shell';
 import { MyProjectsComponent } from './features/projects/my-projects/my-projects';
+import { authGuard } from './shared/guards/auth.guard';
+import { adminGuard } from './shared/guards/admin.guard';
+import { AdminProjectsComponent } from './features/admin/projects/admin-projects';
+import { HelpComponent } from './features/help/help';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
-  { path: 'dashboard', component: DashboardComponent },
-  { path: 'profile', component: ProfileComponent },
-  { path: 'messages', component: MessagesComponent },
-  { path: 'messages/:email', component: ChatComponent },
+  { path: 'admin', component: AdminProjectsComponent, canActivate: [authGuard, adminGuard] },
+  { path: 'help', component: HelpComponent },
+  { path: 'dashboard', component: DashboardComponent, canActivate: [authGuard] },
+  { path: 'profile', component: ProfileComponent, canActivate: [authGuard] },
+  { path: 'messages', component: MessagesComponent, canActivate: [authGuard] },
+  { path: 'messages/:email', component: ChatComponent, canActivate: [authGuard] },
   {
     path: 'projects',
     component: ProjectsShellComponent,
     children: [
       { path: '', component: ProjectListComponent },
-      { path: 'recommended', component: RecommendedProjectsComponent },
-      { path: 'my-applications', component: MyApplicationsComponent },
-      { path: 'my-projects', component: MyProjectsComponent },
-      { path: 'create', component: CreateProjectComponent },
-      { path: ':id/manage', component: ManageCandidatesComponent },
+      { path: 'recommended', component: RecommendedProjectsComponent, canActivate: [authGuard] },
+      { path: 'my-applications', component: MyApplicationsComponent, canActivate: [authGuard] },
+      { path: 'my-projects', component: MyProjectsComponent, canActivate: [authGuard] },
+      { path: 'create', component: CreateProjectComponent, canActivate: [authGuard] },
+      { path: ':id/manage', component: ManageCandidatesComponent, canActivate: [authGuard] },
       { path: ':id', component: ProjectDetailComponent }
     ]
   },

@@ -17,10 +17,14 @@
         </div>
         <div class="info">
           <h3>{{ user.prenom }} {{ user.nom }}</h3>
+          <p class="last">{{ user.last_message || 'Aucun message' }}</p>
           <p class="role">
             <app-icon [name]="user.role === 'etudiant' ? 'graduationCap' : 'projects'" [size]="16"></app-icon>
             {{ user.role === 'etudiant' ? 'Étudiant' : (user.role === 'professionnel' ? 'Professionnel' : user.role) }}
           </p>
+        </div>
+        <div class="meta">
+          <div class="unread" *ngIf="user.unread_count && user.unread_count > 0">{{ user.unread_count }}</div>
         </div>
       </div>
     </div>

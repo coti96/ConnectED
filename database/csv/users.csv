@@ -1,31 +1,34 @@
 email,password_hash,role,nom,prenom,ville,bio_courte,ecole,filiere,fonction,entreprise,created_at
-student1@mail.com,$2b$10$hash1,etudiant,Dupont,Marie,Lyon,"Étudiante passionnée par le web",Epitech,Web Development,, ,2026-01-01T08:00:00
-student2@mail.com,$2b$10$hash2,etudiant,Martin,Lucas,Paris,"Curieux des data sciences",Insa,Data Science,, ,2026-01-02T08:00:00
-student3@mail.com,$2b$10$hash3,etudiant,Leroy,Emma,Marseille,"Design UI/UX est ma passion",Ecole de Design,Design UI/UX,, ,2026-01-03T08:00:00
-student4@mail.com,$2b$10$hash4,etudiant,Roux,Chloé,Lille,"Développement Mobile m'intéresse",Polytech,Mobile Development,, ,2026-01-04T08:00:00
-student5@mail.com,$2b$10$hash5,etudiant,Moreau,Antoine,Bordeaux,"J'aime apprendre React",Epitech,Web Development,, ,2026-01-05T08:00:00
-student6@mail.com,$2b$10$hash6,etudiant,Fabre,Léa,Nice,"Passionnée par le front-end",Epitech,Web Development,, ,2026-01-06T08:00:00
-student7@mail.com,$2b$10$hash7,etudiant,Michel,Hugo,Toulouse,"Data Science est ma vocation",Insa,Data Science,, ,2026-01-07T08:00:00
-student8@mail.com,$2b$10$hash8,etudiant,David,Clara,Nantes,"J'adore créer des interfaces",Ecole de Design,Design UI/UX,, ,2026-01-08T08:00:00
-student9@mail.com,$2b$10$hash9,etudiant,Bernard,Thomas,Strasbourg,"Mobile Dev pour les applis utiles",Polytech,Mobile Development,, ,2026-01-09T08:00:00
-student10@mail.com,$2b$10$hash10,etudiant,Petit,Sophie,Montpellier,"Front-end et React addict",Epitech,Web Development,, ,2026-01-10T08:00:00
-student11@mail.com,$2b$10$hash11,etudiant,Renaud,Julien,Lyon,"Data Science et IA m'intéressent",Insa,Data Science,, ,2026-01-11T08:00:00
-student12@mail.com,$2b$10$hash12,etudiant,Blanc,Manon,Paris,"Design graphique et UI/UX",Ecole de Design,Design UI/UX,, ,2026-01-12T08:00:00
-student13@mail.com,$2b$10$hash13,etudiant,Fontaine,Léo,Marseille,"Applications mobiles innovantes",Polytech,Mobile Development,, ,2026-01-13T08:00:00
-student14@mail.com,$2b$10$hash14,etudiant,Gauthier,Julie,Bordeaux,"Passionnée par React et Angular",Epitech,Web Development,, ,2026-01-14T08:00:00
-student15@mail.com,$2b$10$hash15,etudiant,Chevalier,Maxime,Nice,"Data Science et Machine Learning",Insa,Data Science,, ,2026-01-15T08:00:00
-student16@mail.com,$2b$10$hash16,etudiant,Lemoine,Émilie,Toulouse,"UI/UX et design créatif",Ecole de Design,Design UI/UX,, ,2026-01-16T08:00:00
-student17@mail.com,$2b$10$hash17,etudiant,Faure,Alexandre,Nantes,"Développement mobile sur Flutter",Polytech,Mobile Development,, ,2026-01-17T08:00:00
-student18@mail.com,$2b$10$hash18,etudiant,Rolland,Claire,Strasbourg,"Front-end et React passionnée",Epitech,Web Development,, ,2026-01-18T08:00:00
-student19@mail.com,$2b$10$hash19,etudiant,Brun,Victor,Montpellier,"Data Science et IA",Insa,Data Science,, ,2026-01-19T08:00:00
-student20@mail.com,$2b$10$hash20,etudiant,Marchand,Laura,Lyon,"UI/UX designer en herbe",Ecole de Design,Design UI/UX,, ,2026-01-20T08:00:00
-pro1@company.com,$2b$10$hash21,professionnel,Durand,Pierre,Paris,"Lead Dev expérimenté",, ,Lead Developer,TechCorp,2026-01-01T08:00:00
-pro2@company.com,$2b$10$hash22,professionnel,Lemoine,Sophie,Lyon,"Data Scientist senior",, ,Data Scientist,DataCorp,2026-01-02T08:00:00
-pro3@company.com,$2b$10$hash23,professionnel,Bernard,Julien,Marseille,"Expert en DevOps",, ,DevOps Engineer,CloudTech,2026-01-03T08:00:00
-pro4@company.com,$2b$10$hash24,professionnel,Robert,Isabelle,Bordeaux,"UI/UX Senior",, ,UI/UX Designer,DesignStudio,2026-01-04T08:00:00
-pro5@company.com,$2b$10$hash25,professionnel,Richard,Antoine,Nice,"Back-end expert",, ,Back-end Developer,WebSolutions,2026-01-05T08:00:00
-pro6@company.com,$2b$10$hash26,professionnel,Perrin,Claire,Toulouse,"Data Engineer",, ,Data Engineer,DataCorp,2026-01-06T08:00:00
-pro7@company.com,$2b$10$hash27,professionnel,Leclerc,Thomas,Nantes,"Mobile Dev Senior",, ,Mobile Developer,MobileApps,2026-01-07T08:00:00
-pro8@company.com,$2b$10$hash28,professionnel,Leroy,Emma,Strasbourg,"Full Stack Developer",, ,Full Stack Developer,TechWorld,2026-01-08T08:00:00
-pro9@company.com,$2b$10$hash29,professionnel,Moreau,Antoine,Montpellier,"Cloud Specialist",, ,Cloud Engineer,CloudCorp,2026-01-09T08:00:00
-pro10@company.com,$2b$10$hash30,professionnel,Fabre,Léa,Lyon,"Security Expert",, ,Security Analyst,SecureTech,2026-01-10T08:00:00
+paul@etudiant.com,$2b$12$FDJaarTh9m1TayILD281.OnOGLWqxlR/vJaKEGSlFXTWY8y1dKX32,etudiant,Martin,Paul,Paris,"Étudiant motivé, recherche une équipe",ESIEE Paris,Informatique,, ,2026-01-01T08:00:00
+admin@connected.com,$2b$12$FDJaarTh9m1TayILD281.OnOGLWqxlR/vJaKEGSlFXTWY8y1dKX32,admin,Admin,ConnectED,Paris,"Compte administration (démo)",, ,Administrateur,ConnectED,2026-01-01T08:00:00
+encadrant@esiee.fr,$2b$12$FDJaarTh9m1TayILD281.OnOGLWqxlR/vJaKEGSlFXTWY8y1dKX32,encadrant,Durand,Claire,Paris,"Encadrant pédagogique",ESIEE Paris,Informatique,, ,2026-01-01T08:00:00
+student1@mail.com,$2b$12$FDJaarTh9m1TayILD281.OnOGLWqxlR/vJaKEGSlFXTWY8y1dKX32,etudiant,Dupont,Marie,Lyon,"Étudiante passionnée par le web",Epitech,Web Development,, ,2026-01-01T08:00:00
+student2@mail.com,$2b$12$FDJaarTh9m1TayILD281.OnOGLWqxlR/vJaKEGSlFXTWY8y1dKX32,etudiant,Martin,Lucas,Paris,"Curieux des data sciences",Insa,Data Science,, ,2026-01-02T08:00:00
+student3@mail.com,$2b$12$FDJaarTh9m1TayILD281.OnOGLWqxlR/vJaKEGSlFXTWY8y1dKX32,etudiant,Leroy,Emma,Marseille,"Design UI/UX est ma passion",Ecole de Design,Design UI/UX,, ,2026-01-03T08:00:00
+student4@mail.com,$2b$12$FDJaarTh9m1TayILD281.OnOGLWqxlR/vJaKEGSlFXTWY8y1dKX32,etudiant,Roux,Chloé,Lille,"Développement Mobile m'intéresse",Polytech,Mobile Development,, ,2026-01-04T08:00:00
+student5@mail.com,$2b$12$FDJaarTh9m1TayILD281.OnOGLWqxlR/vJaKEGSlFXTWY8y1dKX32,etudiant,Moreau,Antoine,Bordeaux,"J'aime apprendre React",Epitech,Web Development,, ,2026-01-05T08:00:00
+student6@mail.com,$2b$12$FDJaarTh9m1TayILD281.OnOGLWqxlR/vJaKEGSlFXTWY8y1dKX32,etudiant,Fabre,Léa,Nice,"Passionnée par le front-end",Epitech,Web Development,, ,2026-01-06T08:00:00
+student7@mail.com,$2b$12$FDJaarTh9m1TayILD281.OnOGLWqxlR/vJaKEGSlFXTWY8y1dKX32,etudiant,Michel,Hugo,Toulouse,"Data Science est ma vocation",Insa,Data Science,, ,2026-01-07T08:00:00
+student8@mail.com,$2b$12$FDJaarTh9m1TayILD281.OnOGLWqxlR/vJaKEGSlFXTWY8y1dKX32,etudiant,David,Clara,Nantes,"J'adore créer des interfaces",Ecole de Design,Design UI/UX,, ,2026-01-08T08:00:00
+student9@mail.com,$2b$12$FDJaarTh9m1TayILD281.OnOGLWqxlR/vJaKEGSlFXTWY8y1dKX32,etudiant,Bernard,Thomas,Strasbourg,"Mobile Dev pour les applis utiles",Polytech,Mobile Development,, ,2026-01-09T08:00:00
+student10@mail.com,$2b$12$FDJaarTh9m1TayILD281.OnOGLWqxlR/vJaKEGSlFXTWY8y1dKX32,etudiant,Petit,Sophie,Montpellier,"Front-end et React addict",Epitech,Web Development,, ,2026-01-10T08:00:00
+student11@mail.com,$2b$12$FDJaarTh9m1TayILD281.OnOGLWqxlR/vJaKEGSlFXTWY8y1dKX32,etudiant,Renaud,Julien,Lyon,"Data Science et IA m'intéressent",Insa,Data Science,, ,2026-01-11T08:00:00
+student12@mail.com,$2b$12$FDJaarTh9m1TayILD281.OnOGLWqxlR/vJaKEGSlFXTWY8y1dKX32,etudiant,Blanc,Manon,Paris,"Design graphique et UI/UX",Ecole de Design,Design UI/UX,, ,2026-01-12T08:00:00
+student13@mail.com,$2b$12$FDJaarTh9m1TayILD281.OnOGLWqxlR/vJaKEGSlFXTWY8y1dKX32,etudiant,Fontaine,Léo,Marseille,"Applications mobiles innovantes",Polytech,Mobile Development,, ,2026-01-13T08:00:00
+student14@mail.com,$2b$12$FDJaarTh9m1TayILD281.OnOGLWqxlR/vJaKEGSlFXTWY8y1dKX32,etudiant,Gauthier,Julie,Bordeaux,"Passionnée par React et Angular",Epitech,Web Development,, ,2026-01-14T08:00:00
+student15@mail.com,$2b$12$FDJaarTh9m1TayILD281.OnOGLWqxlR/vJaKEGSlFXTWY8y1dKX32,etudiant,Chevalier,Maxime,Nice,"Data Science et Machine Learning",Insa,Data Science,, ,2026-01-15T08:00:00
+student16@mail.com,$2b$12$FDJaarTh9m1TayILD281.OnOGLWqxlR/vJaKEGSlFXTWY8y1dKX32,etudiant,Lemoine,Émilie,Toulouse,"UI/UX et design créatif",Ecole de Design,Design UI/UX,, ,2026-01-16T08:00:00
+student17@mail.com,$2b$12$FDJaarTh9m1TayILD281.OnOGLWqxlR/vJaKEGSlFXTWY8y1dKX32,etudiant,Faure,Alexandre,Nantes,"Développement mobile sur Flutter",Polytech,Mobile Development,, ,2026-01-17T08:00:00
+student18@mail.com,$2b$12$FDJaarTh9m1TayILD281.OnOGLWqxlR/vJaKEGSlFXTWY8y1dKX32,etudiant,Rolland,Claire,Strasbourg,"Front-end et React passionnée",Epitech,Web Development,, ,2026-01-18T08:00:00
+student19@mail.com,$2b$12$FDJaarTh9m1TayILD281.OnOGLWqxlR/vJaKEGSlFXTWY8y1dKX32,etudiant,Brun,Victor,Montpellier,"Data Science et IA",Insa,Data Science,, ,2026-01-19T08:00:00
+student20@mail.com,$2b$12$FDJaarTh9m1TayILD281.OnOGLWqxlR/vJaKEGSlFXTWY8y1dKX32,etudiant,Marchand,Laura,Lyon,"UI/UX designer en herbe",Ecole de Design,Design UI/UX,, ,2026-01-20T08:00:00
+pro1@company.com,$2b$12$FDJaarTh9m1TayILD281.OnOGLWqxlR/vJaKEGSlFXTWY8y1dKX32,professionnel,Durand,Pierre,Paris,"Lead Dev expérimenté",, ,Lead Developer,TechCorp,2026-01-01T08:00:00
+pro2@company.com,$2b$12$FDJaarTh9m1TayILD281.OnOGLWqxlR/vJaKEGSlFXTWY8y1dKX32,professionnel,Lemoine,Sophie,Lyon,"Data Scientist senior",, ,Data Scientist,DataCorp,2026-01-02T08:00:00
+pro3@company.com,$2b$12$FDJaarTh9m1TayILD281.OnOGLWqxlR/vJaKEGSlFXTWY8y1dKX32,professionnel,Bernard,Julien,Marseille,"Expert en DevOps",, ,DevOps Engineer,CloudTech,2026-01-03T08:00:00
+pro4@company.com,$2b$12$FDJaarTh9m1TayILD281.OnOGLWqxlR/vJaKEGSlFXTWY8y1dKX32,professionnel,Robert,Isabelle,Bordeaux,"UI/UX Senior",, ,UI/UX Designer,DesignStudio,2026-01-04T08:00:00
+pro5@company.com,$2b$12$FDJaarTh9m1TayILD281.OnOGLWqxlR/vJaKEGSlFXTWY8y1dKX32,professionnel,Richard,Antoine,Nice,"Back-end expert",, ,Back-end Developer,WebSolutions,2026-01-05T08:00:00
+pro6@company.com,$2b$12$FDJaarTh9m1TayILD281.OnOGLWqxlR/vJaKEGSlFXTWY8y1dKX32,professionnel,Perrin,Claire,Toulouse,"Data Engineer",, ,Data Engineer,DataCorp,2026-01-06T08:00:00
+pro7@company.com,$2b$12$FDJaarTh9m1TayILD281.OnOGLWqxlR/vJaKEGSlFXTWY8y1dKX32,professionnel,Leclerc,Thomas,Nantes,"Mobile Dev Senior",, ,Mobile Developer,MobileApps,2026-01-07T08:00:00
+pro8@company.com,$2b$12$FDJaarTh9m1TayILD281.OnOGLWqxlR/vJaKEGSlFXTWY8y1dKX32,professionnel,Leroy,Emma,Strasbourg,"Full Stack Developer",, ,Full Stack Developer,TechWorld,2026-01-08T08:00:00
+pro9@company.com,$2b$12$FDJaarTh9m1TayILD281.OnOGLWqxlR/vJaKEGSlFXTWY8y1dKX32,professionnel,Moreau,Antoine,Montpellier,"Cloud Specialist",, ,Cloud Engineer,CloudCorp,2026-01-09T08:00:00
+pro10@company.com,$2b$12$FDJaarTh9m1TayILD281.OnOGLWqxlR/vJaKEGSlFXTWY8y1dKX32,professionnel,Fabre,Léa,Lyon,"Security Expert",, ,Security Analyst,SecureTech,2026-01-10T08:00:00

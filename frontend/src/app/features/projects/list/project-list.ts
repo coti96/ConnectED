@@ -5,11 +5,12 @@ import { ProjectService } from '../project.service';
 import { AuthService } from '../../../shared/services/auth';
 import { Subscription, filter } from 'rxjs';
 import { IconComponent } from '../../../shared/icon/icon';
+import { Neo4jDatePipe } from '../../../shared/pipes/neo4j-date.pipe';
 
 @Component({
   selector: 'app-project-list',
   standalone: true,
-  imports: [CommonModule, RouterModule, IconComponent],
+  imports: [CommonModule, RouterModule, IconComponent, Neo4jDatePipe],
   templateUrl: './project-list.html',
   styleUrls: ['./project-list.scss']
 })
@@ -19,6 +20,8 @@ export class ProjectListComponent implements OnInit, OnDestroy {
   loading: boolean = true;
   searchTerm: string = '';
   selectedDomain: string = '';
+  sortBy: 'deadline_asc' | 'deadline_desc' | 'title_asc' = 'deadline_asc';
+  onlyOpen = true;
 
   constructor(
     private projectService: ProjectService,
@@ -62,18 +65,44 @@ export class ProjectListComponent implements OnInit, OnDestroy {
     this.applyFilters();
   }
 
+  onSort(event: any) {
+    this.sortBy = event.target.value;
+    this.applyFilters();
+  }
+
+  toggleOnlyOpen(event: any) {
+    this.onlyOpen = !!event.target.checked;
+    this.applyFilters();
+  }
+
   applyFilters() {
-    this.filteredProjects = this.projects.filter(project => {
+    const filtered = this.projects.filter(project => {
+      const title = (project?.titre || '').toString().toLowerCase();
+      const technologies = Array.isArray(project?.technologies) ? project.technologies : [];
       const matchesSearch = 
-        project.titre.toLowerCase().includes(this.searchTerm) ||
-        project.technologies.some((t: string) => t.toLowerCase().includes(this.searchTerm));
+        title.includes(this.searchTerm) ||
+        technologies.some((t: string) => (t || '').toString().toLowerCase().includes(this.searchTerm));
       
       const matchesDomain = 
         this.selectedDomain === '' || 
-        project.domain === this.selectedDomain || 
-        (project.domaine && project.domaine === this.selectedDomain); // Check both 'domain' and 'domaine'
+        project?.domain === this.selectedDomain || 
+        (project?.domaine && project.domaine === this.selectedDomain); // Check both 'domain' and 'domaine'
 
-      return matchesSearch && matchesDomain;
+      const matchesOpen = !this.onlyOpen || project?.statut === 'en_cours' || !project?.statut;
+
+      return matchesSearch && matchesDomain && matchesOpen;
+    });
+
+    this.filteredProjects = filtered.sort((a: any, b: any) => {
+      if (this.sortBy === 'title_asc') {
+        return String(a?.titre || '').localeCompare(String(b?.titre || ''), 'fr');
+      }
+
+      const aDeadline = new Date(String(a?.deadline || '')).getTime();
+      const bDeadline = new Date(String(b?.deadline || '')).getTime();
+      const safeA = Number.isFinite(aDeadline) ? aDeadline : 0;
+      const safeB = Number.isFinite(bDeadline) ? bDeadline : 0;
+      return this.sortBy === 'deadline_desc' ? safeB - safeA : safeA - safeB;
     });
   }
 

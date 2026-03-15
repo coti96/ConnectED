@@ -1,11 +1,10 @@
 <section class="projects-shell">
   <div class="tabs">
     <a routerLink="/projects/recommended" routerLinkActive="active">Projets recommandés</a>
-    <a routerLink="/projects/my-projects" routerLinkActive="active" *ngIf="auth.isLoggedIn() && (auth.currentUser()?.role === 'creator' || auth.currentUser()?.role === 'professional')">Mes projets</a>
-    <a routerLink="/projects/my-applications" routerLinkActive="active" *ngIf="auth.isLoggedIn() && auth.currentUser()?.role === 'student'">Mes candidatures</a>
+    <a routerLink="/projects/my-projects" routerLinkActive="active" *ngIf="auth.isLoggedIn()">Mes projets</a>
+    <a routerLink="/projects/my-applications" routerLinkActive="active" *ngIf="auth.isLoggedIn()">Mes candidatures</a>
     <a routerLink="/projects" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Explorer</a>
   </div>
 
   <router-outlet></router-outlet>
 </section>
-

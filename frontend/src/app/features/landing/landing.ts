@@ -25,12 +25,10 @@ export class LandingComponent implements OnInit {
   }
 
   goToLogin() {
-    console.log('Navigating to login...');
     this.router.navigate(['/login']);
   }
 
   goToRegister() {
-    console.log('Navigating to register...');
     this.router.navigate(['/register']);
   }
 }

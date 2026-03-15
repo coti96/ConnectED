@@ -9,6 +9,20 @@
         <p class="subtitle">Projet : <strong>{{ project.titre }}</strong></p>
       </div>
     </div>
+    <div class="project-meta">
+      <div class="meta-pill" *ngIf="project.domain || project.domaine">
+        <app-icon name="globe" [size]="16"></app-icon>
+        <span>{{ project.domain || project.domaine }}</span>
+      </div>
+      <div class="meta-pill" *ngIf="project.deadline">
+        <app-icon name="calendar" [size]="16"></app-icon>
+        <span>Deadline : {{ (project.deadline | neo4jDate) | date:'dd/MM/yyyy' }}</span>
+      </div>
+      <div class="meta-pill" *ngIf="project.nombre_places">
+        <app-icon name="users" [size]="16"></app-icon>
+        <span>{{ acceptedCount }}/{{ project.nombre_places }} places prises</span>
+      </div>
+    </div>
     <div class="stats-summary" *ngIf="applications.length > 0">
       <div class="stat-item">
         <span class="count">{{ applications.length }}</span>
@@ -25,28 +39,67 @@
     </div>
   </div>
 
+  <div *ngIf="!loading && errorMessage" class="error-state">
+    <div class="icon"><app-icon name="warning" [size]="34"></app-icon></div>
+    <div class="content">
+      <div class="title">Erreur</div>
+      <div class="message">{{ errorMessage }}</div>
+      <button class="btn-retry" (click)="loadData()">
+        <app-icon name="refresh" [size]="16"></app-icon>
+        Réessayer
+      </button>
+    </div>
+  </div>
+
   <div *ngIf="loading" class="loading-state">
     <div class="spinner"></div>
     <p>Chargement des candidats...</p>
   </div>
 
-  <div *ngIf="!loading && applications.length === 0" class="empty-state">
+  <div *ngIf="!loading && !errorMessage && applications.length === 0" class="empty-state">
     <div class="icon"><app-icon name="emptyInbox" [size]="40"></app-icon></div>
     <h3>Aucune candidature reçue</h3>
     <p>Partagez votre projet pour attirer des talents !</p>
   </div>
 
-  <div class="candidates-grid" *ngIf="!loading && applications.length > 0">
-    <div *ngFor="let app of applications" class="candidate-card" [ngClass]="app.status">
+  <div *ngIf="!loading && !errorMessage && applications.length > 0" class="tools-bar">
+    <div class="filters">
+      <button class="filter" [class.active]="statusFilter === 'ALL'" (click)="setFilter('ALL')">
+        Tous <span class="count">{{ applications.length }}</span>
+      </button>
+      <button class="filter" [class.active]="statusFilter === 'PENDING'" (click)="setFilter('PENDING')">
+        En attente <span class="count">{{ getCount('PENDING') }}</span>
+      </button>
+      <button class="filter" [class.active]="statusFilter === 'ACCEPTED'" (click)="setFilter('ACCEPTED')">
+        Acceptés <span class="count">{{ getCount('ACCEPTED') }}</span>
+      </button>
+      <button class="filter" [class.active]="statusFilter === 'REJECTED'" (click)="setFilter('REJECTED')">
+        Refusés <span class="count">{{ getCount('REJECTED') }}</span>
+      </button>
+    </div>
+    <div class="search">
+      <app-icon name="search" [size]="18"></app-icon>
+      <input [(ngModel)]="search" placeholder="Rechercher (nom, email, techno…)" />
+    </div>
+  </div>
+
+  <div *ngIf="!loading && !errorMessage && applications.length > 0 && filteredApplications.length === 0" class="empty-state">
+    <div class="icon"><app-icon name="search" [size]="40"></app-icon></div>
+    <h3>Aucun résultat</h3>
+    <p>Changez le filtre ou le texte de recherche.</p>
+  </div>
+
+  <div class="candidates-grid" *ngIf="!loading && !errorMessage && filteredApplications.length > 0">
+    <div *ngFor="let app of filteredApplications" class="candidate-card" [ngClass]="app.status">
       <div class="card-header">
         <div class="avatar">
-          {{ app.applicant.prenom?.charAt(0) }}{{ app.applicant.nom?.charAt(0) }}
+          {{ (app.applicant?.prenom || '?').charAt(0) }}{{ (app.applicant?.nom || '?').charAt(0) }}
         </div>
         <div class="info">
-          <h3>{{ app.applicant.prenom }} {{ app.applicant.nom }}</h3>
+          <h3>{{ app.applicant?.prenom }} {{ app.applicant?.nom }}</h3>
           <p class="role">
-            <app-icon [name]="app.applicant.role === 'etudiant' ? 'graduationCap' : 'projects'" [size]="16"></app-icon>
-            {{ app.applicant.role === 'etudiant' ? 'Étudiant' : 'Professionnel' }}
+            <app-icon [name]="getRoleIcon(app.applicant?.role)" [size]="16"></app-icon>
+            {{ getRoleLabel(app.applicant?.role) }}
           </p>
         </div>
         <div class="status-badge" [ngClass]="app.status">
@@ -56,32 +109,45 @@
 
       <div class="card-body">
         <div class="email">
-          <span class="icon"><app-icon name="mail" [size]="16"></app-icon></span> {{ app.applicant.email }}
+          <span class="icon"><app-icon name="mail" [size]="16"></app-icon></span> {{ app.applicant?.email }}
+        </div>
+
+        <div class="date" *ngIf="app.date">
+          <span class="icon"><app-icon name="calendar" [size]="16"></app-icon></span>
+          <span>Candidature : {{ (app.date | neo4jDate) | date:'dd/MM/yyyy HH:mm' }}</span>
         </div>
         
-        <div class="techs" *ngIf="app.applicant.technologies && app.applicant.technologies.length > 0">
-          <span *ngFor="let tech of app.applicant.technologies" class="tech-tag">{{ tech }}</span>
+        <div class="motivation" *ngIf="app.motivation_message">
+          <div class="motivation-title">
+            <app-icon name="info" [size]="16"></app-icon>
+            <span>Motivation</span>
+          </div>
+          <div class="motivation-text">{{ app.motivation_message }}</div>
         </div>
-        <div class="no-techs" *ngIf="!app.applicant.technologies || app.applicant.technologies.length === 0">
+        
+        <div class="techs" *ngIf="app.applicant?.technologies && app.applicant.technologies.length > 0">
+          <span *ngFor="let tech of app.applicant?.technologies" class="tech-tag">{{ tech }}</span>
+        </div>
+        <div class="no-techs" *ngIf="!app.applicant?.technologies || app.applicant.technologies.length === 0">
           Aucune compétence renseignée
         </div>
       </div>
 
       <div class="card-actions">
-        <button [routerLink]="['/messages', app.applicant.email]" class="btn-action contact">
+        <button *ngIf="app.applicant?.email" [routerLink]="['/messages', app.applicant.email]" class="btn-action contact">
           <span class="icon"><app-icon name="messages" [size]="16"></app-icon></span> Discuter
         </button>
         
         <div class="decision-buttons" *ngIf="app.status === 'PENDING'">
-          <button (click)="updateStatus(app.applicant.email, 'ACCEPTED')" class="btn-action accept">
+          <button (click)="updateStatus(app.applicant?.email, 'ACCEPTED')" class="btn-action accept" [disabled]="busyEmails.has(app.applicant?.email || '') || !app.applicant?.email">
             <span class="icon"><app-icon name="check" [size]="16"></app-icon></span> Accepter
           </button>
-          <button (click)="updateStatus(app.applicant.email, 'REJECTED')" class="btn-action reject">
+          <button (click)="updateStatus(app.applicant?.email, 'REJECTED')" class="btn-action reject" [disabled]="busyEmails.has(app.applicant?.email || '') || !app.applicant?.email">
             <span class="icon"><app-icon name="x" [size]="16"></app-icon></span> Refuser
           </button>
         </div>
         
-        <button *ngIf="app.status !== 'PENDING'" (click)="updateStatus(app.applicant.email, 'PENDING')" class="btn-action reset">
+        <button *ngIf="app.status !== 'PENDING'" (click)="updateStatus(app.applicant?.email, 'PENDING')" class="btn-action reset" [disabled]="busyEmails.has(app.applicant?.email || '') || !app.applicant?.email">
           <span class="icon"><app-icon name="refresh" [size]="16"></app-icon></span> Changer d'avis
         </button>
       </div>

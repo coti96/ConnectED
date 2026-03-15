@@ -1,155 +1,71 @@
+# ConnectED
 
+ConnectED est une plateforme de mise en relation entre étudiants, porteurs de projets et encadrants. Le cœur de la valeur repose sur un moteur de recommandation basé sur un modèle graphe (Neo4j) et sur un workflow complet de candidature jusqu’à la constitution d’équipes.
 
-# ConnectED 
+## Fonctionnalités
+- Authentification sécurisée (JWT) et gestion de profil (compétences, liens, disponibilité, changement de mot de passe).
+- Projets : création (tout utilisateur authentifié), liste avec recherche/tri/filtres, page détail.
+- Recommandations : score et technologies communes (explicabilité).
+- Candidatures : postuler, suivi de statut, annulation (si en attente), gestion côté créateur.
+- Équipe : ajout automatique des membres à l’acceptation, respect de la capacité.
+- Messagerie et notifications in-app (messages reçus, changements de statut).
+- Administration minimale : liste projets et ouverture/fermeture.
+- Page “Aide” intégrée.
 
-ConnectED est une plateforme innovante de mise en relation entre étudiants et porteurs de projets, propulsée par l'intelligence artificielle et une base de données orientée graphe.
+## Stack et architecture
+- Frontend : Angular (standalone components, signals).
+- Backend : Flask (API REST).
+- Base de données : Neo4j (Bolt).
+- Déploiement local : Docker Compose.
 
-## 🌟 Fonctionnalités Principales
+## Démarrage rapide (Docker Compose)
 
-Le projet est désormais complet et inclut les modules suivants :
-
-### 1. Authentification & Profils
-- **Inscription/Connexion** sécurisée (JWT).
-- **Profils Utilisateurs** détaillés avec gestion des compétences dynamiques.
-- **Rôles** : Étudiants, Créateurs de projets, Administrateurs.
-
-### 2. Gestion des Projets
-- **Création de projets** avec description, compétences requises et date limite.
-- **Catalogue de projets** avec recherche et filtres.
-- **Détails complets** : Visualisation des besoins et du créateur.
-
-### 3. Système de Matching Intelligent (Graph-Based)
-- Algorithme de recommandation basé sur **Neo4j**.
-- Analyse la compatibilité entre les compétences de l'utilisateur et les besoins du projet.
-- Score de pertinence (%) affiché en temps réel.
-
-### 4. Gestion des Candidatures
-- **Postuler** en un clic aux projets recommandés.
-- **Suivi des candidatures** : En attente, Accepté, Refusé.
-- **Pour les créateurs** : Interface de gestion des candidats avec validation/refus.
-
-### 5. Messagerie Instantanée
-- **Chat intégré** en temps réel entre candidats et porteurs de projet.
-- Historique des conversations.
-- Accès direct depuis le profil ou la candidature.
-
-### 6. Tableau de Bord (Dashboard)
-- Vue d'ensemble personnalisée à la connexion.
-- Statistiques clés (Candidatures, Projets, Messages).
-- Fil d'activité récent.
-
----
-
-## 🛠️ Architecture Technique
-
-- **Frontend** : Angular 16+ (Standalone Components, Signals).
-- **Backend** : Python Flask (REST API).
-- **Base de Données** : Neo4j (Graph Database) pour gérer les relations complexes (User -[:HAS_SKILL]-> Skill <-[:REQUIRES]- Project).
-- **Conteneurisation** : Docker & Docker Compose.
-
----
-
-## Phase 0 : Guide installation projet
-
-Cette **Phase 0** correspond à l'initialisation technique du projet avec Docker et Git.
-
----
-Prérequis:
-- Git
+Prérequis :
 - Docker Desktop
-- Accès à un terminal (Git Bash, Powershell, VS Code Terminal…)
+- Git
 
-## 1. Structure du projet
-
-```text
-ConnectED/
-│
-├─ backend/           # API Flask (Python)
-│   ├─ app.py         # Point d'entrée avec driver Neo4j
-│   ├─ requirements.txt
-│   └─ Dockerfile
-│
-├─ frontend/          # Application Angular
-│   └─ Dockerfile
-│
-├─ database/          # Initialisation de la BDD
-│   └─ init/ 
-│       └─ db.cypher  # Scripts de création du graphe (NoSQL)
-│
-├─ docker-compose.yml # Orchestration des services
-└─ README.md
-```
-
-Chaque service a son Dockerfile
-
-Les dossiers backend et frontend contiennent le code source
-
-docker-compose.yml gère les services.
-
-## 2. Guide installation
-
-Cloner le projet: 
-
+Configuration (recommandé) :
 ```bash
-git clone https://github.com/coti96/ConnectED/
-```
-```bash
-cd ConnectED
+cp .env.example .env
 ```
 
-Lancer le projet pour la première fois
+Lancer l’application :
 ```bash
 docker-compose up --build
 ```
-Cette commande lance 4 conteneurs :
-- connected-db : Base de données Neo4j (Port 7474 pour l'interface, 7687 pour le backend).
-- connected-db-init : Script automatique qui injecte les données de test (s'arrête après exécution).
-- connected-backend : API Flask (Port 5000).
-- connected-frontend : App Angular via Nginx (Port 4200).
 
-Attention : ça peut prendre quelques minutes car Docker télécharge les images de base et installe les dépendances.
+Accès :
+- Frontend : http://localhost:4200
+- Backend : http://localhost:5000
+- Neo4j Browser : http://localhost:7474 (neo4j / connected_password)
 
-Après ça, le projet est accessible depuis le navigateur :
+## Comptes de démonstration
+Après une initialisation “propre” (volume Neo4j recréé), les comptes suivants sont disponibles avec le mot de passe `password` :
+- Étudiant : paul@etudiant.com / password
+- Professionnel : pro1@company.com / password
+- Encadrant : encadrant@esiee.fr / password
+- Admin : admin@connected.com / password
 
-- Frontend Angular : http://localhost:4200
-- Backend API : http://localhost:5000
-- Neo4j Browser (Explorateur de graphe) : http://localhost:7474
-    - Login : neo4j
-    - Password : connected_password
-    - Commande de test : Tape MATCH (n) RETURN n pour voir les bulles.
+Note : si vous aviez déjà une base Neo4j existante, faites `docker-compose down -v` puis `docker-compose up --build` pour repartir de la base de démonstration et appliquer les index/contraintes.
 
-## 3. Commandes utiles au quotidien
+## Configuration de l’API côté frontend
+Par défaut, le frontend calcule l’URL de l’API depuis le hostname courant : `http(s)://<hostname>:5000`.  
+Pour un déploiement différent, il est possible de définir `window.__API_URL__` afin de forcer l’URL d’API.
 
-Lancer le projet : 
-
-Vérifier les images dockers 
+## Tests backend (smoke)
+Exécuter la suite de tests API dans le conteneur backend :
 ```bash
-docker images          
+docker exec connected-backend python -m pytest -q
 ```
 
-Vérifier les conteneurs en cours d'executions
-```bash
-docker ps          
-```
+## Documentation projet
+- Cahier des charges : [Cahier_des_charges.md](Cahier_des_charges.md)
+- Sécurité : [SECURITY.md](SECURITY.md)
 
-Démarrer le projet
-
-Pour lancer tous les services en arrière-plan et continuer à utiliser ton terminal :
+## Commandes utiles
 ```bash
 docker-compose up -d
-```
-
-Appliquer des changements
-```bash
 docker-compose up -d --build
-```
-
-Eteindre le conteneur
-```bash
 docker-compose stop
-```
-
-Reinitialiser le conteneur
-```bash
 docker-compose down -v
 ```

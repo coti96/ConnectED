@@ -7,6 +7,7 @@
     <a routerLink="/">Accueil</a>
     <a routerLink="/projects">Projets</a>
     <a routerLink="/projects/recommended" *ngIf="auth.isLoggedIn()">Recommandés</a>
+    <a routerLink="/help">Aide</a>
     <!-- On enlève le lien À propos qui cause l'erreur -->
     <!-- <a routerLink="/about">À propos</a> -->
   </nav>
@@ -22,15 +23,35 @@
         <app-icon name="messages" [size]="18"></app-icon>
         <span>Messages</span>
       </a>
+
+      <button type="button" class="notif-btn" (click)="toggleNotifications()">
+        <app-icon name="bell" [size]="18"></app-icon>
+        <span class="notif-badge" *ngIf="notifications.unread() as u" [class.hidden]="u === 0">{{ u }}</span>
+      </button>
+
+      <div class="notif-panel" *ngIf="showNotifications">
+        <div class="notif-header">Notifications</div>
+        <div class="notif-empty" *ngIf="notifications.notifications().length === 0">Aucune notification</div>
+        <button
+          type="button"
+          class="notif-item"
+          *ngFor="let n of notifications.notifications()"
+          [class.unread]="!n.read"
+          (click)="notifications.markRead(n.id)"
+        >
+          <div class="notif-message">{{ n.message }}</div>
+          <div class="notif-date" *ngIf="n.created_at">{{ n.created_at | date:'dd/MM HH:mm' }}</div>
+        </button>
+      </div>
       
       <!-- LIENS ÉTUDIANTS -->
-      <a *ngIf="auth.currentUser()?.role === 'student'" routerLink="/projects/my-applications" class="profile-link">
+      <a routerLink="/projects/my-applications" class="profile-link">
         <app-icon name="applications" [size]="18"></app-icon>
         <span>Mes candidatures</span>
       </a>
 
       <!-- LIENS CRÉATEURS / PROS -->
-      <a *ngIf="auth.currentUser()?.role === 'creator' || auth.currentUser()?.role === 'professional'" routerLink="/projects/my-projects" class="profile-link">
+      <a routerLink="/projects/my-projects" class="profile-link">
         <app-icon name="projects" [size]="18"></app-icon>
         <span>Mes projets</span>
       </a>
@@ -38,6 +59,11 @@
       <a routerLink="/profile" class="profile-link">
         <app-icon name="profile" [size]="18"></app-icon>
         <span>Mon profil</span>
+      </a>
+
+      <a *ngIf="auth.currentUser()?.role === 'admin'" routerLink="/admin" class="profile-link">
+        <app-icon name="badge" [size]="18"></app-icon>
+        <span>Admin</span>
       </a>
       
       <button (click)="auth.logout()" class="btn-login logout">

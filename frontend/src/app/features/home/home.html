@@ -11,11 +11,11 @@
       </div>
 
       <div class="card stats-card" *ngIf="dashboard?.stats">
-        <a class="stat-row" routerLink="/projects/my-applications" *ngIf="auth.currentUser()?.role === 'student'">
+        <a class="stat-row" routerLink="/projects/my-applications" *ngIf="auth.currentUser()?.role === 'etudiant'">
           <span class="label">Candidatures</span>
           <span class="value">{{ dashboard.stats.applications_sent }}</span>
         </a>
-        <a class="stat-row" routerLink="/projects/my-projects" *ngIf="auth.currentUser()?.role === 'creator' || auth.currentUser()?.role === 'professional'">
+        <a class="stat-row" routerLink="/projects/my-projects" *ngIf="auth.currentUser()?.role !== 'etudiant'">
           <span class="label">Projets créés</span>
           <span class="value">{{ dashboard.stats.projects_created }}</span>
         </a>
@@ -59,7 +59,7 @@
                 <span class="feed-label">{{ item.type === 'application' ? 'Candidature' : 'Projet' }}</span>
                 <strong class="feed-title-text">{{ item.title }}</strong>
               </div>
-              <div class="feed-date">{{ item.date | date:'dd/MM/yyyy HH:mm' }}</div>
+              <div class="feed-date">{{ (item.date | neo4jDate) | date:'dd/MM/yyyy HH:mm' }}</div>
             </div>
             <div class="feed-badge" *ngIf="item.status">
               {{ item.status === 'PENDING' ? 'En attente' : (item.status === 'ACCEPTED' ? 'Accepté' : 'Refusé') }}

@@ -1,0 +1,26 @@
+<section class="admin">
+  <div class="admin__header">
+    <h1>Administration</h1>
+    <div class="admin__actions">
+      <button type="button" class="btn" (click)="refresh()">Rafraîchir</button>
+    </div>
+  </div>
+
+  <div class="admin__message" *ngIf="message">{{ message }}</div>
+  <div class="admin__state" *ngIf="loading">Chargement…</div>
+
+  <div class="admin__list" *ngIf="!loading">
+    <div class="admin__item" *ngFor="let p of projects">
+      <div class="admin__title">{{ p.titre }}</div>
+      <div class="admin__meta">
+        <span>Statut : {{ p.statut || 'en_cours' }}</span>
+        <span *ngIf="p.creator">Créateur : {{ p.creator.email }}</span>
+      </div>
+      <div class="admin__buttons">
+        <button type="button" class="btn primary" (click)="setStatus(p.id, 'en_cours')">Ouvrir</button>
+        <button type="button" class="btn" (click)="setStatus(p.id, 'ferme')">Fermer</button>
+      </div>
+    </div>
+  </div>
+</section>
+

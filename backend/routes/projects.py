@@ -1,6 +1,7 @@
 from flask import Blueprint, jsonify, request
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from models.project import ProjectModel
+from models.user import UserModel
 
 projects_bp = Blueprint('projects', __name__)
 
@@ -52,6 +53,9 @@ def create_project():
         
     current_user = get_jwt_identity()
     email = current_user['email'] if isinstance(current_user, dict) else current_user
+    user_node = UserModel.find_by_email(email)
+    if not user_node:
+        return jsonify({"error": "Utilisateur introuvable"}), 404
     
     data = request.get_json()
     

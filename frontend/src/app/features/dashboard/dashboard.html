@@ -9,7 +9,7 @@
 
     <!-- Stats Cards -->
     <div class="stats-grid">
-      <div *ngIf="auth.currentUser()?.role === 'student'" class="stat-card blue" routerLink="/projects/my-applications">
+      <div class="stat-card blue" routerLink="/projects/my-applications">
         <div class="icon"><app-icon name="applications" [size]="22"></app-icon></div>
         <div class="stat-info">
           <h3>{{ data.stats.applications_sent }}</h3>
@@ -17,7 +17,7 @@
         </div>
       </div>
 
-      <div *ngIf="auth.currentUser()?.role === 'creator' || auth.currentUser()?.role === 'professional'" class="stat-card purple" routerLink="/projects/my-projects">
+      <div class="stat-card purple" routerLink="/projects/my-projects">
         <div class="icon"><app-icon name="projects" [size]="22"></app-icon></div>
         <div class="stat-info">
           <h3>{{ data.stats.projects_created }}</h3>
@@ -54,7 +54,7 @@
                   {{ item.type === 'application' ? 'Candidature à' : 'Nouveau projet' }} 
                   <strong>{{ item.title }}</strong>
                 </span>
-                <span class="date">{{ item.date | date:'dd MMM yyyy à HH:mm' }}</span>
+                <span class="date">{{ (item.date | neo4jDate) | date:'dd MMM yyyy à HH:mm' }}</span>
               </div>
               <div class="status" *ngIf="item.status">
                 <span class="badge" [ngClass]="item.status">
@@ -74,10 +74,10 @@
             <button routerLink="/projects/recommended" class="action-btn highlight">
               <span class="icon"><app-icon name="recommended" [size]="18"></app-icon></span> Voir mes recommandations
             </button>
-            <button *ngIf="auth.currentUser()?.role === 'creator' || auth.currentUser()?.role === 'professional'" routerLink="/projects/create" class="action-btn">
+            <button routerLink="/projects/create" class="action-btn">
               <span class="icon"><app-icon name="plus" [size]="18"></app-icon></span> Créer un projet
             </button>
-            <button *ngIf="auth.currentUser()?.role === 'student'" routerLink="/projects" class="action-btn">
+            <button routerLink="/projects" class="action-btn">
               <span class="icon"><app-icon name="search" [size]="18"></app-icon></span> Chercher un projet
             </button>
             <button routerLink="/profile" class="action-btn">

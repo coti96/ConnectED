@@ -1,24 +1,28 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { getApiBaseUrl } from '../../shared/services/api-base-url';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProfileService {
-  private apiUrl = 'http://localhost:5000/profile';
+  private apiUrl = `${getApiBaseUrl()}/profile`;
 
   constructor(private http: HttpClient) {}
 
   getProfile(): Observable<any> {
-    const token = localStorage.getItem('token');
-    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    return this.http.get(this.apiUrl, { headers });
+    return this.http.get(this.apiUrl);
   }
 
   updateProfile(data: any): Observable<any> {
-    const token = localStorage.getItem('token');
-    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    return this.http.put(this.apiUrl, data, { headers });
+    return this.http.put(this.apiUrl, data);
+  }
+
+  updatePassword(currentPassword: string, newPassword: string): Observable<any> {
+    return this.http.put(`${this.apiUrl}/password`, {
+      current_password: currentPassword,
+      new_password: newPassword
+    });
   }
 }

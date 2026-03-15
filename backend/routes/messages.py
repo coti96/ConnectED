@@ -2,6 +2,7 @@ from flask import Blueprint, jsonify, request
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from models.message import MessageModel
 from models.user import UserModel
+from models.notification import NotificationModel
 
 messages_bp = Blueprint('messages', __name__)
 
@@ -26,6 +27,13 @@ def send_message():
     success = MessageModel.create(email, receiver_email, content)
     if not success:
         return jsonify({"error": "Erreur lors de l'envoi"}), 500
+
+    NotificationModel.create_for_user(
+        receiver_email,
+        "message",
+        "Vous avez reçu un nouveau message.",
+        {"from": email},
+    )
         
     return jsonify({"message": "Message envoyé"}), 201
 
@@ -52,5 +60,13 @@ def get_chat_history(other_email):
     # Gestion sécurisée de l'identité
     email = current_user['email'] if isinstance(current_user, dict) else current_user
     
-    messages = MessageModel.get_messages(email, other_email)
+    limit = request.args.get("limit", "100")
+    before = request.args.get("before")
+    since = request.args.get("since")
+    mark_read = request.args.get("mark_read", "1")
+
+    if mark_read == "1":
+        MessageModel.mark_read(email, other_email)
+
+    messages = MessageModel.get_messages(email, other_email, limit=limit, before=before, since=since)
     return jsonify({"messages": messages})

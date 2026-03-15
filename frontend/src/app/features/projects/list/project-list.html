@@ -34,6 +34,19 @@
         <option value="Blockchain">Blockchain</option>
       </select>
     </div>
+
+    <div class="filter-box">
+      <select (change)="onSort($event)" class="filter-select">
+        <option value="deadline_asc">Deadline (la plus proche)</option>
+        <option value="deadline_desc">Deadline (la plus lointaine)</option>
+        <option value="title_asc">Titre (A→Z)</option>
+      </select>
+    </div>
+
+    <label class="filter-box" style="display:flex; align-items:center; gap:8px;">
+      <input type="checkbox" [checked]="onlyOpen" (change)="toggleOnlyOpen($event)">
+      <span>Projets ouverts</span>
+    </label>
   </div>
 
   <div *ngIf="loading" class="loading">
@@ -57,7 +70,7 @@
       <p class="description">{{ (project.description || 'Aucune description disponible') | slice:0:120 }}...</p>
 
       <div class="technologies">
-        <span *ngFor="let tech of project.technologies" class="tech-tag">{{ tech }}</span>
+        <span *ngFor="let tech of (project.technologies || [])" class="tech-tag">{{ tech }}</span>
       </div>
 
       <div class="footer">
@@ -68,7 +81,7 @@
           </span>
           <span class="deadline">
             <app-icon name="calendar" [size]="16"></app-icon>
-            {{ (project.deadline | date:'dd/MM/yyyy') || 'Date inconnue' }}
+            {{ ((project.deadline | neo4jDate) | date:'dd/MM/yyyy') || 'Date inconnue' }}
           </span>
         </div>
         

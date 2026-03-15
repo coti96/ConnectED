@@ -65,8 +65,8 @@ export class CreateProjectComponent {
 
       this.projectService.createProject(projectData).subscribe({
         next: (res) => {
-          console.log('Projet créé', res);
-          this.router.navigate(['/projects']);
+          const id = (res as any)?.id;
+          this.router.navigate(id ? ['/projects', id] : ['/projects']);
         },
         error: (err) => {
           console.error('Erreur création projet', err);

@@ -3,13 +3,32 @@ from datetime import datetime
 
 class ApplicationModel:
     @staticmethod
+    def get_acceptance_info(project_id, applicant_email):
+        driver = db.get_db()
+        with driver.session() as session:
+            query = """
+            MATCH (u:User {email: $email})-[r:APPLIED_TO]->(p:Project)
+            WHERE p.id = $project_id OR elementId(p) = $project_id
+            OPTIONAL MATCH ()-[a:APPLIED_TO {status: 'ACCEPTED'}]->(p)
+            RETURN r.status as current_status, p.nombre_places as capacity, count(DISTINCT a) as accepted_count
+            """
+            record = session.run(query, email=applicant_email, project_id=project_id).single()
+            if not record:
+                return None
+            return {
+                "current_status": record.get("current_status"),
+                "capacity": record.get("capacity"),
+                "accepted_count": record.get("accepted_count", 0),
+            }
+
+    @staticmethod
     def create(user_email, project_id):
         driver = db.get_db()
         with driver.session() as session:
             # Vérifier si déjà candidat
             check_query = """
             MATCH (u:User {email: $email})-[r:APPLIED_TO]->(p:Project)
-            WHERE elementId(p) = $project_id
+            WHERE p.id = $project_id OR elementId(p) = $project_id
             RETURN r
             """
             existing = session.run(check_query, email=user_email, project_id=project_id).single()
@@ -19,7 +38,7 @@ class ApplicationModel:
             # Créer la candidature
             query = """
             MATCH (u:User {email: $email})
-            MATCH (p:Project) WHERE elementId(p) = $project_id
+            MATCH (p:Project) WHERE p.id = $project_id OR elementId(p) = $project_id
             CREATE (u)-[r:APPLIED_TO {
                 date: datetime(),
                 status: 'PENDING'
@@ -35,8 +54,9 @@ class ApplicationModel:
         with driver.session() as session:
             query = """
             MATCH (u:User)-[r:APPLIED_TO]->(p:Project)
-            WHERE elementId(p) = $project_id
-            RETURN u, r, p
+            WHERE p.id = $project_id OR elementId(p) = $project_id
+            OPTIONAL MATCH (u)-[:HAS_TECH]->(t:Technology)
+            RETURN u, r, collect(DISTINCT t.libelle) as technologies
             """
             result = session.run(query, project_id=project_id)
             
@@ -47,12 +67,22 @@ class ApplicationModel:
                 
                 # Nettoyage
                 if 'password_hash' in user: del user['password_hash']
-                if 'date' in app_data: app_data['date'] = str(app_data['date'])
+                for key, value in list(user.items()):
+                    if hasattr(value, 'iso_format'):
+                        user[key] = value.iso_format()
+                user['technologies'] = record.get('technologies') or []
+
+                for key, value in list(app_data.items()):
+                    if hasattr(value, 'iso_format'):
+                        app_data[key] = value.iso_format()
+                if 'date' in app_data:
+                    app_data['date'] = str(app_data['date'])
                 
                 applications.append({
                     'applicant': user,
                     'status': app_data.get('status', 'PENDING'),
-                    'date': app_data.get('date'),
+                    'date': app_data.get('date') or app_data.get('created_at'),
+                    'motivation_message': app_data.get('motivation_message', ''),
                     'application_id': record['r'].element_id
                 })
             return applications
@@ -77,7 +107,7 @@ class ApplicationModel:
                 
                 # Récupérer l'ID (soit via 'id' property si elle existe, soit via element_id)
                 # IMPORTANT: Neo4j Python driver 5.x utilise element_id pour l'ID interne
-                if 'id' not in project:
+                if not project.get('id'):
                     project['id'] = project_node.element_id
                 
                 # Convertir la relation APPLIED_TO en dictionnaire
@@ -107,9 +137,32 @@ class ApplicationModel:
         with driver.session() as session:
             query = """
             MATCH (u:User {email: $email})-[r:APPLIED_TO]->(p:Project)
-            WHERE elementId(p) = $project_id
+            WHERE p.id = $project_id OR elementId(p) = $project_id
             SET r.status = $status
+            WITH u, p, r
+            FOREACH (_ IN CASE WHEN $status = 'ACCEPTED' THEN [1] ELSE [] END |
+              MERGE (u)-[m:MEMBER_OF]->(p)
+              ON CREATE SET m.joined_at = datetime()
+            )
+            FOREACH (_ IN CASE WHEN $status <> 'ACCEPTED' THEN [1] ELSE [] END |
+              OPTIONAL MATCH (u)-[m:MEMBER_OF]->(p)
+              DELETE m
+            )
             RETURN r
             """
             result = session.run(query, email=applicant_email, project_id=project_id, status=new_status)
             return result.single() is not None
+
+    @staticmethod
+    def cancel(user_email, project_id):
+        driver = db.get_db()
+        with driver.session() as session:
+            query = """
+            MATCH (u:User {email: $email})-[r:APPLIED_TO]->(p:Project)
+            WHERE (p.id = $project_id OR elementId(p) = $project_id)
+              AND r.status = 'PENDING'
+            DELETE r
+            RETURN 1 as ok
+            """
+            record = session.run(query, email=user_email, project_id=project_id).single()
+            return record is not None

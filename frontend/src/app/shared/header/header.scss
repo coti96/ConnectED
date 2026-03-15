@@ -62,6 +62,7 @@
       display: flex;
       align-items: center;
       gap: 1.5rem;
+      position: relative;
 
       .profile-link {
         display: inline-flex;
@@ -74,6 +75,95 @@
         &:hover {
           color: #6b2cd4;
         }
+      }
+
+      .notif-btn {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        border: 1px solid #eee;
+        border-radius: 10px;
+        background: white;
+        cursor: pointer;
+        color: #4a3a7c;
+      }
+
+      .notif-badge {
+        position: absolute;
+        top: -6px;
+        right: -6px;
+        min-width: 18px;
+        height: 18px;
+        padding: 0 5px;
+        border-radius: 12px;
+        background: #e11d48;
+        color: white;
+        font-size: 12px;
+        font-weight: 800;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border: 2px solid white;
+      }
+
+      .notif-badge.hidden {
+        display: none;
+      }
+
+      .notif-panel {
+        position: absolute;
+        right: 0;
+        top: 56px;
+        width: 340px;
+        max-height: 420px;
+        overflow: auto;
+        background: white;
+        border: 1px solid #eee;
+        border-radius: 14px;
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.12);
+        padding: 10px;
+        z-index: 2000;
+      }
+
+      .notif-header {
+        font-weight: 800;
+        padding: 8px 10px;
+        color: #111827;
+      }
+
+      .notif-empty {
+        padding: 10px;
+        color: #6b7280;
+      }
+
+      .notif-item {
+        width: 100%;
+        text-align: left;
+        border: none;
+        border-radius: 12px;
+        background: #fafafa;
+        padding: 10px;
+        cursor: pointer;
+        margin-top: 8px;
+      }
+
+      .notif-item.unread {
+        background: #f3e8ff;
+      }
+
+      .notif-message {
+        font-weight: 600;
+        color: #111827;
+        line-height: 1.35;
+      }
+
+      .notif-date {
+        margin-top: 4px;
+        font-size: 12px;
+        color: #6b7280;
       }
     }
   }

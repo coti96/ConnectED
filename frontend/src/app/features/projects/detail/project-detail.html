@@ -17,7 +17,7 @@
       </div>
       <div class="deadline-badge">
         <app-icon name="calendar" [size]="16"></app-icon>
-        Deadline : {{ project.deadline | date:'dd/MM/yyyy' }}
+        Deadline : {{ (project.deadline | neo4jDate) | date:'dd/MM/yyyy' }}
       </div>
     </div>
 
@@ -26,7 +26,11 @@
     <div class="meta-row">
       <div class="meta-item">
         <span class="icon"><app-icon name="users" [size]="18"></app-icon></span>
-        <strong>{{ project.nombre_places }}</strong> places disponibles
+        <strong>{{ acceptedCount }}/{{ project.nombre_places }}</strong> places prises
+      </div>
+      <div class="meta-item" *ngIf="capacity">
+        <span class="icon"><app-icon name="check" [size]="18"></app-icon></span>
+        <strong>{{ placesRemaining }}</strong> restantes
       </div>
       <div class="meta-item" *ngIf="project.creator">
         <span class="icon"><app-icon name="profile" [size]="18"></app-icon></span>
@@ -42,7 +46,16 @@
     <div class="content-section">
       <h3>Technologies & Compétences requises</h3>
       <div class="tech-list">
-        <span *ngFor="let tech of project.technologies" class="tech-tag">{{ tech }}</span>
+        <span *ngFor="let tech of (project.technologies || [])" class="tech-tag">{{ tech }}</span>
+      </div>
+    </div>
+
+    <div class="content-section" *ngIf="(project.members || []).length">
+      <h3>Équipe</h3>
+      <div class="tech-list">
+        <span *ngFor="let m of (project.members || [])" class="tech-tag">
+          {{ (m.prenom || '') + ' ' + (m.nom || '') }}
+        </span>
       </div>
     </div>
 
@@ -51,6 +64,7 @@
       
       <!-- Message de succès/erreur -->
       <div *ngIf="message" class="alert success">{{ message }}</div>
+      <div *ngIf="error" class="alert error">{{ error }}</div>
 
       <!-- Créateur -->
       <div *ngIf="isCreator" class="creator-actions">
@@ -63,14 +77,19 @@
 
       <!-- Candidat -->
       <div *ngIf="!isCreator" class="candidate-actions">
-        <button *ngIf="!hasApplied" (click)="apply()" class="btn-apply">
+        <button *ngIf="!hasApplied" (click)="apply()" class="btn-apply" [disabled]="isFull">
           <app-icon name="applications" [size]="18"></app-icon>
-          Postuler
+          {{ isFull ? 'Projet complet' : 'Postuler' }}
         </button>
         
         <button *ngIf="hasApplied" disabled class="btn-applied">
           <app-icon name="check" [size]="18"></app-icon>
-          Déjà postulé
+          {{ applicationStatus === 'ACCEPTED' ? 'Accepté' : (applicationStatus === 'REJECTED' ? 'Refusé' : 'Déjà postulé') }}
+        </button>
+
+        <button *ngIf="hasApplied && applicationStatus === 'PENDING'" type="button" class="btn-applied cancel" (click)="cancel()">
+          <app-icon name="x" [size]="18"></app-icon>
+          Annuler
         </button>
       </div>
     </div>

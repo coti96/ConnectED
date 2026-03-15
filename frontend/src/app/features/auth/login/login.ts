@@ -35,7 +35,6 @@ export class LoginComponent {
       this.auth.login(this.loginForm.value)
         .subscribe({
           next: (res: any) => {
-            console.log('Connexion réussie', res);
             // Redirection vers le Dashboard après connexion
             this.router.navigate(['/dashboard']);
           },

@@ -74,7 +74,20 @@ class UserModel:
             fields = []
             params = {'email': email}
             # Liste des champs autorisés à la modification
-            allowed = ['nom', 'prenom', 'ville', 'bio_courte', 'ecole', 'filiere', 'entreprise', 'fonction']
+            allowed = [
+                'nom',
+                'prenom',
+                'ville',
+                'bio_courte',
+                'ecole',
+                'filiere',
+                'entreprise',
+                'fonction',
+                'github_url',
+                'linkedin_url',
+                'portfolio_url',
+                'availability',
+            ]
             
             for field in allowed:
                 # On vérifie si le champ est présent dans les données reçues (même vide)
@@ -105,3 +118,11 @@ class UserModel:
                             MERGE (u)-[:HAS_TECH]->(t)
                             """, email=email, tech=tech.strip())
             return True
+
+    @staticmethod
+    def update_password(email, password_hash):
+        driver = db.get_db()
+        with driver.session() as session:
+            query = "MATCH (u:User {email: $email}) SET u.password_hash = $hash RETURN u"
+            record = session.run(query, email=email, hash=password_hash).single()
+            return record is not None

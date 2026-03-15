@@ -6,11 +6,12 @@ import { AuthService } from '../../shared/services/auth';
 import { DashboardService } from '../dashboard/dashboard.service';
 import { ProjectService } from '../projects/project.service';
 import { IconComponent } from '../../shared/icon/icon';
+import { Neo4jDatePipe } from '../../shared/pipes/neo4j-date.pipe';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, RouterModule, LandingComponent, IconComponent],
+  imports: [CommonModule, RouterModule, LandingComponent, IconComponent, Neo4jDatePipe],
   templateUrl: './home.html',
   styleUrls: ['./home.scss']
 })

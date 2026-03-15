@@ -4,11 +4,12 @@ import { RouterModule } from '@angular/router';
 import { DashboardService } from './dashboard.service';
 import { AuthService } from '../../shared/services/auth';
 import { IconComponent } from '../../shared/icon/icon';
+import { Neo4jDatePipe } from '../../shared/pipes/neo4j-date.pipe';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule, RouterModule, IconComponent],
+  imports: [CommonModule, RouterModule, IconComponent, Neo4jDatePipe],
   templateUrl: './dashboard.html',
   styleUrls: ['./dashboard.scss']
 })

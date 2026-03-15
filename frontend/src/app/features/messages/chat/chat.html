@@ -9,7 +9,7 @@
       <!-- On pourrait réafficher la liste ici pour naviguer, 
            mais pour l'instant on se concentre sur le chat -->
       <div class="conversation-item active">
-        <div class="avatar">{{ otherEmail?.charAt(0) }}</div>
+        <div class="avatar">{{ otherEmail.charAt(0) }}</div>
         <div class="info">
           <h3>{{ otherEmail }}</h3>
           <p>En ligne</p>
@@ -25,12 +25,23 @@
 
     <div class="messages-list" #scrollContainer>
       <div *ngIf="loading" class="loading">Chargement...</div>
+
+      <button
+        *ngIf="!loading && messages.length >= 50"
+        type="button"
+        class="back-link"
+        style="align-self:center; margin-bottom: 8px;"
+        (click)="loadOlder()"
+        [disabled]="loadingOlder"
+      >
+        Charger plus
+      </button>
       
       <div *ngFor="let msg of messages" 
            class="message-bubble" 
            [ngClass]="{'sent': msg.sender_email === currentUserEmail, 'received': msg.sender_email !== currentUserEmail}">
         <div class="content">{{ msg.content }}</div>
-        <div class="time">{{ msg.timestamp | date:'HH:mm' }}</div>
+        <div class="time">{{ (msg.timestamp | neo4jDate) | date:'HH:mm' }}</div>
       </div>
     </div>
 

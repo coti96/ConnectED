@@ -96,6 +96,46 @@
         </div>
       </div>
 
+      <div class="section">
+        <h3>Liens & Disponibilité</h3>
+        <div class="row">
+          <div class="form-group">
+            <label>GitHub</label>
+            <input type="text" formControlName="github_url" placeholder="https://github.com/..." />
+          </div>
+          <div class="form-group">
+            <label>LinkedIn</label>
+            <input type="text" formControlName="linkedin_url" placeholder="https://linkedin.com/in/..." />
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group">
+            <label>Portfolio</label>
+            <input type="text" formControlName="portfolio_url" placeholder="https://..." />
+          </div>
+          <div class="form-group">
+            <label>Disponibilité</label>
+            <input type="text" formControlName="availability" placeholder="Ex: 5h/semaine" />
+          </div>
+        </div>
+      </div>
+
+      <div class="section" *ngIf="isEditing">
+        <h3>Sécurité</h3>
+        <div *ngIf="passwordMessage" class="message success">{{ passwordMessage }}</div>
+        <div class="row">
+          <div class="form-group">
+            <label>Mot de passe actuel</label>
+            <input type="password" [(ngModel)]="currentPassword" [ngModelOptions]="{standalone: true}" />
+          </div>
+          <div class="form-group">
+            <label>Nouveau mot de passe</label>
+            <input type="password" [(ngModel)]="newPassword" [ngModelOptions]="{standalone: true}" />
+          </div>
+        </div>
+        <button type="button" class="btn-save" (click)="updatePassword()">Changer le mot de passe</button>
+      </div>
+
       <div class="actions" *ngIf="isEditing">
         <button type="submit" class="btn-save" [disabled]="profileForm.invalid">
           Enregistrer les modifications

@@ -38,7 +38,6 @@ export class RegisterComponent {
       this.auth.register(this.registerForm.value)
         .subscribe({
           next: (res: any) => {
-            console.log('Inscription réussie', res);
             // Auto login or redirect to login
             this.router.navigate(['/login']);
           },

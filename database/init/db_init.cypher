@@ -9,6 +9,9 @@ CREATE CONSTRAINT domain_id_unique IF NOT EXISTS FOR (d:Domain) REQUIRE d.id IS 
 CREATE CONSTRAINT project_titre_unique IF NOT EXISTS FOR (p:Project) REQUIRE p.titre IS UNIQUE;
 CREATE CONSTRAINT domain_libelle_unique IF NOT EXISTS FOR (d:Domain) REQUIRE d.libelle IS UNIQUE;
 CREATE CONSTRAINT tech_libelle_unique IF NOT EXISTS FOR (t:Technology) REQUIRE t.libelle IS UNIQUE;
+CREATE CONSTRAINT message_id_unique IF NOT EXISTS FOR (m:Message) REQUIRE m.id IS UNIQUE;
+
+CREATE INDEX message_timestamp IF NOT EXISTS FOR (m:Message) ON (m.timestamp);
 
 
 

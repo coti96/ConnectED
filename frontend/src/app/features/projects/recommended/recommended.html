@@ -61,7 +61,10 @@
           </span>
         </div>
         
-        <button class="btn-details" [routerLink]="['/projects', project.id]">
+        <button *ngIf="project.id" class="btn-details" [routerLink]="['/projects', project.id]">
+          Voir détails
+        </button>
+        <button *ngIf="!project.id" class="btn-details" disabled>
           Voir détails
         </button>
       </div>
