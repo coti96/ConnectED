@@ -1,0 +1,39 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: neo4j-init
+  namespace: connected
+spec:
+  backoffLimit: 5
+  template:
+    spec:
+      restartPolicy: OnFailure
+      containers:
+        - name: db-init
+          image: neo4j:community
+          command:
+            - /bin/bash
+            - -c
+            - |
+              set -e
+              echo "=== Attente de Neo4j ==="
+              until wget -qO- http://neo4j:7474 > /dev/null 2>&1; do
+                echo "Waiting for Neo4j HTTP..."; sleep 5;
+              done
+              echo "Neo4j HTTP est prêt, attente bolt..."
+              sleep 15
+              echo "=== INITIALISATION DE LA BASE ==="
+              cypher-shell -a bolt://neo4j:7687 -u neo4j -p connected_password -f /scripts/db_init.cypher
+              echo "=== TERMINÉ ==="
+          volumeMounts:
+            - name: neo4j-init
+              mountPath: /scripts
+            - name: neo4j-csv
+              mountPath: /var/lib/neo4j/import
+      volumes:
+        - name: neo4j-init
+          configMap:
+            name: neo4j-init-scripts
+        - name: neo4j-csv
+          configMap:
+            name: neo4j-csv-data

@@ -1,0 +1,61 @@
+﻿apiVersion: v1
+data:
+  db_init.cypher: "// ============================================================================\r\n//
+    1´©ÅÔâú CONTRAINTES (UNIQUE)\r\n// ============================================================================\r\nCREATE
+    CONSTRAINT user_email_unique IF NOT EXISTS FOR (u:User) REQUIRE u.email IS UNIQUE;\r\nCREATE
+    CONSTRAINT user_id_unique IF NOT EXISTS FOR (u:User) REQUIRE u.id IS UNIQUE;\r\nCREATE
+    CONSTRAINT project_id_unique IF NOT EXISTS FOR (p:Project) REQUIRE p.id IS UNIQUE;\r\nCREATE
+    CONSTRAINT tech_id_unique IF NOT EXISTS FOR (t:Technology) REQUIRE t.id IS UNIQUE;\r\nCREATE
+    CONSTRAINT domain_id_unique IF NOT EXISTS FOR (d:Domain) REQUIRE d.id IS UNIQUE;\r\nCREATE
+    CONSTRAINT project_titre_unique IF NOT EXISTS FOR (p:Project) REQUIRE p.titre
+    IS UNIQUE;\r\nCREATE CONSTRAINT domain_libelle_unique IF NOT EXISTS FOR (d:Domain)
+    REQUIRE d.libelle IS UNIQUE;\r\nCREATE CONSTRAINT tech_libelle_unique IF NOT EXISTS
+    FOR (t:Technology) REQUIRE t.libelle IS UNIQUE;\r\n\r\n\r\n\r\n// ============================================================================\r\n//
+    2´©ÅÔâú DOMAINES\r\n// ============================================================================\r\nCALL
+    {\r\n    LOAD CSV WITH HEADERS FROM 'file:///domains.csv' AS row\r\n    CREATE
+    (:Domain {id: randomUUID(), libelle: row.libelle, created_at: datetime()})\r\n}
+    IN TRANSACTIONS;\r\n\r\n// ============================================================================\r\n//
+    3´©ÅÔâú TECHNOLOGIES\r\n// ============================================================================\r\nCALL
+    {\r\n    LOAD CSV WITH HEADERS FROM 'file:///technologies.csv' AS row\r\n    MATCH
+    (d:Domain {libelle: row.domain_libelle})\r\n    CREATE (t:Technology {id: randomUUID(),
+    libelle: row.libelle, created_at: datetime()})\r\n    MERGE (t)-[:IN_DOMAIN]->(d)\r\n}
+    IN TRANSACTIONS;\r\n\r\n// ============================================================================\r\n//
+    4´©ÅÔâú UTILISATEURS\r\n// ============================================================================\r\nCALL
+    {\r\n    LOAD CSV WITH HEADERS FROM 'file:///users.csv' AS row\r\n    CREATE (:User
+    {\r\n        id: randomUUID(),\r\n        email: row.email,\r\n        password_hash:
+    row.password_hash,\r\n        role: row.role,\r\n        nom: row.nom,\r\n        prenom:
+    row.prenom,\r\n        ville: row.ville,\r\n        bio_courte: row.bio_courte,\r\n
+    \       ecole: row.ecole,\r\n        filiere: row.filiere,\r\n        fonction:
+    row.fonction,\r\n        entreprise: row.entreprise,\r\n        created_at: datetime(row.created_at)\r\n
+    \   })\r\n} IN TRANSACTIONS;\r\n\r\n// ============================================================================\r\n//
+    5´©ÅÔâú RELATIONS UTILISATEURS Ôåö TECHNOLOGIES\r\n// ============================================================================\r\nCALL
+    {\r\n    LOAD CSV WITH HEADERS FROM 'file:///relations_user_tech.csv' AS row\r\n
+    \   MATCH (u:User {email: row.user_email})\r\n    MATCH (t:Technology {libelle:
+    row.tech_libelle})\r\n    MERGE (u)-[:HAS_TECH]->(t)\r\n} IN TRANSACTIONS;\r\n\r\n//
+    ============================================================================\r\n//
+    6´©ÅÔâú PROJETS\r\n// ============================================================================\r\nCALL
+    {\r\n    LOAD CSV WITH HEADERS FROM 'file:///projects.csv' AS row\r\n    CREATE
+    (:Project {\r\n        id: randomUUID(),\r\n        titre: row.titre,\r\n        description:
+    row.description,\r\n        localisation: row.localisation,\r\n        statut:
+    row.statut,\r\n        nombre_places: toInteger(row.nombre_places),\r\n        created_at:
+    datetime()\r\n    })\r\n} IN TRANSACTIONS;\r\n\r\n// ============================================================================\r\n//
+    7´©ÅÔâú RELATIONS PROJETS Ôåö TECHNOLOGIES\r\n// ============================================================================\r\nCALL
+    {\r\n    LOAD CSV WITH HEADERS FROM 'file:///relations_project_tech.csv' AS row\r\n
+    \   MATCH (p:Project {titre: row.project_title})\r\n    MATCH (t:Technology {libelle:
+    row.tech_libelle})\r\n    MERGE (p)-[:REQUIRES_TECH]->(t)\r\n} IN TRANSACTIONS;\r\n\r\n//
+    ============================================================================\r\n//
+    8´©ÅÔâú RELATIONS UTILISATEURS Ôåö PROJETS (APPLICATIONS)\r\n// ============================================================================\r\nCALL
+    {\r\n    LOAD CSV WITH HEADERS FROM 'file:///relations_user_project_applied.csv'
+    AS row\r\n    MATCH (u:User {email: row.user_email})\r\n    MATCH (p:Project {titre:
+    row.project_title})\r\n    MERGE (u)-[r:APPLIED_TO]->(p)\r\n    SET r.status =
+    row.status,\r\n        r.motivation_message = row.motivation_message,\r\n        r.created_at
+    = datetime(row.created_at)\r\n} IN TRANSACTIONS;\r\n\r\n// ============================================================================\r\n//
+    9´©ÅÔâú RELATIONS UTILISATEURS Ôåö PROJETS (MEMBRES ACCEPT├ëS)\r\n// ============================================================================\r\nCALL
+    {\r\n    LOAD CSV WITH HEADERS FROM 'file:///relations_user_project_member.csv'
+    AS row\r\n    MATCH (u:User {email: row.user_email})\r\n    MATCH (p:Project {titre:
+    row.project_title})\r\n    MERGE (u)-[r:MEMBER_OF]->(p)\r\n    SET r.joined_at
+    = datetime(row.joined_at)\r\n} IN TRANSACTIONS;\r\n\r\n"
+kind: ConfigMap
+metadata:
+  name: neo4j-init-scripts
+  namespace: connected

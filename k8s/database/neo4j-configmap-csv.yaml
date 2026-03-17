@@ -1,0 +1,104 @@
+﻿apiVersion: v1
+data:
+  domains.csv: "libelle\r\nD├®veloppement Web\r\nData Science\r\nDesign UI/UX\r\nMobile
+    Development\r\nDevOps\r\nCloud Computing\r\nCybersecurity\r\nBlockchain\r\nIntelligence
+    Artificielle\r\nBig Data\r\n"
+  projects.csv: "titre,description,localisation,statut,nombre_places,creator_email,domain\r\nPlateforme
+    IA,Syst├¿me de d├®tection de fraude,Paris,en_cours,3,pro2@company.com,Intelligence
+    Artificielle\r\nApp Mobile Fitness,Application mobile pour le suivi sportif,Lyon,en_cours,4,pro7@company.com,Mobile
+    Development\r\nDashboard Analytics,Tableau de bord pour KPIs et visualisation
+    de donn├®es,Marseille,en_cours,3,pro2@company.com,Data Science\r\nSite E-commerce,Plateforme
+    de vente en ligne avec paiement int├®gr├®,Bordeaux,en_cours,5,pro5@company.com,D├®veloppement
+    Web\r\nJeu Vid├®o 2D,Jeu ├®ducatif pour enfants,Nice,en_cours,3,pro8@company.com,Gaming\r\nApplication
+    Sant├®,T├®l├® suivi m├®dical ├á distance,Toulouse,en_cours,2,pro10@company.com,HealthTech\r\nAutomatisation
+    DevOps,Pipeline CI/CD et monitoring complet,Paris,en_cours,3,pro3@company.com,DevOps\r\nPortfolio
+    Designer,Application web pour designers,Strasbourg,en_cours,3,pro4@company.com,Design
+    UI/UX\r\nBlockchain SupplyChain,Suivi logistique sur blockchain,Lyon,en_cours,3,pro9@company.com,Blockchain\r\nAnalyse
+    Big Data,Analyse des logs et donn├®es massives,Montpellier,en_cours,4,pro2@company.com,Big
+    Data\r\n"
+  relations_project_tech.csv: "project_title,tech_libelle\r\nPlateforme IA,Python\r\nPlateforme
+    IA,TensorFlow\r\nPlateforme IA,OpenAI API\r\nApp Mobile Fitness,Flutter\r\nApp
+    Mobile Fitness,React Native\r\nApp Mobile Fitness,Swift\r\nDashboard Analytics,Python\r\nDashboard
+    Analytics,Pandas\r\nDashboard Analytics,Scikit-learn\r\nDashboard Analytics,Tableau\r\nSite
+    E-commerce,JavaScript\r\nSite E-commerce,React\r\nSite E-commerce,Node.js\r\nSite
+    E-commerce,Angular\r\nJeu Vid├®o 2D,Unity\r\nJeu Vid├®o 2D,C#\r\nJeu Vid├®o 2D,Unreal
+    Engine\r\nApplication Sant├®,Python\r\nApplication Sant├®,React Native\r\nApplication
+    Sant├®,Flutter\r\nAutomatisation DevOps,Docker\r\nAutomatisation DevOps,Kubernetes\r\nAutomatisation
+    DevOps,Terraform\r\nAutomatisation DevOps,Prometheus\r\nPortfolio Designer,Figma\r\nPortfolio
+    Designer,Adobe XD\r\nPortfolio Designer,React\r\nPortfolio Designer,JavaScript\r\nBlockchain
+    SupplyChain,Solidity\r\nBlockchain SupplyChain,Python\r\nBlockchain SupplyChain,Blockchain\r\nAnalyse
+    Big Data,Spark\r\nAnalyse Big Data,Hadoop\r\nAnalyse Big Data,Kafka\r\nAnalyse
+    Big Data,Python\r\n"
+  relations_user_project_applied.csv: "user_email,project_title,status,motivation_message,created_at\r\nstudent1@mail.com,Plateforme
+    IA,en_attente,\"Je veux apprendre React et Python\",2026-01-05T09:00:00\r\nstudent2@mail.com,Plateforme
+    IA,en_attente,\"Passionn├® par la Data Science\",2026-01-05T09:15:00\r\nstudent3@mail.com,Plateforme
+    IA,en_attente,\"Curieuse du front-end et UI/UX\",2026-01-05T09:30:00\r\npro1@company.com,App
+    Mobile Fitness,en_attente,\"Je peux encadrer les ├®tudiants sur React\",2026-01-06T10:00:00\r\nstudent4@mail.com,App
+    Mobile Fitness,en_attente,\"Data Science et Machine Learning\",2026-01-06T10:15:00\r\nstudent5@mail.com,App
+    Mobile Fitness,en_attente,\"Python et IA sont mes points forts\",2026-01-06T10:30:00\r\npro2@company.com,Dashboard
+    Analytics,en_attente,\"Exp├®rience DevOps pour ce projet\",2026-01-07T11:00:00\r\nstudent6@mail.com,Dashboard
+    Analytics,en_attente,\"Je ma├«trise Docker et Kubernetes\",2026-01-07T11:15:00\r\nstudent7@mail.com,Dashboard
+    Analytics,en_attente,\"Curieux des pipelines CI/CD\",2026-01-07T11:30:00\r\nstudent8@mail.com,Site
+    E-commerce,en_attente,\"Passionn├®e par le design UI/UX\",2026-01-08T09:00:00\r\npro3@company.com,Site
+    E-commerce,en_attente,\"UI/UX designer exp├®riment├®\",2026-01-08T09:15:00\r\nstudent9@mail.com,Site
+    E-commerce,en_attente,\"Figma et Adobe XD sont mes outils favoris\",2026-01-08T09:30:00\r\nstudent10@mail.com,Jeu
+    Vid├®o 2D,en_attente,\"Int├®ress├® par le back-end et Node.js\",2026-01-09T08:45:00\r\npro4@company.com,Jeu
+    Vid├®o 2D,en_attente,\"Je peux guider les ├®tudiants sur Node.js\",2026-01-09T09:00:00\r\nstudent11@mail.com,Jeu
+    Vid├®o 2D,en_attente,\"Curieux du d├®veloppement fullstack\",2026-01-09T09:15:00\r\nstudent12@mail.com,Application
+    Sant├®,en_attente,\"Passionn├®e par le mobile et Flutter\",2026-01-10T10:00:00\r\npro5@company.com,Application
+    Sant├®,en_attente,\"Mobile dev senior disponible\",2026-01-10T10:15:00\r\nstudent13@mail.com,A\r\n"
+  relations_user_project_member.csv: "user_email,project_title,joined_at\r\nstudent1@mail.com,Plateforme
+    IA,2026-01-15T10:00:00\r\npro1@company.com,Plateforme IA,2026-01-15T10:30:00\r\nstudent2@mail.com,App
+    Mobile Fitness,2026-01-16T11:00:00\r\npro2@company.com,App Mobile Fitness,2026-01-16T11:30:00\r\nstudent3@mail.com,Dashboard
+    Analytics,2026-01-17T09:00:00\r\npro3@company.com,Dashboard Analytics,2026-01-17T09:30:00\r\nstudent4@mail.com,Site
+    E-commerce,2026-01-18T10:00:00\r\npro4@company.com,Site E-commerce,2026-01-18T10:30:00\r\nstudent5@mail.com,Jeu
+    Vid├®o 2D,2026-01-19T14:00:00\r\npro5@company.com,Jeu Vid├®o 2D,2026-01-19T14:30:00\r\nstudent6@mail.com,Application
+    Sant├®,2026-01-20T08:45:00\r\npro6@company.com,Application Sant├®,2026-01-20T09:00:00\r\nstudent7@mail.com,Automatisation
+    DevOps,2026-01-21T11:00:00\r\npro7@company.com,Automatisation DevOps,2026-01-21T11:15:00\r\nstudent8@mail.com,Portfolio
+    Designer,2026-01-22T12:00:00\r\npro8@company.com,Portfolio Designer,2026-01-22T12:30:00\r\nstudent9@mail.com,Blockchain
+    SupplyChain,2026-01-23T13:00:00\r\npro9@company.com,Blockchain SupplyChain,2026-01-23T13:15:00\r\nstudent10@mail.com,Analyse
+    Big Data,2026-01-24T14:00:00\r\npro10@company.com,Analyse Big Data,2026-01-24T14:30:00\r\n"
+  technologies.csv: "libelle,domain_libelle\r\nJavaScript,D├®veloppement Web\r\nReact,D├®veloppement
+    Web\r\nNode.js,D├®veloppement Web\r\nVue,D├®veloppement Web\r\nAngular,D├®veloppement
+    Web\r\nPython,Data Science\r\nTensorFlow,Data Science\r\nPyTorch,Data Science\r\nScikit-learn,Data
+    Science\r\nPandas,Data Science\r\nFigma,Design UI/UX\r\nAdobe XD,Design UI/UX\r\nFlutter,Mobile
+    Development\r\nReact Native,Mobile Development\r\nSwift,Mobile Development\r\nKotlin,Mobile
+    Development\r\nDocker,DevOps\r\nKubernetes,DevOps\r\nTerraform,DevOps\r\nAWS,Cloud
+    Computing\r\nAzure,Cloud Computing\r\nGCP,Cloud Computing\r\nMetasploit,Cybersecurity\r\nWireshark,Cybersecurity\r\nSolidity,Blockchain\r\nOpenAI
+    API,Intelligence Artificielle\r\nKafka,Big Data\r\nSpark,Big Data\r\nHadoop,Big
+    Data\r\n"
+  users.csv: "email,password_hash,role,nom,prenom,ville,bio_courte,ecole,filiere,fonction,entreprise,created_at\r\nstudent1@mail.com,$2b$10$hash1,etudiant,Dupont,Marie,Lyon,\"├ëtudiante
+    passionn├®e par le web\",Epitech,Web Development,, ,2026-01-01T08:00:00\r\nstudent2@mail.com,$2b$10$hash2,etudiant,Martin,Lucas,Paris,\"Curieux
+    des data sciences\",Insa,Data Science,, ,2026-01-02T08:00:00\r\nstudent3@mail.com,$2b$10$hash3,etudiant,Leroy,Emma,Marseille,\"Design
+    UI/UX est ma passion\",Ecole de Design,Design UI/UX,, ,2026-01-03T08:00:00\r\nstudent4@mail.com,$2b$10$hash4,etudiant,Roux,Chlo├®,Lille,\"D├®veloppement
+    Mobile m'int├®resse\",Polytech,Mobile Development,, ,2026-01-04T08:00:00\r\nstudent5@mail.com,$2b$10$hash5,etudiant,Moreau,Antoine,Bordeaux,\"J'aime
+    apprendre React\",Epitech,Web Development,, ,2026-01-05T08:00:00\r\nstudent6@mail.com,$2b$10$hash6,etudiant,Fabre,L├®a,Nice,\"Passionn├®e
+    par le front-end\",Epitech,Web Development,, ,2026-01-06T08:00:00\r\nstudent7@mail.com,$2b$10$hash7,etudiant,Michel,Hugo,Toulouse,\"Data
+    Science est ma vocation\",Insa,Data Science,, ,2026-01-07T08:00:00\r\nstudent8@mail.com,$2b$10$hash8,etudiant,David,Clara,Nantes,\"J'adore
+    cr├®er des interfaces\",Ecole de Design,Design UI/UX,, ,2026-01-08T08:00:00\r\nstudent9@mail.com,$2b$10$hash9,etudiant,Bernard,Thomas,Strasbourg,\"Mobile
+    Dev pour les applis utiles\",Polytech,Mobile Development,, ,2026-01-09T08:00:00\r\nstudent10@mail.com,$2b$10$hash10,etudiant,Petit,Sophie,Montpellier,\"Front-end
+    et React addict\",Epitech,Web Development,, ,2026-01-10T08:00:00\r\nstudent11@mail.com,$2b$10$hash11,etudiant,Renaud,Julien,Lyon,\"Data
+    Science et IA m'int├®ressent\",Insa,Data Science,, ,2026-01-11T08:00:00\r\nstudent12@mail.com,$2b$10$hash12,etudiant,Blanc,Manon,Paris,\"Design
+    graphique et UI/UX\",Ecole de Design,Design UI/UX,, ,2026-01-12T08:00:00\r\nstudent13@mail.com,$2b$10$hash13,etudiant,Fontaine,L├®o,Marseille,\"Applications
+    mobiles innovantes\",Polytech,Mobile Development,, ,2026-01-13T08:00:00\r\nstudent14@mail.com,$2b$10$hash14,etudiant,Gauthier,Julie,Bordeaux,\"Passionn├®e
+    par React et Angular\",Epitech,Web Development,, ,2026-01-14T08:00:00\r\nstudent15@mail.com,$2b$10$hash15,etudiant,Chevalier,Maxime,Nice,\"Data
+    Science et Machine Learning\",Insa,Data Science,, ,2026-01-15T08:00:00\r\nstudent16@mail.com,$2b$10$hash16,etudiant,Lemoine,├ëmilie,Toulouse,\"UI/UX
+    et design cr├®atif\",Ecole de Design,Design UI/UX,, ,2026-01-16T08:00:00\r\nstudent17@mail.com,$2b$10$hash17,etudiant,Faure,Alexandre,Nantes,\"D├®veloppement
+    mobile sur Flutter\",Polytech,Mobile Development,, ,2026-01-17T08:00:00\r\nstudent18@mail.com,$2b$10$hash18,etudiant,Rolland,Claire,Strasbourg,\"Front-end
+    et React passionn├®e\",Epitech,Web Development,, ,2026-01-18T08:00:00\r\nstudent19@mail.com,$2b$10$hash19,etudiant,Brun,Victor,Montpellier,\"Data
+    Science et IA\",Insa,Data Science,, ,2026-01-19T08:00:00\r\nstudent20@mail.com,$2b$10$hash20,etudiant,Marchand,Laura,Lyon,\"UI/UX
+    designer en herbe\",Ecole de Design,Design UI/UX,, ,2026-01-20T08:00:00\r\npro1@company.com,$2b$10$hash21,professionnel,Durand,Pierre,Paris,\"Lead
+    Dev exp├®riment├®\",, ,Lead Developer,TechCorp,2026-01-01T08:00:00\r\npro2@company.com,$2b$10$hash22,professionnel,Lemoine,Sophie,Lyon,\"Data
+    Scientist senior\",, ,Data Scientist,DataCorp,2026-01-02T08:00:00\r\npro3@company.com,$2b$10$hash23,professionnel,Bernard,Julien,Marseille,\"Expert
+    en DevOps\",, ,DevOps Engineer,CloudTech,2026-01-03T08:00:00\r\npro4@company.com,$2b$10$hash24,professionnel,Robert,Isabelle,Bordeaux,\"UI/UX
+    Senior\",, ,UI/UX Designer,DesignStudio,2026-01-04T08:00:00\r\npro5@company.com,$2b$10$hash25,professionnel,Richard,Antoine,Nice,\"Back-end
+    expert\",, ,Back-end Developer,WebSolutions,2026-01-05T08:00:00\r\npro6@company.com,$2b$10$hash26,professionnel,Perrin,Claire,Toulouse,\"Data
+    Engineer\",, ,Data Engineer,DataCorp,2026-01-06T08:00:00\r\npro7@company.com,$2b$10$hash27,professionnel,Leclerc,Thomas,Nantes,\"Mobile
+    Dev Senior\",, ,Mobile Developer,MobileApps,2026-01-07T08:00:00\r\npro8@company.com,$2b$10$hash28,professionnel,Leroy,Emma,Strasbourg,\"Full
+    Stack Developer\",, ,Full Stack Developer,TechWorld,2026-01-08T08:00:00\r\npro9@company.com,$2b$10$hash29,professionnel,Moreau,Antoine,Montpellier,\"Cloud
+    Specialist\",, ,Cloud Engineer,CloudCorp,2026-01-09T08:00:00\r\npro10@company.com,$2b$10$hash30,professionnel,Fabre,L├®a,Lyon,\"Security
+    Expert\",, ,Security Analyst,SecureTech,2026-01-10T08:00:00\r\n"
+kind: ConfigMap
+metadata:
+  name: neo4j-csv-data
+  namespace: connected

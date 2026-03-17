@@ -21,7 +21,7 @@ app.config['JWT_SECRET_KEY'] = 'this-is-a-very-long-and-secure-secret-key-for-co
 app.config['JWT_ACCESS_TOKEN_EXPIRES'] = timedelta(days=7)
 CORS(
     app,
-    resources={r"/*": {"origins": ["http://localhost:4200", "http://127.0.0.1:4200"]}},
+    resources={r"/*": {"origins": ["http://localhost:4200", "http://127.0.0.1:4200" , "http://connected.local"]}},
     supports_credentials=True,
     allow_headers=["Content-Type", "Authorization"],
 )
@@ -66,7 +66,7 @@ app.register_blueprint(dashboard_bp)
 app.register_blueprint(domains_bp)
 app.register_blueprint(technologies_bp)
 
-@app.route('/api/health')
+@app.route('/health')
 def index():
     driver = db.get_db()
     with driver.session() as session:
